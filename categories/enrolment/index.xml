@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Enrolment on endpointmgt.com</title><link>https://endpointmgt.com/categories/enrolment/</link><description>Recent content in Enrolment on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Jan 2024 10:59:19 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/categories/enrolment/index.xml" rel="self" type="application/rss+xml"/><item><title>Missing Microsoft Enrolment App</title><link>https://endpointmgt.com/p/recreateenrolmentapp/</link><pubDate>Mon, 22 Jan 2024 10:59:19 +0100</pubDate><guid>https://endpointmgt.com/p/recreateenrolmentapp/</guid><description>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" />&lt;p>Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p>
+&lt;p>As you can see below, the Microsoft Intune app is missing from the Mobility MDM and WIP page.&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png"
+width="474"
+height="223"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_869cafa68da317a3.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_612badd42150d4b8.png 1024w"
+loading="lazy"
+alt="Missing Enrolment App"
+class="gallery-image"
+data-flex-grow="212"
+data-flex-basis="510px"
+>&lt;/p>
+&lt;p>As you can also see, it’s missing from the Target Resources within the Conditional Access Policies.&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png"
+width="889"
+height="569"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_5ffe9ca43b702b6c.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_aee2aa3ac4b62fe9.png 1024w"
+loading="lazy"
+alt="Conditional Access Selection"
+class="gallery-image"
+data-flex-grow="156"
+data-flex-basis="374px"
+>&lt;/p>
+&lt;p>To resolve the issue, we need a way of recreating the app that Microsoft will recognise as the Intune enrolment app, we can’t simply create an Enterprise Application called the same name. We’ll do this by creating a new Service Principle.&lt;/p>
+&lt;p>First, we’re going to login to Entra ID using Powershell.&lt;/p>
+&lt;p>&lt;code>Connect-AzureAD&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png"
+width="951"
+height="211"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_acbe48cc74e1b086.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_e87d245b4b6bb559.png 1024w"
+loading="lazy"
+alt="Connect to Entra"
+class="gallery-image"
+data-flex-grow="450"
+data-flex-basis="1081px"
+>&lt;/p>
+&lt;p>Lets now check if the app exists, run the get command to see if it exists.&lt;/p>
+&lt;p>&lt;code>Get-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code>&lt;/p>
+&lt;p>If it returned nothing back and simply returned back to a new command line, then we need to create the app. We’ll first clear any record of it from the tenant by removing the SP.&lt;/p>
+&lt;p>&lt;code>Remove-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code>&lt;/p>
+&lt;p>Once complete, we’re now going to recreate it. Don’t make any changes to the command.&lt;/p>
+&lt;p>&lt;code>New-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code>&lt;/p>
+&lt;p>To confirm it’s created, PS will show you the new Service Principle with the correct display name of the require Intune enrollment app.&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png"
+width="975"
+height="205"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_ba846775bc50c6a4.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_ef115481583cc253.png 1024w"
+loading="lazy"
+alt="Create Entra Service Principal"
+class="gallery-image"
+data-flex-grow="475"
+data-flex-basis="1141px"
+>&lt;/p>
+&lt;p>We can now also see the app listed in the Mobility page&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png"
+width="458"
+height="267"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_856a55f12f637a6d.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_8ac63a3820a18508.png 1024w"
+loading="lazy"
+alt="Mobility Page"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;p>And, if you now select the app from the CA policy, it should be listed. You’ll need to refresh the page if you still have it open from checking previously.&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png"
+width="900"
+height="568"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_6059c9c680b98f4d.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_cff216257318c3cd.png 1024w"
+loading="lazy"
+alt="Updated Conditional Access Selection"
+class="gallery-image"
+data-flex-grow="158"
+data-flex-basis="380px"
+>&lt;/p>
+&lt;p>And your done. Now all you have to do is save your CA policy and test the results.&lt;/p></description></item></channel></rss>
