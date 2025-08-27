@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Certificates on endpointmgt.com</title><link>https://endpointmgt.com/categories/certificates/</link><description>Recent content in Certificates on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 26 Aug 2025 13:44:11 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/categories/certificates/index.xml" rel="self" type="application/rss+xml"/><item><title>Deploying Microsoft Intune Cloud PKI</title><link>https://endpointmgt.com/p/deploycloudpki/</link><pubDate>Tue, 26 Aug 2025 13:44:11 +0100</pubDate><guid>https://endpointmgt.com/p/deploycloudpki/</guid><description>&lt;img src="https://endpointmgt.com/p/deploycloudpki/post/CloudPKI/img/cover.png" alt="Featured image of post Deploying Microsoft Intune Cloud PKI" />&lt;p>Microsoft Cloud PKI, included in the Intune Suite, provides a cloud-based Public Key Infrastructure (PKI) to simplify certificate management and deployment. This blog outlines recommended practices for deploying Cloud PKI and options for integrating existing internal Certificate Authorities (CAs).&lt;/p>
+&lt;h2 id="why-cloud-pki">Why Cloud PKI?
+&lt;/h2>&lt;p>Cloud PKI is particularly useful when:&lt;/p>
+&lt;ul>
+&lt;li>You don&amp;rsquo;t have an internal Windows AD Certificate Authority but want to deploy certificates to end-user devices, for example, for 802.1x networks or VPN authentication.&lt;/li>
+&lt;li>You want to extend your existing internal CA but, as part of a Cloud First or Cloud Native strategy, either:
+&lt;ul>
+&lt;li>Migrate certificate management and issuance entirely to the cloud (Full Cloud PKI).&lt;/li>
+&lt;li>Use the cloud for certificate issuance without relying on the internal CA and without updating existing solutions (Bring Your Own CA).&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>Note: Cloud PKI is not a complete replacement for an on-premises PKI. It supports certificate delivery only for Intune-managed devices—not servers, networking equipment, or appliances.&lt;/p>
+&lt;h2 id="pki-deployment-approaches">PKI Deployment Approaches
+&lt;/h2>&lt;p>Deployment can be approached in several ways depending on the environment:&lt;/p>
+&lt;p>There are two main Cloud PKI options:&lt;/p>
+&lt;h3 id="full-cloud-pki">Full Cloud PKI
+&lt;/h3>&lt;ul>
+&lt;li>Moves CA management entirely to Intune.&lt;/li>
+&lt;li>After deployment, you must configure solutions like wireless controllers to trust the new certificates.&lt;/li>
+&lt;/ul>
+&lt;h3 id="bring-your-own-ca">Bring Your Own CA
+&lt;/h3>&lt;ul>
+&lt;li>Extends an internal CA to Intune by creating a Cloud PKI issuing CA.&lt;/li>
+&lt;li>No need for NDES or SCEP connectors.&lt;/li>
+&lt;li>Existing solutions continue to function if the trusted root is correctly configured.&lt;/li>
+&lt;/ul>
+&lt;h2 id="full-cloud-pki-deployment">Full Cloud PKI Deployment
+&lt;/h2>&lt;h3 id="prerequisites">Prerequisites
+&lt;/h3>&lt;ul>
+&lt;li>Global Admin or Intune Admin access in Microsoft Intune.&lt;/li>
+&lt;li>Devices enrolled in Intune.&lt;/li>
+&lt;li>Microsoft Intune Suite license or standalone Cloud PKI add-on.&lt;/li>
+&lt;/ul>
+&lt;h3 id="recommended-settings">Recommended Settings
+&lt;/h3>&lt;ul>
+&lt;li>Create both Root and Issuing CAs.&lt;/li>
+&lt;li>Root CA validity: 15 years; Issuing CA validity: 10 years.&lt;/li>
+&lt;li>Common Names (CN) should follow a naming conventions (e.g., RCAName, SCAName).&lt;/li>
+&lt;li>Encryption: RSA-4096 and SHA-512.&lt;/li>
+&lt;li>No need for an Enterprise App Proxy.&lt;/li>
+&lt;li>Use the SCEP URL exactly as provided in the issuing CA configuration.&lt;/li>
+&lt;/ul>
+&lt;h3 id="deployment-overview">Deployment Overview
+&lt;/h3>&lt;h4 id="root-certification-authority">Root Certification Authority
+&lt;/h4>&lt;ol>
+&lt;li>Navigate to Tenant Administration &amp;gt; Cloud PKI &amp;gt; Create.&lt;/li>
+&lt;li>Name the CA (e.g., RCA_Root) and select Root CA type.&lt;/li>
+&lt;li>Set validity to 15 years and configure Extended Key Usage.&lt;/li>
+&lt;li>Set CN appropriately and choose RSA-4096/SHA-512.&lt;/li>
+&lt;li>Create and refresh to see the new Root CA.&lt;/li>
+&lt;/ol>
+&lt;h4 id="issuing-certification-authority">Issuing Certification Authority
+&lt;/h4>&lt;ol>
+&lt;li>Navigate to Tenant Administration &amp;gt; Cloud PKI &amp;gt; Create.&lt;/li>
+&lt;li>Name the CA (e.g., SCA_Issuing) and select Issuing CA type.&lt;/li>
+&lt;li>Select Root CA source as Intune and pick the newly created Root CA.&lt;/li>
+&lt;li>Set validity to 10 years, CN, and encryption as inherited from Root CA.&lt;/li>
+&lt;li>Create and refresh to see the Issuing CA.&lt;/li>
+&lt;/ol>
+&lt;h3 id="certificate-management">Certificate Management
+&lt;/h3>&lt;ul>
+&lt;li>Download Root and Issuing CA certificates and upload them into Intune as Trusted Certificates.&lt;/li>
+&lt;li>Create a SCEP profile for the desired platform and configure:
+&lt;ul>
+&lt;li>Certificate type (Device/User)&lt;/li>
+&lt;li>Subject Name and SAN (using Intune dynamic attributes)&lt;/li>
+&lt;li>Validity: 1 year&lt;/li>
+&lt;li>Key Storage Provider: TPM recommended&lt;/li>
+&lt;li>Key usage: Digital Signature &amp;amp; Key Encipherment&lt;/li>
+&lt;li>Key size: 2048 or 4096&lt;/li>
+&lt;li>Hash: SHA-2&lt;/li>
+&lt;li>Extended key usage: Client Authentication&lt;/li>
+&lt;li>SCEP URL: Use the one provided by the Issuing CA&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="bring-your-own-ca-deployment">Bring Your Own CA Deployment
+&lt;/h2>&lt;h3 id="prerequisites-1">Prerequisites
+&lt;/h3>&lt;ul>
+&lt;li>Same as Full Cloud PKI plus:
+&lt;ul>
+&lt;li>Access to the internal AD CA and web host running the CA Web Enrollment service.&lt;/li>
+&lt;li>Active Directory Enterprise Administrator role.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="recommended-settings-1">Recommended Settings
+&lt;/h3>&lt;ul>
+&lt;li>Root CA must have substantial validity remaining (ideally &amp;gt;10 years).&lt;/li>
+&lt;li>Issuing CA CN should follow environment naming conventions.&lt;/li>
+&lt;li>Encryption key size: RSA-4096/SHA-512.&lt;/li>
+&lt;li>Use the SCEP URL as provided.&lt;/li>
+&lt;/ul>
+&lt;h3 id="deployment-overview-1">Deployment Overview
+&lt;/h3>&lt;ol>
+&lt;li>Create an Issuing CA via Tenant Administration &amp;gt; Cloud PKI &amp;gt; Create.&lt;/li>
+&lt;li>Select Root CA source as Bring Your Own CA and configure Extended Key Usage.&lt;/li>
+&lt;li>Download the CSR and submit it to the internal Root CA for signing.&lt;/li>
+&lt;li>Upload the signed certificate and chain to Intune. Status updates to Active.&lt;/li>
+&lt;li>Note the SCEP URL and create the SCEP profile for client certificates as above.&lt;/li>
+&lt;/ol></description></item></channel></rss>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>SCEP on endpointmgt.com</title>
+        <link>http://localhost:1313/categories/scep/</link>
+        <description>Recent content in SCEP on endpointmgt.com</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 26 Aug 2025 13:44:11 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/scep/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Deploying Microsoft Intune Cloud PKI</title>
+        <link>http://localhost:1313/p/deploycloudpki/</link>
+        <pubDate>Tue, 26 Aug 2025 13:44:11 +0100</pubDate>
+        
+        <guid>http://localhost:1313/p/deploycloudpki/</guid>
+        <description>&lt;img src="http://localhost:1313/img/cover.png" alt="Featured image of post Deploying Microsoft Intune Cloud PKI" /&gt;&lt;p&gt;Microsoft Cloud PKI, included in the Intune Suite, provides a cloud-based Public Key Infrastructure (PKI) to simplify certificate management and deployment. This blog outlines recommended practices for deploying Cloud PKI and options for integrating existing internal Certificate Authorities (CAs).&lt;/p&gt;
+&lt;h2 id=&#34;why-cloud-pki&#34;&gt;Why Cloud PKI?
+&lt;/h2&gt;&lt;p&gt;Cloud PKI is particularly useful when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A customer does not have an internal Windows AD Certificate Authority but wants to deploy certificates to end-user devices, for example, for 802.1x networks or VPN authentication.&lt;/li&gt;
+&lt;li&gt;A customer has an internal CA but, as part of a Cloud First or Cloud Native strategy, wants to:
+&lt;ul&gt;
+&lt;li&gt;Migrate certificate management and issuance entirely to the cloud (Full Cloud PKI).&lt;/li&gt;
+&lt;li&gt;Use the cloud for certificate issuance without relying on the internal CA and without updating existing solutions (Bring Your Own CA).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: Cloud PKI is not a complete replacement for an on-premises PKI. It supports certificate delivery only for Intune-managed devices—not servers, networking equipment, or appliances.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
