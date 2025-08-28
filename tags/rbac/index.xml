@@ -1,78 +1,192 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>RBAC on endpointmgt.com</title>
-        <link>http://localhost:1313/tags/rbac/</link>
-        <description>Recent content in RBAC on endpointmgt.com</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Thu, 28 Aug 2025 09:10:17 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/rbac/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)</title>
-        <link>http://localhost:1313/p/multiappapproval/</link>
-        <pubDate>Thu, 28 Aug 2025 09:10:17 +0100</pubDate>
-        
-        <guid>http://localhost:1313/p/multiappapproval/</guid>
-        <description>&lt;p&gt;If you’ve ever woken up in a cold sweat wondering, “What if one of my admin accounts got compromised and someone wiped 5,000 devices overnight?” Firstly, you need more restful sleep, but second, Microsoft has finally heard you.&lt;/p&gt;
-&lt;p&gt;Enter Multiple Administrative Approval (MAA) in Intune. Think of it like that classic buddy system from school trips, you can’t make a move without a partner watching you. Except instead of making sure you don’t wander off at the museum gift shop, MAA makes sure no single admin can make big changes to your tenant without someone else giving the thumbs up. Good Right?&lt;/p&gt;
-&lt;p&gt;Here’s the gist:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;You create access policies that protect certain things (apps, device wipe actions, scripts, RBAC changes, and even the MAA policies themselves).&lt;/li&gt;
-&lt;li&gt;When an admin makes a change, Intune says, “Not so fast, cowboy”, and holds that request hostage until another admin, someone in your designated approver group reviews it and hits Approve.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;It’s a neat safeguard, but before you run off to secure the kingdom, let’s talk about what you can and can’t do with it.&lt;/p&gt;
-&lt;h2 id=&#34;the-big-gotcha-its-all-or-nothing&#34;&gt;The Big Gotcha: It’s All or Nothing
-&lt;/h2&gt;&lt;p&gt;When you set an access policy, it applies tenant-wide. That means all admins are covered by it, regardless of whether they’re junior Service Desk tech or your top-level cloud architect. You can’t yet assign policies to specific groups, devices, or scenarios.&lt;/p&gt;
-&lt;p&gt;For example, wouldn’t it be brilliant if:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;A small group of trusted admins could wipe devices immediately, while everyone else required approval?&lt;/li&gt;
-&lt;li&gt;Or if corporate-owned devices could be wiped without fuss, but BYOD devices required approval because, let’s face it, accidentally nuking someone’s personal phone is a fast track to HR complaints or even worse?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Sadly, that flexibility isn’t here—at least not yet. Right now, it’s a blanket rule for everyone.&lt;/p&gt;
-&lt;h2 id=&#34;why-its-still-worth-it&#34;&gt;Why It’s Still Worth It
-&lt;/h2&gt;&lt;p&gt;Limitations aside, MAA is a strong step toward protecting against compromised accounts and fat-finger mistakes. Even the best admins occasionally click the wrong thing, and having that extra checkpoint could save your bacon.&lt;/p&gt;
-&lt;p&gt;The process also builds transparency: business justifications are logged, approvals and rejections are documented, and everything shows up in the audit logs. That’s not just good for governance, it’s fantastic for compliance conversations when someone inevitably asks, “So, who approved this?”&lt;/p&gt;
-&lt;h2 id=&#34;living-with-maa&#34;&gt;Living with MAA
-&lt;/h2&gt;&lt;p&gt;If you’re going to use it, here are a few practical tips:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Have at least two active admins (sounds obvious, but you’d be surprised how often tenants rely on a single person).&lt;/li&gt;
-&lt;li&gt;Communicate with your approvers. There’s no built-in notification system for new requests yet, so if it’s urgent, you’ll need to poke them directly.&lt;/li&gt;
-&lt;li&gt;Keep an eye on requests, pending changes expire after 30 days if nobody acts on them.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;lets-demonstrate-how-to-configure-it&#34;&gt;Lets demonstrate how to configure it
-&lt;/h2&gt;&lt;p&gt;Alright, so you’re sold on the idea and want to set this up. The good news? The process isn’t rocket science. The bad news? You’ll need two admin accounts handy, because you can’t approve your own request (no cheating the system).&lt;/p&gt;
-&lt;h3 id=&#34;create-the-access-policy&#34;&gt;Create the Access Policy
-&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;Sign in to the Microsoft Intune admin center with your first admin account.&lt;/li&gt;
-&lt;li&gt;Create a group in Entra or if your old fashioned (and stuck in your ways), Active Directory and wait for the group to sync up. (I won&amp;rsquo;t start on why using AD groups in Entra with sync&amp;rsquo;d admins is a bad idea, that&amp;rsquo;s for another day.). This group will act as the Approvers List. Once a protection action is triggered, it&amp;rsquo;ll be this group of users that can approve the action. Even if they&amp;rsquo;re already a GA or Intune admin. Not in this group, they can&amp;rsquo;t approve it!&lt;/li&gt;
-&lt;li&gt;Head over to Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Access policies.&lt;/li&gt;
-&lt;li&gt;Select Create.&lt;/li&gt;
-&lt;li&gt;On the Basics page, give your policy a name, add an optional description (bonus points if it’s funny enough to make future-you smile), and choose the profile type you want to protect (Apps, Scripts, Device actions, etc.).&lt;/li&gt;
-&lt;li&gt;On the Approvers page, select Add groups and pick which group of admins will approve changes for this policy.
-Important: You can’t exclude groups or get fancy with scoping here—it’s one group, one policy, all users.&lt;/li&gt;
-&lt;li&gt;Review your settings, and add a business justification for the approver.&lt;/li&gt;
-&lt;li&gt;Then hit Submit for Approval. Something like this;
-&lt;img src=&#34;http://localhost:1313/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy.png&#34;
-	width=&#34;770&#34;
-	height=&#34;655&#34;
-	srcset=&#34;http://localhost:1313/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_33e193bafc98ba56.png 480w, http://localhost:1313/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_77960a514c7f29c4.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Sign In&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;117&#34;
-		data-flex-basis=&#34;282px&#34;
-	
-&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;At this point, your shiny new policy is created, but it’s not live until it’s approved.&lt;/p&gt;
-&lt;h3 id=&#34;looking-ahead&#34;&gt;Looking Ahead
-&lt;/h3&gt;&lt;p&gt;Will Microsoft eventually let us scope approvals to specific groups or device types? One can hope. The ideal future is granular control: different approval paths for different admin roles, device ownership types, or even for high-risk vs. low-risk actions.&lt;/p&gt;
-&lt;p&gt;Until then, MAA is a solid foundation. It might not be the dream scenario where your junior admin can reset a password but needs approval to delete a fleet of laptops—but it’s still a powerful safety net for every organization running Intune.&lt;/p&gt;
-&lt;p&gt;And hey, if nothing else, it makes sure your admins are talking to each other. Who knew security could double up as team bonding?&lt;/p&gt;
-</description>
-        </item>
-        
-    </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RBAC on endpointmgt.com</title><link>https://endpointmgt.com/tags/rbac/</link><description>Recent content in RBAC on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 28 Aug 2025 09:10:17 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/rbac/index.xml" rel="self" type="application/rss+xml"/><item><title>Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)</title><link>https://endpointmgt.com/p/multiappapproval/</link><pubDate>Thu, 28 Aug 2025 09:10:17 +0100</pubDate><guid>https://endpointmgt.com/p/multiappapproval/</guid><description>&lt;p>If you’ve ever woken up in a cold sweat wondering, “What if one of my admin accounts got compromised and someone wiped 5,000 devices overnight?” Firstly, you need more restful sleep, but second, Microsoft has finally heard you.&lt;/p>
+&lt;p>Enter Multiple Administrative Approval (MAA) in Intune. Think of it like that classic buddy system from school trips, you can’t make a move without a partner watching you. Except instead of making sure you don’t wander off at the museum gift shop, MAA makes sure no single admin can make big changes to your tenant without someone else giving the thumbs up. Good Right?&lt;/p>
+&lt;p>Here’s the gist:&lt;/p>
+&lt;ul>
+&lt;li>You create access policies that protect certain things (apps, device wipe actions, scripts, RBAC changes, and even the MAA policies themselves).&lt;/li>
+&lt;li>When an admin makes a change, Intune says, “Not so fast, cowboy”, and holds that request hostage until another admin, someone in your designated approver group reviews it and hits Approve.&lt;/li>
+&lt;/ul>
+&lt;p>It’s a neat safeguard, but before you run off to secure the kingdom, let’s talk about what you can and can’t do with it.&lt;/p>
+&lt;h2 id="the-big-gotcha-its-all-or-nothing">The Big Gotcha: It’s All or Nothing
+&lt;/h2>&lt;p>When you set an access policy, it applies tenant-wide. That means all admins are covered by it, regardless of whether they’re junior Service Desk tech or your top-level cloud architect. You can’t yet assign policies to specific groups, devices, or scenarios.&lt;/p>
+&lt;p>For example, wouldn’t it be brilliant if:&lt;/p>
+&lt;ul>
+&lt;li>A small group of trusted admins could wipe devices immediately, while everyone else required approval?&lt;/li>
+&lt;li>Or if corporate-owned devices could be wiped without fuss, but BYOD devices required approval because, let’s face it, accidentally nuking someone’s personal phone is a fast track to HR complaints or even worse?&lt;/li>
+&lt;/ul>
+&lt;p>Sadly, that flexibility isn’t here—at least not yet. Right now, it’s a blanket rule for everyone.&lt;/p>
+&lt;h2 id="why-its-still-worth-it">Why It’s Still Worth It
+&lt;/h2>&lt;p>Limitations aside, MAA is a strong step toward protecting against compromised accounts and fat-finger mistakes. Even the best admins occasionally click the wrong thing, and having that extra checkpoint could save your bacon.&lt;/p>
+&lt;p>The process also builds transparency: business justifications are logged, approvals and rejections are documented, and everything shows up in the audit logs. That’s not just good for governance, it’s fantastic for compliance conversations when someone inevitably asks, “So, who approved this?”&lt;/p>
+&lt;h2 id="living-with-maa">Living with MAA
+&lt;/h2>&lt;p>If you’re going to use it, here are a few practical tips:&lt;/p>
+&lt;ul>
+&lt;li>Have at least two active admins (sounds obvious, but you’d be surprised how often tenants rely on a single person).&lt;/li>
+&lt;li>Communicate with your approvers. There’s no built-in notification system for new requests yet, so if it’s urgent, you’ll need to poke them directly.&lt;/li>
+&lt;li>Keep an eye on requests, pending changes expire after 30 days if nobody acts on them.&lt;/li>
+&lt;/ul>
+&lt;h2 id="how-to-configure">How to Configure
+&lt;/h2>&lt;p>Alright, so you’re sold on the idea and want to set this up. The good news? The process isn’t rocket science. The bad news? You’ll need two admin accounts handy, because you can’t approve your own request (no cheating the system).&lt;/p>
+&lt;p>I&amp;rsquo;ll take you through the process of creating a protected device action of wiping a device. The same process can be followed for other actions.&lt;/p>
+&lt;h3 id="create-the-access-policy">Create the Access Policy
+&lt;/h3>&lt;ol>
+&lt;li>Sign in to the Microsoft Intune admin center with your first admin account.&lt;/li>
+&lt;li>Create a group in Entra or if your old fashioned (and stuck in your ways), Active Directory and wait for the group to sync up. (I won&amp;rsquo;t start on why using AD groups in Entra with sync&amp;rsquo;d admins is a bad idea, that&amp;rsquo;s for another day.). This group will act as the Approvers List. Once a protection action is triggered, it&amp;rsquo;ll be this group of users that can approve the action. Even if they&amp;rsquo;re already a GA or Intune admin. Not in this group, they can&amp;rsquo;t approve it!&lt;/li>
+&lt;li>Head over to Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Access policies.&lt;/li>
+&lt;li>Select Create.&lt;/li>
+&lt;li>On the Basics page, give your policy a name, add an optional description (bonus points if it’s funny enough to make future-you smile), and choose the profile type you want to protect (Apps, Scripts, Device actions, etc.).&lt;/li>
+&lt;li>On the Approvers page, select Add groups and pick which group of admins will approve changes for this policy.
+Important: You can’t exclude groups or get fancy with scoping here—it’s one group, one policy, all users.&lt;/li>
+&lt;li>Review your settings, and add a business justification for the approver. Something like this;
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy.png"
+width="770"
+height="655"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_33e193bafc98ba56.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_77960a514c7f29c4.png 1024w"
+loading="lazy"
+alt="Review Policy before submission"
+class="gallery-image"
+data-flex-grow="117"
+data-flex-basis="282px"
+>&lt;/li>
+&lt;li>Then hit Submit for Approval.&lt;/li>
+&lt;/ol>
+&lt;p>At this point, your shiny new policy is created, but it’s not live until it’s approved. You&amp;rsquo;ll see this under My Requests
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval.png"
+width="1392"
+height="240"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_a540ae7ea75066d1.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_b3ee82fbeec9fb7d.png 1024w"
+loading="lazy"
+alt="Pending Approval"
+class="gallery-image"
+data-flex-grow="580"
+data-flex-basis="1392px"
+>&lt;/p>
+&lt;h3 id="approve-the-policy">Approve the Policy
+&lt;/h3>&lt;ol>
+&lt;li>Sign out of your first admin account and sign back in with a different admin account that’s either an GA, Intune Admin or has the permission Approve MAA within RBAC.&lt;/li>
+&lt;li>Navigate to Tenant administration &amp;gt; Multi Admin Approval &amp;gt; All requests.&lt;/li>
+&lt;li>Find the pending request for your new access policy.
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest.png"
+width="1393"
+height="234"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_68a6efea9912e34f.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_d54d842311840067.png 1024w"
+loading="lazy"
+alt="Approval Request"
+class="gallery-image"
+data-flex-grow="595"
+data-flex-basis="1428px"
+>&lt;/li>
+&lt;li>Open it up, review the details (including the justification) and add in your approver notes. This is required&lt;/li>
+&lt;li>Then hit Approve request (or reject request if your future self is having second thoughts).
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approve.png"
+width="1107"
+height="863"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_5f6fc4edfe408aef.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_400fa6625be2610c.png 1024w"
+loading="lazy"
+alt="Approve"
+class="gallery-image"
+data-flex-grow="128"
+data-flex-basis="307px"
+>&lt;/li>
+&lt;li>You&amp;rsquo;ll then see the policy as approved, if you refresh the page.
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved.png"
+width="1390"
+height="75"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_8d60c43b7b1005f5.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_8faf5404ff873834.png 1024w"
+loading="lazy"
+alt="Approved"
+class="gallery-image"
+data-flex-grow="1853"
+data-flex-basis="4448px"
+>&lt;/li>
+&lt;/ol>
+&lt;h3 id="complete-the-policy">Complete the Policy
+&lt;/h3>&lt;p>You would think, that&amp;rsquo;s it, right? No, it&amp;rsquo;s not! The first admin, now needs to complete the policy before it becomes live.&lt;/p>
+&lt;ol>
+&lt;li>Sign out of your second admin account and sign back in with the fist admin account.&lt;/li>
+&lt;li>Navigate to Tenant administration &amp;gt; Multi Admin Approval &amp;gt; My requests.&lt;/li>
+&lt;li>You&amp;rsquo;ll see your new policy as approved
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved2.png"
+width="1381"
+height="239"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_bb65b869589135f6.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_c9dd2aa9ca8fbe28.png 1024w"
+loading="lazy"
+alt="Approved for second admin"
+class="gallery-image"
+data-flex-grow="577"
+data-flex-basis="1386px"
+>&lt;/li>
+&lt;li>Select the policy and select Complete request.
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest.png"
+width="1114"
+height="860"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_57be83b57672af06.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_cc3c6ff1cd8778ea.png 1024w"
+loading="lazy"
+alt="Complete Request"
+class="gallery-image"
+data-flex-grow="129"
+data-flex-basis="310px"
+>&lt;/li>
+&lt;li>Now wait! It takes around 10 minutes in my testing for the policy be adopted and the action to be protected. You&amp;rsquo;ll know when it is as you&amp;rsquo;ll see a business justification field, when you try to carry out the protected action. If you don&amp;rsquo;t see it, it&amp;rsquo;s not live yet!&lt;/li>
+&lt;/ol>
+&lt;h3 id="what-does-it-look-like-in-action">What does it look like in action?
+&lt;/h3>&lt;p>So you’ve got this far and set up your shiny new access policy. What actually happens when an admin tries to make a change that’s now protected? Let’s walk through it, no popcorn required.&lt;/p>
+&lt;ol>
+&lt;li>The Admin Makes a Change
+Imagine an admin tries to wipe a device (or maybe deploy a script). Normally, that action would go straight through. But now, when they hit save, Intune steps in and says: “Hold on, explain yourself.” A Business justification box appears at the bottom of the screen. The admin types in why the change is needed—something like “User lost laptop on the train again” (we all know that person).
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/WipeAction.png"
+width="770"
+height="301"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_10d518e328024a58.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_cf52393055043887.png 1024w"
+loading="lazy"
+alt="Wipe Action"
+class="gallery-image"
+data-flex-grow="255"
+data-flex-basis="613px"
+>&lt;/li>
+&lt;li>The Request Gets Parked
+Instead of being processed immediately, the request now sits in limbo under My requests in the Intune admin center. The status will show as Needs approval.
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending.png"
+width="1392"
+height="238"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_9cadd5c1af1fddf5.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_e9b02058e7e9900f.png 1024w"
+loading="lazy"
+alt="Device Action Pending Approval"
+class="gallery-image"
+data-flex-grow="584"
+data-flex-basis="1403px"
+>&lt;/li>
+&lt;li>The Approver Steps In
+Another admin, one who’s in the designated approver group, logs into Intune and heads to Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Received requests.
+They’ll see the pending request, complete with details of what action was attempted, who submitted it, and that all-important business justification.
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2.png"
+width="1112"
+height="858"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_7c9ad3ec5a813e1b.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_ec52f276a87e33a5.png 1024w"
+loading="lazy"
+alt="Device Action Pending Approval for second admin"
+class="gallery-image"
+data-flex-grow="129"
+data-flex-basis="311px"
+>&lt;/li>
+&lt;li>Decision Time
+The approver can either hit Approve or Reject, and they’ve got a notes field to leave comments—helpful for feedback, or the occasional passive-aggressive remark like “Stop wiping devices on Friday afternoons.”&lt;/li>
+&lt;li>The Requestor Finishes the Job
+Here’s the twist: even after approval, the original requestor has to go back in and hit Complete before the action actually happens. This ensures the person who started the process is still in the loop. Once completed, the status updates to Completed, and Intune carries out the change.
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved.png"
+width="1116"
+height="858"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_7094bf7de9308339.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_9fad84d2e2edd9b1.png 1024w"
+loading="lazy"
+alt="Device Action Approved"
+class="gallery-image"
+data-flex-grow="130"
+data-flex-basis="312px"
+>&lt;/li>
+&lt;li>Everyone Stays in the Loop
+If the request is rejected, the notes from the approver are visible to the requestor, so they know why. Every step is logged in audit logs, so you’ve got the receipts if you need them later.&lt;/li>
+&lt;/ol>
+&lt;p>The whole process feels a bit like tagging in a teammate during a wrestling match, one person starts the move, but someone else has to back them up before it lands. It adds a couple of extra clicks, but in exchange, you’re massively reducing the risk of one compromised account (or one tired admin mis-click) causing chaos.&lt;/p>
+&lt;h2 id="looking-ahead">Looking Ahead
+&lt;/h2>&lt;p>Will Microsoft eventually let us scope approvals to specific groups or device types? One can hope. The ideal future is granular control: different approval paths for different admin roles, device ownership types, or even for high-risk vs. low-risk actions.&lt;/p>
+&lt;p>Until then, MAA is a solid foundation. It might not be the dream scenario where your junior admin can reset a password but needs approval to delete a fleet of laptops—but it’s still a powerful safety net for every organization running Intune.&lt;/p>
+&lt;p>And hey, if nothing else, it makes sure your admins are talking to each other. Who knew security could double up as team bonding?&lt;/p></description></item></channel></rss>
