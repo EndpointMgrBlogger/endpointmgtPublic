@@ -159,8 +159,8 @@ data-flex-grow="584"
 data-flex-basis="1403px"
 >&lt;/li>
 &lt;li>The Approver Steps In
-Another admin, one who’s in the designated approver group, logs into Intune and heads to Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Received requests.
-They’ll see the pending request, complete with details of what action was attempted, who submitted it, and that all-important business justification.
+Another admin, one who’s in the designated approver group, logs into Intune and heads to &lt;kbd>Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Received requests&lt;/kbd>.
+They’ll see the pending request, complete with details of what action was attempted, who submitted it, and that all-important &amp;lsquo;business justification&amp;rsquo;.
 &lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2.png"
 width="1112"
 height="858"
