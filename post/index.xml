@@ -8,7 +8,7 @@
 &lt;/ul>
 &lt;p>It’s a neat safeguard, but before you run off to secure the kingdom, let’s talk about what you can and can’t do with it.&lt;/p>
 &lt;h2 id="the-big-gotcha-its-all-or-nothing">The Big Gotcha: It’s All or Nothing
-&lt;/h2>&lt;p>When you set an access policy, it applies tenant-wide. That means all admins are covered by it, regardless of whether they’re junior Service Desk tech or your top-level cloud architect. You can’t yet assign policies to specific groups, devices, or scenarios.&lt;/p>
+&lt;/h2>&lt;p>When you set an access policy, it applies &lt;b>tenant-wide&lt;/b>. That means all admins are covered by it, regardless of whether they’re junior Service Desk tech or your top-level cloud architect. You can’t yet assign policies to specific groups, devices, or scenarios.&lt;/p>
 &lt;p>For example, wouldn’t it be brilliant if:&lt;/p>
 &lt;ul>
 &lt;li>A small group of trusted admins could wipe devices immediately, while everyone else required approval?&lt;/li>
