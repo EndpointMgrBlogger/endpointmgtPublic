@@ -72,6 +72,7 @@ data-flex-basis="391px"
 &lt;li>✅ &lt;strong>Filter by Enrollment Profile&lt;/strong> → if all shared devices use a dedicated Autopilot profile.&lt;/li>
 &lt;li>✅ &lt;strong>Filter by Extension Attribute&lt;/strong> → if you need granular control across mixed Autopilot profiles or to tag only specific labs.&lt;/li>
 &lt;li>❌ &lt;strong>Exclude by Network Location&lt;/strong> → only safe if you can guarantee shared devices are the only ones using those public IPs. Avoid if BYOD devices connect to the same network.&lt;/li>
+&lt;li>❌ &lt;strong>Introduce Web Signin&lt;/strong> → only safe if you can guarantee shared devices will always have an internet connection.&lt;/li>
 &lt;/ul>
 &lt;h3 id="exclude-microsoft-intune">Exclude Microsoft Intune
 &lt;/h3>&lt;p>To prevent Company Portal and user initiated sync&amp;rsquo;s with Microsoft Intune being affected by your conditional access, the best advice would be to simply exclude the app entirely from the offending CA.&lt;/p>
@@ -331,6 +332,14 @@ data-flex-basis="295px"
 &lt;li>Now to test your policy exclusion&amp;hellip;.&lt;/li>
 &lt;li>You should now see that the MFA policy now excludes this device from the policy&lt;/li>
 &lt;/ol>
+&lt;h3 id="an-alternative-option-web-sign-in">&lt;strong>An Alternative Option: Web Sign-in&lt;/strong>
+&lt;/h3>&lt;p>In addition to traditional sign-in methods, &lt;strong>Web sign-in&lt;/strong> offers another possibility for shared devices. This option provides a streamlined experience by leveraging cloud-based authentication like MFA, Microsoft Authenticator, Temporary Access Pass (TAP), or FIDO2 security keys.&lt;/p>
+&lt;p>The primary drawback of Web sign-in is its complete dependence on a reliable internet connection. Unlike cached credentials from a traditional password login, the Web sign-in option requires an internet connection for &lt;em>every single login&lt;/em>, even if the user has previously signed in to the device. This means if a device loses its network connection, users will be unable to sign in using this method.&lt;/p>
+&lt;p>&lt;a class="link" href="https://learn.microsoft.com/en-us/windows/security/identity-protection/web-sign-in/?tabs=intune" target="_blank" rel="noopener"
+>More on Web Sign from Microsoft&lt;/a>&lt;/p>
+&lt;h4 id="what-if-a-login-fails">&lt;strong>What if a Login Fails?&lt;/strong>
+&lt;/h4>&lt;p>You might be wondering if users will know how to switch options if their Web sign-in fails. The good news is that Windows is designed to handle this gracefully. The lock screen will always show multiple sign-in options if they are enabled on the device (e.g., password, PIN, Web sign-in).&lt;/p>
+&lt;p>If a Web sign-in attempt fails due to a network issue, the user can simply press &lt;strong>Ctrl + Alt + Delete&lt;/strong> to return to the main login screen. From there, they can select an alternative sign-in method, such as a cached password or PIN, allowing them to complete their login without interruption.&lt;/p>
 &lt;h2 id="conclusion">Conclusion
 &lt;/h2>&lt;p>Conditional Access and MFA are essential for securing identities in Microsoft 365, but shared devices introduce edge cases that can easily break the user experience. The challenge is that non-interactive logins silently fail when MFA is required but never prompted, leaving users confused and admins troubleshooting stalled configurations.&lt;/p>
 &lt;p>By carefully excluding the right enterprise applications, or by using targeted device filters such as Autopilot profiles or extension attributes, you can strike the balance between &lt;strong>security and usability&lt;/strong>. The goal isn’t to weaken MFA, but to apply it intelligently so that shared devices remain functional while personal or high-risk scenarios stay protected.&lt;/p>
