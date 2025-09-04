@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Authentication on endpointmgt.com</title>
+        <link>http://localhost:1313/tags/authentication/</link>
+        <description>Recent content in Authentication on endpointmgt.com</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 04 Sep 2025 13:11:54 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/authentication/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Sign into an Entra join device with only the SAM account name instead of the full UPN</title>
+        <link>http://localhost:1313/p/nonupnsignin/</link>
+        <pubDate>Thu, 04 Sep 2025 13:11:54 +0100</pubDate>
+        
+        <guid>http://localhost:1313/p/nonupnsignin/</guid>
+        <description>&lt;img src="http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/cover.png" alt="Featured image of post Sign into an Entra join device with only the SAM account name instead of the full UPN" /&gt;&lt;p&gt;So you&amp;rsquo;re making the leap into the world of Cloud only or cloud first and moving devices to Entra joined. Did you know the standard login process for entra join changes the way users sign in? By default, entra join devices will require the user to sign in with their work or school account, in other words, their Microsoft 365 email address or more accurately, their User Principle Name (UPN). Whereas domain or hybrid domain join devices will expect the user to login with their SAM Account Name.&lt;/p&gt;
+&lt;p&gt;Did you know that we can change this?&lt;/p&gt;
+&lt;h2 id=&#34;reasons-to-update&#34;&gt;Reasons to Update
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Keep user experience consistent between the different device join types&lt;/li&gt;
+&lt;li&gt;Reduce failed login attempts with typos or users not realising the change&lt;/li&gt;
+&lt;li&gt;Reduced communication to users for login changes&lt;/li&gt;
+&lt;li&gt;Speed up the login process&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;understanding-the-upn&#34;&gt;Understanding the UPN
+&lt;/h2&gt;&lt;p&gt;Lets break it down. You can see that the UPN is name of the SAM Account Name and the email domain name. As already explained, by default the user needs to type in the full UPN when signing in.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp.png&#34;
+	width=&#34;688&#34;
+	height=&#34;174&#34;
+	srcset=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp_hu_e05e7360f885a8b6.png 480w, http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp_hu_baef949ecb50ab1a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Login&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;395&#34;
+		data-flex-basis=&#34;948px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Now that you understand the concept of where the UPN comes from, lets change the sign in experience to just require the first part and save users having to type out the entire UPN.&lt;/p&gt;
+&lt;h2 id=&#34;what-youll-currently-see&#34;&gt;What you&amp;rsquo;ll currently see
+&lt;/h2&gt;&lt;p&gt;If you have the default configuration, this is what you&amp;rsquo;re users will see when logging in. You can tell it&amp;rsquo;s the default as it&amp;rsquo;ll say &lt;strong&gt;Sign in to: Your Work or School Account&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore.png&#34;
+	width=&#34;1275&#34;
+	height=&#34;956&#34;
+	srcset=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_b51562f15deb9924.png 480w, http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_a61357b447ccd178.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Before Change&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;configure-the-the-login-experience&#34;&gt;Configure the the login experience
+&lt;/h2&gt;&lt;p&gt;To configure the login, we&amp;rsquo;re going to utilise a setting within Intune&amp;rsquo;s settings catalogue&lt;/p&gt;
+&lt;h3 id=&#34;configure-preferred-aad-tenant-domain-name-policy&#34;&gt;Configure Preferred Aad Tenant Domain Name Policy
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Log into Intune&lt;/li&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;Devices &amp;gt; Windows &amp;gt; Configuration &amp;gt; Create &amp;gt; New Policy&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select Platform &lt;kbd&gt;Windows 10 and later&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select Profile Type &lt;kbd&gt;Settings Catalog &amp;gt; Create&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Give your policy a suitable name, then &lt;kbd&gt;Next&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Add Settings&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Search for &lt;strong&gt;Preferred Aad Tenant Domain Name&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Authentication&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Tick &lt;kbd&gt;Preferred Aad Tenant Domain Name&lt;kbd&gt;&lt;/li&gt;
+&lt;li&gt;Close the settings tag with the cross on the top right&lt;/li&gt;
+&lt;li&gt;Within the Preferred Aad Tenant Domain Name type in your domain unque custom domain name, such as &lt;strong&gt;ABCCompany.com&lt;/strong&gt; - Don&amp;rsquo;t include the &lt;strong&gt;@&lt;/strong&gt; sign.&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Next &amp;gt; Next&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Assign the policy to an Entra group of test devices.
+Note - I would suggest a static test group for the testing phase then moving when you&amp;rsquo;re ready to deploy to production, using the &lt;strong&gt;All Devices&lt;/strong&gt; with an assignment filter or a dynamic entra group once you&amp;rsquo;re ready to deploy.&lt;/li&gt;
+&lt;li&gt;The policy should look something like this&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy.png&#34;
+	width=&#34;697&#34;
+	height=&#34;797&#34;
+	srcset=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_776a3feb0b8bc65c.png 480w, http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_c37fc8b88c12ee1c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Intune Configuration&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;87&#34;
+		data-flex-basis=&#34;209px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;13&#34;&gt;
+&lt;li&gt;&lt;kbd&gt;Create&lt;/kbd&gt; once you&amp;rsquo;re happy with the configuration and assignment&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;test-the-new-login-experience&#34;&gt;Test the new login experience
+&lt;/h3&gt;&lt;p&gt;Once a device is added and sync&amp;rsquo;d to the test group and the policy is received by the device. The login experience will update to show &lt;strong&gt;Sign In to: DomainName.com&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter.png&#34;
+	width=&#34;1022&#34;
+	height=&#34;766&#34;
+	srcset=&#34;http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_c85b40bbaa26fbba.png 480w, http://localhost:1313/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_c8881c850aac8022.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;After Change&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Log into the device with just the SAM Account Name. If you&amp;rsquo;re logged in successful, you&amp;rsquo;ve successful improved the login experience and can deploy wider.&lt;/p&gt;
+&lt;p&gt;As always, thanks for reading!&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

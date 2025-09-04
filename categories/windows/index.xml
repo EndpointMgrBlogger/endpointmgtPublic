@@ -1,455 +1,535 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Windows on endpointmgt.com</title><link>https://endpointmgt.com/categories/windows/</link><description>Recent content in Windows on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 Sep 2025 16:23:48 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/categories/windows/index.xml" rel="self" type="application/rss+xml"/><item><title>Conditional Access and MFA on Shared Windows Devices with Intune</title><link>https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/</link><pubDate>Mon, 01 Sep 2025 16:23:48 +0100</pubDate><guid>https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/</guid><description>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" />&lt;p>Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class="link" href="https://endpointmgt.com/p/whfbcloudkerberos/" >Windows Hello for Business&lt;/a> ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p>
-&lt;p>Shared Windows devices in teaching labs, libraries, and lecture theatres need to “just work.” But when Microsoft Intune and Conditional Access are combined with Windows Autopilot pre-provisioning, things can go wrong in unexpected ways.&lt;/p>
-&lt;p>A common issue we’ve seen is that MFA never prompts the user during login. On the surface, this might look like a smoother experience. In reality, it means no Primary Refresh Token (PRT) is established and without a PRT, seamless SSO fails. The knock-on effect is that students (or staff) can’t sync Company Portal policies, device configuration stalls, and Windows subscription activation doesn’t apply correctly.&lt;/p>
-&lt;h2 id="why-it-happens">Why It Happens
-&lt;/h2>&lt;ul>
-&lt;li>Shared Windows devices (Azure AD joined, Intune managed, no primary user) don’t issue MFA at login.&lt;/li>
-&lt;li>Conditional Access policies apply to all users and apps without exclusions.&lt;/li>
-&lt;li>Non-interactive logins (Company Portal, Intune MDM, Windows licensing) then try to authenticate — but get blocked silently by Conditional Access because MFA is required but not triggered.&lt;/li>
-&lt;li>Result: Company Portal only partially works, device policies sit as “Pending,” and subscription activation is delayed.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Interactive vs. Non-Interactive Sign-Ins in Entra ID&lt;/strong>&lt;/p>
-&lt;p>When a user signs in to a device or application, Entra ID records the sign-in as either interactive or non-interactive.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png"
-width="1220"
-height="256"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_f1eac52d6d48ce4e.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_f3287712bd1400c.png 1024w"
-loading="lazy"
-alt="Entra Sign in"
-class="gallery-image"
-data-flex-grow="476"
-data-flex-basis="1143px"
->&lt;/p>
-&lt;ul>
-&lt;li>Interactive sign-ins occur when the user is directly prompted to enter their credentials or complete an MFA challenge. This includes typing in a password, using Windows Hello, or approving a prompt on their phone. Interactive sign-ins always involve visible user interaction.&lt;/li>
-&lt;li>Non-interactive sign-ins happen silently in the background, usually when a token is being refreshed or when applications/services request access on behalf of the user. For example, Microsoft Intune, Company Portal, or Office apps will often use non-interactive sign-ins to request tokens without interrupting the user.&lt;/li>
-&lt;/ul>
-&lt;p>The distinction matters in Conditional Access: if MFA is required on a non-interactive sign-in, the user won’t see a prompt right away. Instead, the process fails until something triggers an interactive sign-in, which can lead to confusion and policy mis-applications on shared devices.&lt;/p>
-&lt;h2 id="the-user-experience">The user experience
-&lt;/h2>&lt;p>Instead of being prompted for MFA at sign-in, students only discover the problem when:&lt;/p>
-&lt;ul>
-&lt;li>Device configuration targeted at the user is delayed&lt;/li>
-&lt;li>OneDrive sync client doesn&amp;rsquo;t automatically sign in and re-direct folders&lt;/li>
-&lt;li>Edge automatic sign in and sync doesn&amp;rsquo;t automatically sign in and provide your user preferences&lt;/li>
-&lt;li>Outlook prompts the user for their email address upon first launch&lt;/li>
-&lt;li>Windows Enterprise/Education edition activation is delayed&lt;/li>
-&lt;/ul>
-&lt;p>In teaching environments, this disruption is magnified — students move rapidly between machines, and IT staff can’t troubleshoot MFA prompts that never appear.&lt;/p>
-&lt;h2 id="issue-confirmation">Issue confirmation
-&lt;/h2>&lt;p>So you&amp;rsquo;ve read this far and wonder if the user experience witnessed is caused by Conditional Access too? Let&amp;rsquo;s confirm before remediating.&lt;/p>
-&lt;p>You can first this in 2 way; one the affected device or via the entra sign in logs.&lt;/p>
-&lt;h3 id="on-the-device">On the device
-&lt;/h3>&lt;p>The simplest way to check is get the user to login and launch the start menu. Select their user account icon (either their picture or initials, if they don&amp;rsquo;t have a picture), if MFA is at fault here, they&amp;rsquo;ll get&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png"
-width="528"
-height="324"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_23eba057a30810c5.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8d4d39ced900282d.png 1024w"
-loading="lazy"
-alt="Verify Account Prompt"
-class="gallery-image"
-data-flex-grow="162"
-data-flex-basis="391px"
->&lt;/p>
-&lt;p>They can always verify account here and configuration will start to apply but by this point, the damage to SSO and the user experience is already disrupted. Not to mention that they might need to log off and on to get OneDrive, Edge and other configuration to automatically apply.&lt;/p>
-&lt;h3 id="entra-logs">Entra Logs
-&lt;/h3>&lt;p>You&amp;rsquo;ll need a role that allows access to user sign in logs and conditional access (to see the problematic policy report). Remember that sign in logs take around 10 minutes to populate so log into an affected device and wait before looking to the logs.&lt;/p>
-&lt;ol>
-&lt;li>Navigate to &lt;kbd>entra.microsoft.com&lt;/kbd>&lt;/li>
-&lt;li>Go to &lt;kbd>Entra ID &amp;gt; Users &amp;gt; Select test User &amp;gt; Sign In Logs&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>User sign-ins (non-interactive)&lt;/kbd>&lt;/li>
-&lt;li>Now look for an interrupted sign in for Windows Search, Device Management&amp;hellip;&lt;/li>
-&lt;li>Select the &lt;kbd>sign in log&lt;/kbd>, it might be under aggregate, if so select that line and select the &lt;kbd>expanded record&lt;/kbd>&lt;/li>
-&lt;li>You&amp;rsquo;ll see the basic authentication information with a message such as Failure Reason&lt;/li>
-&lt;li>Select &lt;kbd>Conditional Access&lt;/kbd>&lt;/li>
-&lt;li>Here you&amp;rsquo;ll the policy causing the issue&lt;/li>
-&lt;li>You&amp;rsquo;ll see within the grant control required.&lt;/li>
-&lt;/ol>
-&lt;h2 id="intune-conditional-access-remediation-options-for-mfa-on-shared-devices">Intune Conditional Access Remediation Options for MFA on Shared Devices
-&lt;/h2>&lt;p>Now that you&amp;rsquo;ve confirmed the issue, we need a solution! To balance security and usability, organisations need to exclude shared devices from strict MFA requirements, while still maintaining strong controls elsewhere.&lt;/p>
-&lt;h3 id="which-approach-should-you-use">Which Approach Should You Use?
-&lt;/h3>&lt;ul>
-&lt;li>✅ &lt;strong>Exclude Intune / Windows Store for Business&lt;/strong> → if device sync and subscription activation are the main blockers.&lt;/li>
-&lt;li>✅ &lt;strong>Filter by Enrollment Profile&lt;/strong> → if all shared devices use a dedicated Autopilot profile.&lt;/li>
-&lt;li>✅ &lt;strong>Filter by Extension Attribute&lt;/strong> → if you need granular control across mixed Autopilot profiles or to tag only specific labs.&lt;/li>
-&lt;li>❌ &lt;strong>Exclude by Network Location&lt;/strong> → only safe if you can guarantee shared devices are the only ones using those public IPs. Avoid if BYOD devices connect to the same network.&lt;/li>
-&lt;li>❌ &lt;strong>Introduce Web Signin&lt;/strong> → only safe if you can guarantee shared devices will always have an internet connection.&lt;/li>
-&lt;/ul>
-&lt;h3 id="exclude-microsoft-intune">Exclude Microsoft Intune
-&lt;/h3>&lt;p>To prevent Company Portal and user initiated sync&amp;rsquo;s with Microsoft Intune being affected by your conditional access, the best advice would be to simply exclude the app entirely from the offending CA.&lt;/p>
-&lt;ol>
-&lt;li>Navigate to &lt;kbd>entra.microsoft.com&lt;/kbd>&lt;/li>
-&lt;li>Go to &lt;kbd>Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd>&lt;/li>
-&lt;li>Select the MFA policy (remember you might have more than one, so repeat steps 4-9)&lt;/li>
-&lt;/ol>
-&lt;ul>
-&lt;li>It might be a good idea here to review your other policies for grant controls and consider adding this exclude to those too. For example &amp;ldquo;Require Compliant devices&amp;rdquo;.&lt;/li>
-&lt;/ul>
-&lt;ol start="4">
-&lt;li>Select &lt;kbd>Target resources&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Exclude&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Select or the blue text below select&lt;/kbd>&lt;/li>
-&lt;li>Search for and select &amp;ldquo;Microsoft Intune&amp;rdquo;. If this doesn&amp;rsquo;t appear, depending on your tenant look for &amp;ldquo;Microsoft.Intune&amp;rdquo; It&amp;rsquo;s the same App ID but some tenants have a dot in the middle. Good old Microsoft.&lt;/li>
-&lt;li>Select the blue &lt;kbd>Select&lt;/kbd> button
-&lt;ul>
-&lt;li>Example screenshot of the policy filter in action:;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png"
-width="598"
-height="872"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_eb4f0c1c40f87043.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_823876bebb4949e0.png 1024w"
-loading="lazy"
-alt="Exclude Microsoft Intune"
-class="gallery-image"
-data-flex-grow="68"
-data-flex-basis="164px"
->&lt;/p>
-&lt;ol start="9">
-&lt;li>Save the policy.&lt;/li>
-&lt;li>The policy will be updated with the new exclusion and take around 20 minutes to apply.&lt;/li>
-&lt;/ol>
-&lt;h3 id="exclude-windows-store-for-business">Exclude Windows Store for Business
-&lt;/h3>&lt;p>In the same way as Microsoft Intune. Subscription Activation of Windows is handled by Windows Store for Business. If devices are failing to uplift to Enterprise, exclude the Windows Store for Business Enterprise app entirely from the offending CA. Microsoft also include this in their &lt;a class="link" href="https://learn.microsoft.com/en-us/windows/deployment/windows-subscription-activation?pivots=windows-11#adding-conditional-access-policy" target="_blank" rel="noopener"
->documentation.&lt;/a>&lt;/p>
-&lt;ol>
-&lt;li>Navigate to &lt;kbd>entra.microsoft.com&lt;/kbd>&lt;/li>
-&lt;li>Go to &lt;kbd>Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd>&lt;/li>
-&lt;li>Select the MFA policy (remember you might have more than one, so repeat steps 4-9)
-&lt;ul>
-&lt;li>It might be a good idea here to review you&amp;rsquo;re other policies for grant controls and consider adding this exclude to those too.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Select &lt;kbd>Target resources&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Exclude&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Select or the blue text below select&lt;/kbd>&lt;/li>
-&lt;li>Search for and select &amp;ldquo;Windows Store for Business&amp;rdquo;. If this doesn&amp;rsquo;t appear, depending on your tenant look for &amp;ldquo;Universal Store Service APIs and Web Application&amp;rdquo; It&amp;rsquo;s the same App ID as the Windows Store.&lt;/li>
-&lt;li>Select the blue &lt;kbd>Select&lt;/kbd> button
-&lt;ul>
-&lt;li>Example screenshot of the policy filter in action:;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png"
-width="626"
-height="864"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_ecb07e1367863d07.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_ba06b3b52216a959.png 1024w"
-loading="lazy"
-alt="Exclude Windows Store for Business"
-class="gallery-image"
-data-flex-grow="72"
-data-flex-basis="173px"
->&lt;/p>
-&lt;ol start="9">
-&lt;li>&lt;kbd>Save&lt;/kbd> the policy.&lt;/li>
-&lt;li>The policy will be updated with the new exclusion and take around 20 minutes to apply.&lt;/li>
-&lt;/ol>
-&lt;h3 id="filter-for-shared-devices">Filter for shared devices
-&lt;/h3>&lt;p>Now comes the fun part! Depending on your environment will depend on the best approach here. I&amp;rsquo;ll cover off a general exclude and then a 2 tailored options for shared devices.&lt;/p>
-&lt;h4 id="network-approach">Network Approach
-&lt;/h4>&lt;p>This option only works if you want to exclude all devices that reside on your internal network. If you have other device use cases or allow users to connect personal devices to the same network, even connected to different vlans, this isn&amp;rsquo;t the option for you. To clarify, if internet traffic for these devices is all route through the same public IP addresses to M365, I don&amp;rsquo;t recommend this approach. Be warned!&lt;/p>
-&lt;ol>
-&lt;li>Obtain your public facing IP address(es)&lt;/li>
-&lt;li>Navigate to &lt;kbd>entra.microsoft.com&lt;/kbd>&lt;/li>
-&lt;li>Go to &lt;kbd>Entra ID &amp;gt; Conditional Access &amp;gt; Named Locations&lt;/kbd>&lt;/li>
-&lt;li>Review the IP ranges locations to ensure you don&amp;rsquo;t already have these setup. If you do, skip to step X&lt;/li>
-&lt;li>Select &lt;kbd>IP Ranges location&lt;/kbd>&lt;/li>
-&lt;li>Provide a name such as the location or campus&lt;/li>
-&lt;li>Click on the &lt;kbd>+&lt;/kbd> icon&lt;/li>
-&lt;li>Add the IPv4 range with /24 or/32 etc (I won&amp;rsquo;t explain these here)&lt;/li>
-&lt;li>Select &lt;kbd>Add&lt;/kbd>&lt;/li>
-&lt;li>Navigate to &lt;kbd>Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd>&lt;/li>
-&lt;li>Select the MFA policy&lt;/li>
-&lt;li>Select &lt;kbd>Network&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Yes&lt;/kbd> on Configure&lt;/li>
-&lt;li>Select &lt;kbd>Exclude&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Selected network and locations&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>None&lt;/kbd>&lt;/li>
-&lt;li>Add the newly added or existing named location and select &lt;kbd>Save&lt;/kbd>
-&lt;ul>
-&lt;li>Example screenshot of the policy filter in action:;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png"
-width="746"
-height="716"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_85f0b295908d9ed1.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_479498d75a243e61.png 1024w"
-loading="lazy"
-alt="Exclude Network Location"
-class="gallery-image"
-data-flex-grow="104"
-data-flex-basis="250px"
->&lt;/p>
-&lt;ol start="18">
-&lt;li>Remember to then &lt;kbd>Save&lt;/kbd> the conditional access policy.&lt;/li>
-&lt;/ol>
-&lt;p>Now that you&amp;rsquo;ve excluded the MFA from the named location, the policy will take around 20 minutes to update and from then, MFA will not prompt users on this network. If you&amp;rsquo;ve selected the route, it would be a good idea to add an additional MFA policy that is targeted to this network. For example you could have a policy that includes this network but only targets the browser and Office 365.&lt;/p>
-&lt;p>Note- This will only work if devices are logging in, when on your network. If they take a shared device home and login for the first time, this solution doesn&amp;rsquo;t address the issue. Keep reading ;).&lt;/p>
-&lt;h4 id="filter-for-devices-approach">Filter for Devices Approach
-&lt;/h4>&lt;p>You&amp;rsquo;re still with us. Good, this is where it gets interesting and becomes tailored to your device use case. If you only want to exclude the shared devices from the policies, this is where we&amp;rsquo;ll use Filter for Devices. It&amp;rsquo;s been around for quite some time but in my experience, it&amp;rsquo;s relatively less known.&lt;/p>
-&lt;p>You can use &amp;ldquo;Filter for Devices&amp;rdquo; within a Conditional Access policy to control if it should or shouldn&amp;rsquo;t apply via includes and excludes criteria. There are a number of filter options that can be selected. From Intune Compliance state, Device Name, EnrolmentProfileName and so on. Some of these are safer to use than others. I&amp;rsquo;d recommend not using a filter that a user could manipulate. For example a user could change their Device Name for exclude their device from a targeted CA policy.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png"
-width="1615"
-height="882"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_fbce869297a4cc8.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_6f288a2a7c6d923c.png 1024w"
-loading="lazy"
-alt="Filter for Devices"
-class="gallery-image"
-data-flex-grow="183"
-data-flex-basis="439px"
->&lt;/p>
-&lt;p>We&amp;rsquo;ll run through 2 exclude options here, based on;&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>Windows Autopilot enrolment profile&lt;/strong> - used by the shared devices onboarding via Windows Autopilot&lt;/li>
-&lt;li>&lt;strong>Extension Attributes&lt;/strong> (often used for &lt;a class="link" href="https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-deployment" target="_blank" rel="noopener"
->Privileged Access Workstations - PAW&lt;/a>) used when you want to target all or a subset of devices.&lt;/li>
-&lt;/ul>
-&lt;p>The mechanics behind Filter for devices is the same;&lt;/p>
-&lt;ol>
-&lt;li>Navigate to &lt;kbd>entra.microsoft.com&lt;/kbd>&lt;/li>
-&lt;li>Go to &lt;kbd>Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd>&lt;/li>
-&lt;li>Select the MFA policy&lt;/li>
-&lt;li>Select &lt;kbd>Conditions&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Filter for Devices &amp;gt; Not Configured&lt;/kbd>&lt;/li>
-&lt;li>Select &lt;kbd>Configure&lt;/kbd>&lt;/li>
-&lt;li>Select the radial for &lt;kbd>Exclude filtered devices from policy&lt;/kbd>&lt;/li>
-&lt;li>Select the &lt;kbd>property&lt;/kbd> that you wish to exclude from the drop down
-&lt;ul>
-&lt;li>In our case it&amp;rsquo;ll be EnrollmentProfileName or ExtensionAttribute(1-15)&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Operator should be &amp;ldquo;Equals&amp;rdquo;&lt;/li>
-&lt;li>Value should is a string with the value of
-&lt;ul>
-&lt;li>In our case it&amp;rsquo;ll be the EnrollmentProfileName from the Windows Autopilot Deployment Profiles blade within&lt;br>
-&lt;a class="link" href="https://intune.microsoft.com/#view/Microsoft_Intune_Enrollment/AutopilotDeploymentProfiles.ReactView" target="_blank" rel="noopener"
->Microsoft Intune&lt;/a>&lt;/li>
-&lt;li>Or a string value of our choice for the ExtensionAttribute, such as &amp;ldquo;Shared-MFAExcluded&amp;rdquo;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Select the blue &lt;kbd>Done&lt;/kbd> once complete
-&lt;ul>
-&lt;li>Example screenshot of the policy filter in action:;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png"
-width="1609"
-height="872"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_1e0f58111e01b414.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_4b20f97fdbf1159c.png 1024w"
-loading="lazy"
-alt="Exclude Using Filer for Devices"
-class="gallery-image"
-data-flex-grow="184"
-data-flex-basis="442px"
->&lt;/p>
-&lt;ol start="12">
-&lt;li>Remember to Save the policy to finish editing the CA policy&lt;/li>
-&lt;li>Again, wait around 20 minutes for the policy changes to take effect.&lt;/li>
-&lt;/ol>
-&lt;p>If you&amp;rsquo;ve used the EnrollmentProfileName property and devices are enrolled using that deployment profile, your work here is done and you can test with a new enrolment. If however you&amp;rsquo;ve opted for ExtensionAttribute, the device(s) still need to be tagged.&lt;/p>
-&lt;p>&lt;strong>Add Extension Attributes to devices&lt;/strong>&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png"
-width="549"
-height="49"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_f7286b9865f0eb7e.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_37977331202d1b2a.png 1024w"
-loading="lazy"
-alt="Extension Attribute"
-class="gallery-image"
-data-flex-grow="1120"
-data-flex-basis="2688px"
->&lt;/p>
-&lt;p>This has been covered by many blog posts over the years so I&amp;rsquo;ll keep this part brief. I might even revise this in future and profile a Powershell script to call graph, watch this space. To understand adding this attributes, you have to understand that these attributes live within Entra, not Intune. The attributes gets added to the Autopilot Entra record. The bonus is that you only ever have to do this once. The downside is that it can&amp;rsquo;t be done via the Entra portal. It has to be done via Graph.&lt;/p>
-&lt;p>These blog posts cover how to add the extension attributes to devices&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://ourcloudnetwork.com/configure-device-extension-attributes-in-azure-ad-with-powershell/" target="_blank" rel="noopener"
->ourcloudnetwork.com&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://smbtothecloud.com/dynamically-add-device-extension-attributes-using-remediations/" target="_blank" rel="noopener"
->smbtothecloud.com&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>The concept is simple however;
-As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp;ldquo;extensionAttribute1&amp;rdquo; of a selected device, based on it&amp;rsquo;s name. I&amp;rsquo;ve kept it very simply without an if query to check the device exists etc but just so you get the concept and to allow for testing.&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Load the Microsoft Graph module&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Import-Module&lt;/span> &lt;span class="n">Microsoft&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Graph&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Identity&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">DirectoryManagement&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Connect to Microsoft Graph with required permissions&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Connect-MgGraph&lt;/span> &lt;span class="n">-Scopes&lt;/span> &lt;span class="s2">&amp;#34;Directory.ReadWrite.All&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Define the device name you want to update&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$DeviceName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;DEVENV-34429856&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Find the device by name&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$Device&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-MgDevice&lt;/span> &lt;span class="n">-Filter&lt;/span> &lt;span class="s2">&amp;#34;displayName eq &amp;#39;&lt;/span>&lt;span class="nv">$DeviceName&lt;/span>&lt;span class="s2">&amp;#39;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Update extensionAttribute1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Update-MgDevice&lt;/span> &lt;span class="n">-DeviceId&lt;/span> &lt;span class="nv">$Device&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Id&lt;/span> &lt;span class="n">-AdditionalProperties&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;extensionAttributes&amp;#34;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;extensionAttribute1&amp;#34;&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;Shared-MFAExcluded&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>To confirm that it&amp;rsquo;s worked, you should now see the extensionAttribute within Entra&lt;/p>
-&lt;ol>
-&lt;li>Navigate to &lt;kbd>entra.microsoft.com&lt;/kbd>&lt;/li>
-&lt;li>Go to &lt;kbd>Entra ID &amp;gt; Devices &amp;gt; All Devices&lt;/kbd>&lt;/li>
-&lt;li>Search for your device&lt;/li>
-&lt;li>Select the device, in my case &lt;kbd>DEVENV-34429856&lt;/kbd>&lt;/li>
-&lt;li>At the bottom of the record you should now see the extensionAttribute set.&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png"
-width="1010"
-height="821"
-srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_9533da7df157f045.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_b3b9330b3bc77ff0.png 1024w"
-loading="lazy"
-alt="Extension Attribute Set"
-class="gallery-image"
-data-flex-grow="123"
-data-flex-basis="295px"
->&lt;/p>
-&lt;ol start="6">
-&lt;li>Now to test your policy exclusion&amp;hellip;.&lt;/li>
-&lt;li>You should now see that the MFA policy now excludes this device from the policy&lt;/li>
-&lt;/ol>
-&lt;h3 id="an-alternative-option-web-sign-in">&lt;strong>An Alternative Option: Web Sign-in&lt;/strong>
-&lt;/h3>&lt;p>In addition to traditional sign-in methods, &lt;strong>Web sign-in&lt;/strong> offers another possibility for shared devices. This option provides a streamlined experience by leveraging cloud-based authentication like MFA, Microsoft Authenticator, Temporary Access Pass (TAP), or FIDO2 security keys.&lt;/p>
-&lt;p>The primary drawback of Web sign-in is its complete dependence on a reliable internet connection. Unlike cached credentials from a traditional password login, the Web sign-in option requires an internet connection for &lt;em>every single login&lt;/em>, even if the user has previously signed in to the device. This means if a device loses its network connection, users will be unable to sign in using this method.&lt;/p>
-&lt;p>&lt;a class="link" href="https://learn.microsoft.com/en-us/windows/security/identity-protection/web-sign-in/?tabs=intune" target="_blank" rel="noopener"
->More on Web Sign from Microsoft&lt;/a>&lt;/p>
-&lt;h4 id="what-if-a-login-fails">&lt;strong>What if a Login Fails?&lt;/strong>
-&lt;/h4>&lt;p>You might be wondering if users will know how to switch options if their Web sign-in fails. The good news is that Windows is designed to handle this gracefully. The lock screen will always show multiple sign-in options if they are enabled on the device (e.g., password, PIN, Web sign-in).&lt;/p>
-&lt;p>If a Web sign-in attempt fails due to a network issue, the user can simply press &lt;strong>Ctrl + Alt + Delete&lt;/strong> to return to the main login screen. From there, they can select an alternative sign-in method, such as a cached password or PIN, allowing them to complete their login without interruption.&lt;/p>
-&lt;h2 id="conclusion">Conclusion
-&lt;/h2>&lt;p>Conditional Access and MFA are essential for securing identities in Microsoft 365, but shared devices introduce edge cases that can easily break the user experience. The challenge is that non-interactive logins silently fail when MFA is required but never prompted, leaving users confused and admins troubleshooting stalled configurations.&lt;/p>
-&lt;p>By carefully excluding the right enterprise applications, or by using targeted device filters such as Autopilot profiles or extension attributes, you can strike the balance between &lt;strong>security and usability&lt;/strong>. The goal isn’t to weaken MFA, but to apply it intelligently so that shared devices remain functional while personal or high-risk scenarios stay protected.&lt;/p>
-&lt;p>As always, test exclusions thoroughly in a controlled environment before rolling them out broadly, and keep monitoring your Entra sign-in logs to validate that policies are working as intended.&lt;/p>
-&lt;p>Done right, Conditional Access doesn’t have to be a blocker — it becomes an enabler for seamless, secure, and scalable device management in Microsoft Intune environments.&lt;/p></description></item><item><title>Windows Hello for Business and Cloud Kerberos Authentication</title><link>https://endpointmgt.com/p/whfbcloudkerberos/</link><pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate><guid>https://endpointmgt.com/p/whfbcloudkerberos/</guid><description>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" />&lt;p>I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p>
-&lt;h2 id="why-might-you-need-it">Why might you need it?
-&lt;/h2>&lt;p>Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p>
-&lt;h3 id="alternatives">Alternatives
-&lt;/h3>&lt;p>As with everything, in short Yes there are but I&amp;rsquo;d consider these older technology. You have the choice of using a key trust or certificate trust. With the later, even if you have your own PKI infrastructure, I still wouldn&amp;rsquo;t recommend it. It&amp;rsquo;s much harder to upkeep and to be honest, it&amp;rsquo;s a royal pain, comes with poor user experience (at step up stage) and doesn&amp;rsquo;t really offer anything else for the complexity that it brings. MIcrosoft themselves, recommend Cloud Kerberos Trust!&lt;/p>
-&lt;h2 id="so-how-does-it-work">So how does it work?
-&lt;/h2>&lt;h2 id="what-are-the-supported-scenarios">What are the supported scenarios?
-&lt;/h2>&lt;p>So imagine, you&amp;rsquo;re moving to the cloud. Existing devices are hybrid domain joined. New pilot devices are Entra joined via Windows Autopilot and you&amp;rsquo;re slowly moving workloads over from on-premise. How does this fit? Well in short, it supports both. So you can deploy CKT, deploy one configuration to devices or users and it&amp;rsquo;ll, well just work!&lt;/p>
-&lt;p>Devices do need support Windows Hello for business for all this to work but that comes down to the device. I&amp;rsquo;ll let you research this part!&lt;/p>
-&lt;h2 id="how-to-deploy-it">How to deploy it&amp;hellip;
-&lt;/h2>&lt;p>This comes in two parts, setting up the kerberos trust and deploying Windows Hello configuration. Do not deploy the Windows Hello configuration to devices or users, until the Cloud Kerberos configuration is in place. Doing so will mean that users will need to delete their WHfB and start again for it to take place.&lt;/p>
-&lt;h3 id="set-up-cloud-kerberos-trust">Set up Cloud Kerberos Trust
-&lt;/h3>&lt;p>Step 1 - First, ensure TLS 1.2 for PowerShell gallery access.&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="no">Net.ServicePointManager&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">SecurityProtocol&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">Net.ServicePointManager&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">SecurityProtocol&lt;/span> &lt;span class="o">-bor&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">Net.SecurityProtocolType&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Tls12&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Step 2 - Install the AzureADHybridAuthenticationManagement PowerShell module.&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Install-Module&lt;/span> &lt;span class="n">-Name&lt;/span> &lt;span class="n">AzureADHybridAuthenticationManagement&lt;/span> &lt;span class="n">-AllowClobber&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Step 3 - Create the new Entra ID Kerberos Server object in Active Directory&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$GAUser&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;PlaceYourAdminCreds@tenantdomain.com&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Set-AzureADKerberosServer&lt;/span> &lt;span class="n">-Domain&lt;/span> &lt;span class="nv">$env:UserDNSDomain&lt;/span> &lt;span class="n">-UserPrincipalName&lt;/span> &lt;span class="nv">$GAUser&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Step 4 - Now you&amp;rsquo;re done but lets verify it&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Get-AzureADKerberosServer&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>You should see something like this&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png"
-width="634"
-height="247"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_ae1793da91e2ee15.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_dbabff089f7430e4.png 1024w"
-loading="lazy"
-alt="Confirmation of Deployment"
-class="gallery-image"
-data-flex-grow="256"
-data-flex-basis="616px"
->&lt;/p>
-&lt;p>If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png"
-width="1067"
-height="458"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_7f38e7b8a60996a2.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_78f8083b93c34bab.png 1024w"
-loading="lazy"
-alt="Disabled User Object"
-class="gallery-image"
-data-flex-grow="232"
-data-flex-basis="559px"
->&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png"
-width="1066"
-height="456"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_ea96e62b04f96767.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_57d8cde087d09b23.png 1024w"
-loading="lazy"
-alt="Enabled Device Object"
-class="gallery-image"
-data-flex-grow="233"
-data-flex-basis="561px"
->&lt;/p>
-&lt;blockquote>
-&lt;p>Do not delete/move/rename these 2 objects. To do so will break your new Cloud Kerberos Trust!&lt;/p>&lt;/blockquote>
-&lt;h3 id="intune-configuration">Intune Configuration
-&lt;/h3>&lt;ol>
-&lt;li>Create Windows Hello for Business Configuration Profile&lt;/li>
-&lt;/ol>
-&lt;p>Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png"
-width="615"
-height="831"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_108596622b126fff.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_6b3a4b389ec56f9d.png 1024w"
-loading="lazy"
-alt="Enabled Device Object"
-class="gallery-image"
-data-flex-grow="74"
-data-flex-basis="177px"
->&lt;/p>
-&lt;ol start="2">
-&lt;li>Deploy it to users or devices. Once the user logs back into the device, they should receive a message to setup Windows Hello.&lt;/li>
-&lt;/ol>
-&lt;h3 id="user-setup">User Setup
-&lt;/h3>&lt;p>This works in the exactly the same way as it would without kerberos trust so the user won&amp;rsquo;t notice anything different. They sign in, go through the MFA Prompt and setup faceID, fingerprintID and then a PIN code. Once set, they&amp;rsquo;ll be logged in and WHfB will be the new default sign in option.&lt;/p>
-&lt;blockquote>
-&lt;p>This is one of the biggest benefits of using this method. Whereas using a key trust or certificate trust, means that when a user sets up for the first time, they can&amp;rsquo;t immediately start using it, they have to wait upwards of 60 mins for the device objects in Active Directory to be updated. Not the case with Cloud Kerberos Trust. Use it straight away!&lt;/p>&lt;/blockquote>
-&lt;h2 id="user-experience">User Experience.
-&lt;/h2>&lt;p>I&amp;rsquo;m not going to give you a screen shot of the setup process or accessing on premise file shares. As long as the user has line of sight to the file share, to test Cloud Kerberos, have them sign in with WHfB on the device and access a file share. If it just opens, success! If it prompts for a username/password, we have problems! I&amp;rsquo;d run the &lt;code>Get-AzureADKerberosServer&lt;/code> to check the status.&lt;/p>
-&lt;p>Thanks for reading!&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Windows on endpointmgt.com</title>
+        <link>http://localhost:1313/categories/windows/</link>
+        <description>Recent content in Windows on endpointmgt.com</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 01 Sep 2025 16:23:48 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/windows/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Conditional Access and MFA on Shared Windows Devices with Intune</title>
+        <link>http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/</link>
+        <pubDate>Mon, 01 Sep 2025 16:23:48 +0100</pubDate>
+        
+        <guid>http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/</guid>
+        <description>&lt;img src="http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/whfbcloudkerberos/&#34; &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
+&lt;p&gt;Shared Windows devices in teaching labs, libraries, and lecture theatres need to “just work.” But when Microsoft Intune and Conditional Access are combined with Windows Autopilot pre-provisioning, things can go wrong in unexpected ways.&lt;/p&gt;
+&lt;p&gt;A common issue we’ve seen is that MFA never prompts the user during login. On the surface, this might look like a smoother experience. In reality, it means no Primary Refresh Token (PRT) is established and without a PRT, seamless SSO fails. The knock-on effect is that students (or staff) can’t sync Company Portal policies, device configuration stalls, and Windows subscription activation doesn’t apply correctly.&lt;/p&gt;
+&lt;h2 id=&#34;why-it-happens&#34;&gt;Why It Happens
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Shared Windows devices (Azure AD joined, Intune managed, no primary user) don’t issue MFA at login.&lt;/li&gt;
+&lt;li&gt;Conditional Access policies apply to all users and apps without exclusions.&lt;/li&gt;
+&lt;li&gt;Non-interactive logins (Company Portal, Intune MDM, Windows licensing) then try to authenticate — but get blocked silently by Conditional Access because MFA is required but not triggered.&lt;/li&gt;
+&lt;li&gt;Result: Company Portal only partially works, device policies sit as “Pending,” and subscription activation is delayed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Interactive vs. Non-Interactive Sign-Ins in Entra ID&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;When a user signs in to a device or application, Entra ID records the sign-in as either interactive or non-interactive.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png&#34;
+	width=&#34;1220&#34;
+	height=&#34;256&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_f1eac52d6d48ce4e.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_f3287712bd1400c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Entra Sign in&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;476&#34;
+		data-flex-basis=&#34;1143px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Interactive sign-ins occur when the user is directly prompted to enter their credentials or complete an MFA challenge. This includes typing in a password, using Windows Hello, or approving a prompt on their phone. Interactive sign-ins always involve visible user interaction.&lt;/li&gt;
+&lt;li&gt;Non-interactive sign-ins happen silently in the background, usually when a token is being refreshed or when applications/services request access on behalf of the user. For example, Microsoft Intune, Company Portal, or Office apps will often use non-interactive sign-ins to request tokens without interrupting the user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The distinction matters in Conditional Access: if MFA is required on a non-interactive sign-in, the user won’t see a prompt right away. Instead, the process fails until something triggers an interactive sign-in, which can lead to confusion and policy mis-applications on shared devices.&lt;/p&gt;
+&lt;h2 id=&#34;the-user-experience&#34;&gt;The user experience
+&lt;/h2&gt;&lt;p&gt;Instead of being prompted for MFA at sign-in, students only discover the problem when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Device configuration targeted at the user is delayed&lt;/li&gt;
+&lt;li&gt;OneDrive sync client doesn&amp;rsquo;t automatically sign in and re-direct folders&lt;/li&gt;
+&lt;li&gt;Edge automatic sign in and sync doesn&amp;rsquo;t automatically sign in and provide your user preferences&lt;/li&gt;
+&lt;li&gt;Outlook prompts the user for their email address upon first launch&lt;/li&gt;
+&lt;li&gt;Windows Enterprise/Education edition activation is delayed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In teaching environments, this disruption is magnified — students move rapidly between machines, and IT staff can’t troubleshoot MFA prompts that never appear.&lt;/p&gt;
+&lt;h2 id=&#34;issue-confirmation&#34;&gt;Issue confirmation
+&lt;/h2&gt;&lt;p&gt;So you&amp;rsquo;ve read this far and wonder if the user experience witnessed is caused by Conditional Access too? Let&amp;rsquo;s confirm before remediating.&lt;/p&gt;
+&lt;p&gt;You can first this in 2 way; one the affected device or via the entra sign in logs.&lt;/p&gt;
+&lt;h3 id=&#34;on-the-device&#34;&gt;On the device
+&lt;/h3&gt;&lt;p&gt;The simplest way to check is get the user to login and launch the start menu. Select their user account icon (either their picture or initials, if they don&amp;rsquo;t have a picture), if MFA is at fault here, they&amp;rsquo;ll get&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png&#34;
+	width=&#34;528&#34;
+	height=&#34;324&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_23eba057a30810c5.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8d4d39ced900282d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Verify Account Prompt&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;162&#34;
+		data-flex-basis=&#34;391px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;They can always verify account here and configuration will start to apply but by this point, the damage to SSO and the user experience is already disrupted. Not to mention that they might need to log off and on to get OneDrive, Edge and other configuration to automatically apply.&lt;/p&gt;
+&lt;h3 id=&#34;entra-logs&#34;&gt;Entra Logs
+&lt;/h3&gt;&lt;p&gt;You&amp;rsquo;ll need a role that allows access to user sign in logs and conditional access (to see the problematic policy report). Remember that sign in logs take around 10 minutes to populate so log into an affected device and wait before looking to the logs.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Users &amp;gt; Select test User &amp;gt; Sign In Logs&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;User sign-ins (non-interactive)&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Now look for an interrupted sign in for Windows Search, Device Management&amp;hellip;&lt;/li&gt;
+&lt;li&gt;Select the &lt;kbd&gt;sign in log&lt;/kbd&gt;, it might be under aggregate, if so select that line and select the &lt;kbd&gt;expanded record&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;You&amp;rsquo;ll see the basic authentication information with a message such as Failure Reason&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Conditional Access&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Here you&amp;rsquo;ll the policy causing the issue&lt;/li&gt;
+&lt;li&gt;You&amp;rsquo;ll see within the grant control required.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;intune-conditional-access-remediation-options-for-mfa-on-shared-devices&#34;&gt;Intune Conditional Access Remediation Options for MFA on Shared Devices
+&lt;/h2&gt;&lt;p&gt;Now that you&amp;rsquo;ve confirmed the issue, we need a solution! To balance security and usability, organisations need to exclude shared devices from strict MFA requirements, while still maintaining strong controls elsewhere.&lt;/p&gt;
+&lt;h3 id=&#34;which-approach-should-you-use&#34;&gt;Which Approach Should You Use?
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;✅ &lt;strong&gt;Exclude Intune / Windows Store for Business&lt;/strong&gt; → if device sync and subscription activation are the main blockers.&lt;/li&gt;
+&lt;li&gt;✅ &lt;strong&gt;Filter by Enrollment Profile&lt;/strong&gt; → if all shared devices use a dedicated Autopilot profile.&lt;/li&gt;
+&lt;li&gt;✅ &lt;strong&gt;Filter by Extension Attribute&lt;/strong&gt; → if you need granular control across mixed Autopilot profiles or to tag only specific labs.&lt;/li&gt;
+&lt;li&gt;❌ &lt;strong&gt;Exclude by Network Location&lt;/strong&gt; → only safe if you can guarantee shared devices are the only ones using those public IPs. Avoid if BYOD devices connect to the same network.&lt;/li&gt;
+&lt;li&gt;❌ &lt;strong&gt;Introduce Web Signin&lt;/strong&gt; → only safe if you can guarantee shared devices will always have an internet connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;exclude-microsoft-intune&#34;&gt;Exclude Microsoft Intune
+&lt;/h3&gt;&lt;p&gt;To prevent Company Portal and user initiated sync&amp;rsquo;s with Microsoft Intune being affected by your conditional access, the best advice would be to simply exclude the app entirely from the offending CA.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select the MFA policy (remember you might have more than one, so repeat steps 4-9)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;It might be a good idea here to review your other policies for grant controls and consider adding this exclude to those too. For example &amp;ldquo;Require Compliant devices&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Select &lt;kbd&gt;Target resources&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Exclude&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Select or the blue text below select&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Search for and select &amp;ldquo;Microsoft Intune&amp;rdquo;. If this doesn&amp;rsquo;t appear, depending on your tenant look for &amp;ldquo;Microsoft.Intune&amp;rdquo; It&amp;rsquo;s the same App ID but some tenants have a dot in the middle. Good old Microsoft.&lt;/li&gt;
+&lt;li&gt;Select the blue &lt;kbd&gt;Select&lt;/kbd&gt; button
+&lt;ul&gt;
+&lt;li&gt;Example screenshot of the policy filter in action:;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png&#34;
+	width=&#34;598&#34;
+	height=&#34;872&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_eb4f0c1c40f87043.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_823876bebb4949e0.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Exclude Microsoft Intune&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;68&#34;
+		data-flex-basis=&#34;164px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;9&#34;&gt;
+&lt;li&gt;Save the policy.&lt;/li&gt;
+&lt;li&gt;The policy will be updated with the new exclusion and take around 20 minutes to apply.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;exclude-windows-store-for-business&#34;&gt;Exclude Windows Store for Business
+&lt;/h3&gt;&lt;p&gt;In the same way as Microsoft Intune. Subscription Activation of Windows is handled by Windows Store for Business. If devices are failing to uplift to Enterprise, exclude the Windows Store for Business Enterprise app entirely from the offending CA. Microsoft also include this in their &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/windows/deployment/windows-subscription-activation?pivots=windows-11#adding-conditional-access-policy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;documentation.&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select the MFA policy (remember you might have more than one, so repeat steps 4-9)
+&lt;ul&gt;
+&lt;li&gt;It might be a good idea here to review you&amp;rsquo;re other policies for grant controls and consider adding this exclude to those too.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Target resources&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Exclude&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Select or the blue text below select&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Search for and select &amp;ldquo;Windows Store for Business&amp;rdquo;. If this doesn&amp;rsquo;t appear, depending on your tenant look for &amp;ldquo;Universal Store Service APIs and Web Application&amp;rdquo; It&amp;rsquo;s the same App ID as the Windows Store.&lt;/li&gt;
+&lt;li&gt;Select the blue &lt;kbd&gt;Select&lt;/kbd&gt; button
+&lt;ul&gt;
+&lt;li&gt;Example screenshot of the policy filter in action:;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png&#34;
+	width=&#34;626&#34;
+	height=&#34;864&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_ecb07e1367863d07.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_ba06b3b52216a959.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Exclude Windows Store for Business&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;72&#34;
+		data-flex-basis=&#34;173px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;9&#34;&gt;
+&lt;li&gt;&lt;kbd&gt;Save&lt;/kbd&gt; the policy.&lt;/li&gt;
+&lt;li&gt;The policy will be updated with the new exclusion and take around 20 minutes to apply.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;filter-for-shared-devices&#34;&gt;Filter for shared devices
+&lt;/h3&gt;&lt;p&gt;Now comes the fun part! Depending on your environment will depend on the best approach here. I&amp;rsquo;ll cover off a general exclude and then a 2 tailored options for shared devices.&lt;/p&gt;
+&lt;h4 id=&#34;network-approach&#34;&gt;Network Approach
+&lt;/h4&gt;&lt;p&gt;This option only works if you want to exclude all devices that reside on your internal network. If you have other device use cases or allow users to connect personal devices to the same network, even connected to different vlans, this isn&amp;rsquo;t the option for you. To clarify, if internet traffic for these devices is all route through the same public IP addresses to M365, I don&amp;rsquo;t recommend this approach. Be warned!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Obtain your public facing IP address(es)&lt;/li&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Conditional Access &amp;gt; Named Locations&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Review the IP ranges locations to ensure you don&amp;rsquo;t already have these setup. If you do, skip to step X&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;IP Ranges location&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Provide a name such as the location or campus&lt;/li&gt;
+&lt;li&gt;Click on the &lt;kbd&gt;+&lt;/kbd&gt; icon&lt;/li&gt;
+&lt;li&gt;Add the IPv4 range with /24 or/32 etc (I won&amp;rsquo;t explain these here)&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Add&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select the MFA policy&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Network&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Yes&lt;/kbd&gt; on Configure&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Exclude&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Selected network and locations&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;None&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Add the newly added or existing named location and select &lt;kbd&gt;Save&lt;/kbd&gt;
+&lt;ul&gt;
+&lt;li&gt;Example screenshot of the policy filter in action:;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png&#34;
+	width=&#34;746&#34;
+	height=&#34;716&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_85f0b295908d9ed1.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_479498d75a243e61.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Exclude Network Location&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;104&#34;
+		data-flex-basis=&#34;250px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;18&#34;&gt;
+&lt;li&gt;Remember to then &lt;kbd&gt;Save&lt;/kbd&gt; the conditional access policy.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Now that you&amp;rsquo;ve excluded the MFA from the named location, the policy will take around 20 minutes to update and from then, MFA will not prompt users on this network. If you&amp;rsquo;ve selected the route, it would be a good idea to add an additional MFA policy that is targeted to this network. For example you could have a policy that includes this network but only targets the browser and Office 365.&lt;/p&gt;
+&lt;p&gt;Note- This will only work if devices are logging in, when on your network. If they take a shared device home and login for the first time, this solution doesn&amp;rsquo;t address the issue. Keep reading ;).&lt;/p&gt;
+&lt;h4 id=&#34;filter-for-devices-approach&#34;&gt;Filter for Devices Approach
+&lt;/h4&gt;&lt;p&gt;You&amp;rsquo;re still with us. Good, this is where it gets interesting and becomes tailored to your device use case. If you only want to exclude the shared devices from the policies, this is where we&amp;rsquo;ll use Filter for Devices. It&amp;rsquo;s been around for quite some time but in my experience, it&amp;rsquo;s relatively less known.&lt;/p&gt;
+&lt;p&gt;You can use &amp;ldquo;Filter for Devices&amp;rdquo; within a Conditional Access policy to control if it should or shouldn&amp;rsquo;t apply via includes and excludes criteria. There are a number of filter options that can be selected. From Intune Compliance state, Device Name, EnrolmentProfileName and so on. Some of these are safer to use than others. I&amp;rsquo;d recommend not using a filter that a user could manipulate. For example a user could change their Device Name for exclude their device from a targeted CA policy.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png&#34;
+	width=&#34;1615&#34;
+	height=&#34;882&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_fbce869297a4cc8.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_6f288a2a7c6d923c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Filter for Devices&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;439px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll run through 2 exclude options here, based on;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Windows Autopilot enrolment profile&lt;/strong&gt; - used by the shared devices onboarding via Windows Autopilot&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extension Attributes&lt;/strong&gt; (often used for &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-deployment&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Privileged Access Workstations - PAW&lt;/a&gt;) used when you want to target all or a subset of devices.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The mechanics behind Filter for devices is the same;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select the MFA policy&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Conditions&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Filter for Devices &amp;gt; Not Configured&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;kbd&gt;Configure&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select the radial for &lt;kbd&gt;Exclude filtered devices from policy&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Select the &lt;kbd&gt;property&lt;/kbd&gt; that you wish to exclude from the drop down
+&lt;ul&gt;
+&lt;li&gt;In our case it&amp;rsquo;ll be EnrollmentProfileName or ExtensionAttribute(1-15)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Operator should be &amp;ldquo;Equals&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Value should is a string with the value of
+&lt;ul&gt;
+&lt;li&gt;In our case it&amp;rsquo;ll be the EnrollmentProfileName from the Windows Autopilot Deployment Profiles blade within&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://intune.microsoft.com/#view/Microsoft_Intune_Enrollment/AutopilotDeploymentProfiles.ReactView&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Microsoft Intune&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Or a string value of our choice for the ExtensionAttribute, such as &amp;ldquo;Shared-MFAExcluded&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Select the blue &lt;kbd&gt;Done&lt;/kbd&gt; once complete
+&lt;ul&gt;
+&lt;li&gt;Example screenshot of the policy filter in action:;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png&#34;
+	width=&#34;1609&#34;
+	height=&#34;872&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_1e0f58111e01b414.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_4b20f97fdbf1159c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Exclude Using Filer for Devices&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;184&#34;
+		data-flex-basis=&#34;442px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;12&#34;&gt;
+&lt;li&gt;Remember to Save the policy to finish editing the CA policy&lt;/li&gt;
+&lt;li&gt;Again, wait around 20 minutes for the policy changes to take effect.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you&amp;rsquo;ve used the EnrollmentProfileName property and devices are enrolled using that deployment profile, your work here is done and you can test with a new enrolment. If however you&amp;rsquo;ve opted for ExtensionAttribute, the device(s) still need to be tagged.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Add Extension Attributes to devices&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png&#34;
+	width=&#34;549&#34;
+	height=&#34;49&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_f7286b9865f0eb7e.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_37977331202d1b2a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Extension Attribute&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;1120&#34;
+		data-flex-basis=&#34;2688px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This has been covered by many blog posts over the years so I&amp;rsquo;ll keep this part brief. I might even revise this in future and profile a Powershell script to call graph, watch this space. To understand adding this attributes, you have to understand that these attributes live within Entra, not Intune. The attributes gets added to the Autopilot Entra record. The bonus is that you only ever have to do this once. The downside is that it can&amp;rsquo;t be done via the Entra portal. It has to be done via Graph.&lt;/p&gt;
+&lt;p&gt;These blog posts cover how to add the extension attributes to devices&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://ourcloudnetwork.com/configure-device-extension-attributes-in-azure-ad-with-powershell/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ourcloudnetwork.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://smbtothecloud.com/dynamically-add-device-extension-attributes-using-remediations/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;smbtothecloud.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The concept is simple however;
+As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp;ldquo;extensionAttribute1&amp;rdquo; of a selected device, based on it&amp;rsquo;s name. I&amp;rsquo;ve kept it very simply without an if query to check the device exists etc but just so you get the concept and to allow for testing.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Load the Microsoft Graph module&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Import-Module&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Microsoft&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Graph&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Identity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;DirectoryManagement&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Connect to Microsoft Graph with required permissions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Connect-MgGraph&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Scopes&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Directory.ReadWrite.All&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Define the device name you want to update&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$DeviceName&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;DEVENV-34429856&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Find the device by name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$Device&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-MgDevice&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Filter&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;displayName eq &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$DeviceName&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Update extensionAttribute1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;Update-MgDevice&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-DeviceId&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$Device&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Id&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-AdditionalProperties&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;extensionAttributes&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;s2&#34;&gt;&amp;#34;extensionAttribute1&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Shared-MFAExcluded&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To confirm that it&amp;rsquo;s worked, you should now see the extensionAttribute within Entra&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Devices &amp;gt; All Devices&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;Search for your device&lt;/li&gt;
+&lt;li&gt;Select the device, in my case &lt;kbd&gt;DEVENV-34429856&lt;/kbd&gt;&lt;/li&gt;
+&lt;li&gt;At the bottom of the record you should now see the extensionAttribute set.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png&#34;
+	width=&#34;1010&#34;
+	height=&#34;821&#34;
+	srcset=&#34;http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_9533da7df157f045.png 480w, http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_b3b9330b3bc77ff0.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Extension Attribute Set&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;123&#34;
+		data-flex-basis=&#34;295px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Now to test your policy exclusion&amp;hellip;.&lt;/li&gt;
+&lt;li&gt;You should now see that the MFA policy now excludes this device from the policy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;an-alternative-option-web-sign-in&#34;&gt;&lt;strong&gt;An Alternative Option: Web Sign-in&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;In addition to traditional sign-in methods, &lt;strong&gt;Web sign-in&lt;/strong&gt; offers another possibility for shared devices. This option provides a streamlined experience by leveraging cloud-based authentication like MFA, Microsoft Authenticator, Temporary Access Pass (TAP), or FIDO2 security keys.&lt;/p&gt;
+&lt;p&gt;The primary drawback of Web sign-in is its complete dependence on a reliable internet connection. Unlike cached credentials from a traditional password login, the Web sign-in option requires an internet connection for &lt;em&gt;every single login&lt;/em&gt;, even if the user has previously signed in to the device. This means if a device loses its network connection, users will be unable to sign in using this method.&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/windows/security/identity-protection/web-sign-in/?tabs=intune&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;More on Web Sign from Microsoft&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;what-if-a-login-fails&#34;&gt;&lt;strong&gt;What if a Login Fails?&lt;/strong&gt;
+&lt;/h4&gt;&lt;p&gt;You might be wondering if users will know how to switch options if their Web sign-in fails. The good news is that Windows is designed to handle this gracefully. The lock screen will always show multiple sign-in options if they are enabled on the device (e.g., password, PIN, Web sign-in).&lt;/p&gt;
+&lt;p&gt;If a Web sign-in attempt fails due to a network issue, the user can simply press &lt;strong&gt;Ctrl + Alt + Delete&lt;/strong&gt; to return to the main login screen. From there, they can select an alternative sign-in method, such as a cached password or PIN, allowing them to complete their login without interruption.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+&lt;/h2&gt;&lt;p&gt;Conditional Access and MFA are essential for securing identities in Microsoft 365, but shared devices introduce edge cases that can easily break the user experience. The challenge is that non-interactive logins silently fail when MFA is required but never prompted, leaving users confused and admins troubleshooting stalled configurations.&lt;/p&gt;
+&lt;p&gt;By carefully excluding the right enterprise applications, or by using targeted device filters such as Autopilot profiles or extension attributes, you can strike the balance between &lt;strong&gt;security and usability&lt;/strong&gt;. The goal isn’t to weaken MFA, but to apply it intelligently so that shared devices remain functional while personal or high-risk scenarios stay protected.&lt;/p&gt;
+&lt;p&gt;As always, test exclusions thoroughly in a controlled environment before rolling them out broadly, and keep monitoring your Entra sign-in logs to validate that policies are working as intended.&lt;/p&gt;
+&lt;p&gt;Done right, Conditional Access doesn’t have to be a blocker — it becomes an enabler for seamless, secure, and scalable device management in Microsoft Intune environments.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Windows Hello for Business and Cloud Kerberos Authentication</title>
+        <link>http://localhost:1313/p/whfbcloudkerberos/</link>
+        <pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate>
+        
+        <guid>http://localhost:1313/p/whfbcloudkerberos/</guid>
+        <description>&lt;img src="http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
+&lt;h2 id=&#34;why-might-you-need-it&#34;&gt;Why might you need it?
+&lt;/h2&gt;&lt;p&gt;Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p&gt;
+&lt;h3 id=&#34;alternatives&#34;&gt;Alternatives
+&lt;/h3&gt;&lt;p&gt;As with everything, in short Yes there are but I&amp;rsquo;d consider these older technology. You have the choice of using a key trust or certificate trust. With the later, even if you have your own PKI infrastructure, I still wouldn&amp;rsquo;t recommend it. It&amp;rsquo;s much harder to upkeep and to be honest, it&amp;rsquo;s a royal pain, comes with poor user experience (at step up stage) and doesn&amp;rsquo;t really offer anything else for the complexity that it brings. MIcrosoft themselves, recommend Cloud Kerberos Trust!&lt;/p&gt;
+&lt;h2 id=&#34;so-how-does-it-work&#34;&gt;So how does it work?
+&lt;/h2&gt;&lt;h2 id=&#34;what-are-the-supported-scenarios&#34;&gt;What are the supported scenarios?
+&lt;/h2&gt;&lt;p&gt;So imagine, you&amp;rsquo;re moving to the cloud. Existing devices are hybrid domain joined. New pilot devices are Entra joined via Windows Autopilot and you&amp;rsquo;re slowly moving workloads over from on-premise. How does this fit? Well in short, it supports both. So you can deploy CKT, deploy one configuration to devices or users and it&amp;rsquo;ll, well just work!&lt;/p&gt;
+&lt;p&gt;Devices do need support Windows Hello for business for all this to work but that comes down to the device. I&amp;rsquo;ll let you research this part!&lt;/p&gt;
+&lt;h2 id=&#34;how-to-deploy-it&#34;&gt;How to deploy it&amp;hellip;
+&lt;/h2&gt;&lt;p&gt;This comes in two parts, setting up the kerberos trust and deploying Windows Hello configuration. Do not deploy the Windows Hello configuration to devices or users, until the Cloud Kerberos configuration is in place. Doing so will mean that users will need to delete their WHfB and start again for it to take place.&lt;/p&gt;
+&lt;h3 id=&#34;set-up-cloud-kerberos-trust&#34;&gt;Set up Cloud Kerberos Trust
+&lt;/h3&gt;&lt;p&gt;Step 1 - First, ensure TLS 1.2 for PowerShell gallery access.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SecurityProtocol&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SecurityProtocol&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-bor&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Net.SecurityProtocolType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tls12&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Step 2 - Install the AzureADHybridAuthenticationManagement PowerShell module.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Install-Module&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Name&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AzureADHybridAuthenticationManagement&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-AllowClobber&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Step 3 - Create the new Entra ID Kerberos Server object in Active Directory&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$GAUser&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;PlaceYourAdminCreds@tenantdomain.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Set-AzureADKerberosServer&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Domain&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$env:UserDNSDomain&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-UserPrincipalName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$GAUser&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Step 4 - Now you&amp;rsquo;re done but lets verify it&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-AzureADKerberosServer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;You should see something like this&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png&#34;
+	width=&#34;634&#34;
+	height=&#34;247&#34;
+	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_ae1793da91e2ee15.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_dbabff089f7430e4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Confirmation of Deployment&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;256&#34;
+		data-flex-basis=&#34;616px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png&#34;
+	width=&#34;1067&#34;
+	height=&#34;458&#34;
+	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_7f38e7b8a60996a2.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_78f8083b93c34bab.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Disabled User Object&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;232&#34;
+		data-flex-basis=&#34;559px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png&#34;
+	width=&#34;1066&#34;
+	height=&#34;456&#34;
+	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_ea96e62b04f96767.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_57d8cde087d09b23.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Enabled Device Object&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;233&#34;
+		data-flex-basis=&#34;561px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Do not delete/move/rename these 2 objects. To do so will break your new Cloud Kerberos Trust!&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;intune-configuration&#34;&gt;Intune Configuration
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Create Windows Hello for Business Configuration Profile&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png&#34;
+	width=&#34;615&#34;
+	height=&#34;831&#34;
+	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_108596622b126fff.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_6b3a4b389ec56f9d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Enabled Device Object&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;74&#34;
+		data-flex-basis=&#34;177px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Deploy it to users or devices. Once the user logs back into the device, they should receive a message to setup Windows Hello.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;user-setup&#34;&gt;User Setup
+&lt;/h3&gt;&lt;p&gt;This works in the exactly the same way as it would without kerberos trust so the user won&amp;rsquo;t notice anything different. They sign in, go through the MFA Prompt and setup faceID, fingerprintID and then a PIN code. Once set, they&amp;rsquo;ll be logged in and WHfB will be the new default sign in option.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is one of the biggest benefits of using this method. Whereas using a key trust or certificate trust, means that when a user sets up for the first time, they can&amp;rsquo;t immediately  start using it, they have to wait upwards of 60 mins for the device objects in Active Directory to be updated. Not the case with Cloud Kerberos Trust. Use it straight away!&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;user-experience&#34;&gt;User Experience.
+&lt;/h2&gt;&lt;p&gt;I&amp;rsquo;m not going to give you a screen shot of the setup process or accessing on premise file shares. As long as the user has line of sight to the file share, to test Cloud Kerberos, have them sign in with WHfB on the device and access a file share. If it just opens, success! If it prompts for a username/password, we have problems! I&amp;rsquo;d run the &lt;code&gt;Get-AzureADKerberosServer&lt;/code&gt; to check the status.&lt;/p&gt;
+&lt;p&gt;Thanks for reading!&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
