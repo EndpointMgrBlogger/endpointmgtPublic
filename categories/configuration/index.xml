@@ -52,7 +52,7 @@ data-flex-basis="320px"
 &lt;li>Select &lt;kbd>Authentication&lt;/kbd>&lt;/li>
 &lt;li>Tick &lt;kbd>Preferred Aad Tenant Domain Name&lt;kbd>&lt;/li>
 &lt;li>Close the settings tag with the cross on the top right&lt;/li>
-&lt;li>Within the Preferred Aad Tenant Domain Name type in your domain unque custom domain name, such as &lt;strong>ABCCompany.com&lt;/strong> - Don&amp;rsquo;t include the &lt;strong>@&lt;/strong> sign.&lt;/li>
+&lt;li>Within the Preferred Aad Tenant Domain Name type in your domain unique custom domain name, such as &lt;strong>ABCCompany.com&lt;/strong> - Don&amp;rsquo;t include the &lt;strong>@&lt;/strong> sign.&lt;/li>
 &lt;li>Select &lt;kbd>Next &amp;gt; Next&lt;/kbd>&lt;/li>
 &lt;li>Assign the policy to an Entra group of test devices.
 Note - I would suggest a static test group for the testing phase then moving when you&amp;rsquo;re ready to deploy to production, using the &lt;strong>All Devices&lt;/strong> with an assignment filter or a dynamic entra group once you&amp;rsquo;re ready to deploy.&lt;/li>
@@ -74,4 +74,6 @@ data-flex-basis="196px"
 &lt;h3 id="test-the-new-login-experience">Test the new login experience
 &lt;/h3>&lt;p>Once a device is added and sync&amp;rsquo;d to the test group and the policy is received by the device. The login experience will update to show &lt;strong>Sign In to: DomainName.com&lt;/strong>&lt;/p>
 &lt;p>Log into the device with just the SAM Account Name. If you&amp;rsquo;re logged in successful, you&amp;rsquo;ve successful improved the login experience and can deploy wider.&lt;/p>
+&lt;h3 id="other-upn-domains">Other UPN Domains
+&lt;/h3>&lt;p>Within some environments, you may have users with different domains or even sub domains, these are also supported. All the user has to do is type in their normal UPN. You&amp;rsquo;ll notice that as soon as you type the &lt;strong>@&lt;/strong> sign, the &lt;strong>Sign In to: DomainName.com&lt;/strong> will update back to the default &lt;strong>Sign in to: Your Work or School Account&lt;/strong>, allowing the user to login as normal.&lt;/p>
 &lt;p>As always, thanks for reading!&lt;/p></description></item></channel></rss>
