@@ -59,14 +59,14 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;li>The policy should look something like this&lt;/li>
 &lt;/ol>
 &lt;p>&lt;img src="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy.png"
-width="697"
-height="797"
-srcset="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_776a3feb0b8bc65c.png 480w, https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_c37fc8b88c12ee1c.png 1024w"
+width="698"
+height="852"
+srcset="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_41d5c7bacf7b7840.png 480w, https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_3c6a20377184d538.png 1024w"
 loading="lazy"
 alt="Intune Configuration"
 class="gallery-image"
-data-flex-grow="87"
-data-flex-basis="209px"
+data-flex-grow="81"
+data-flex-basis="196px"
 >&lt;/p>
 &lt;ol start="13">
 &lt;li>&lt;kbd>Create&lt;/kbd> once you&amp;rsquo;re happy with the configuration and assignment&lt;/li>
