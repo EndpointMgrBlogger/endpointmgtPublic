@@ -1,219 +1,180 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>SIMS on endpointmgt.com</title>
-        <link>http://localhost:1313/tags/sims/</link>
-        <description>Recent content in SIMS on endpointmgt.com</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Wed, 29 Jan 2025 19:45:32 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/sims/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Deploy SOLUS 3 for SIMS</title>
-        <link>http://localhost:1313/p/deploysims/</link>
-        <pubDate>Wed, 29 Jan 2025 19:45:32 +0100</pubDate>
-        
-        <guid>http://localhost:1313/p/deploysims/</guid>
-        <description>&lt;img src="http://localhost:1313/p/deploysims/post/InstallSims/img/cover.png" alt="Featured image of post Deploy SOLUS 3 for SIMS" /&gt;&lt;p&gt;On a recent engagement in my day job, I had a challenge to deploy Solus3 agent to Microsoft Entra joined devices. These devices were enrolled via Windows Autopilot and no longer domain joined. The existing deployment deployed the Solus3 agent via a targeted AD OU, which deploys the agent via the deployment server. This of course, isn’t possible with Entra joined devices.&lt;/p&gt;
-&lt;p&gt;To get this to work, its a wrap within a wrap. Keeping it as close the production or what your using or how you might already deploy the app as close the the existing deployment but with a few tweaks. Anyways for now, here are the steps to deploy the agent via Microsoft Intune. After all, it’s why you’re here 🙂&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;It should be noted that this approach to deployment is NOT supported. Do so at your own risk. You may still need to keep an instance of a supported deployment. This will allow you to replicate the any issue on a supported deployment for escalation.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h2 id=&#34;preparation&#34;&gt;Preparation
-&lt;/h2&gt;&lt;p&gt;You’ll need to gather the relevant files and create a folder for the install files, called SIMS. In my example, I’ve placed the SIMS folder on the root of the D:\ drive. Copy the following files over to the SIMS folder.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SOLUS3AgentInstaller_x86.msi&lt;/li&gt;
-&lt;li&gt;SOLUS3AgentInstaller_x64.msi&lt;/li&gt;
-&lt;li&gt;Solus3.Keys.DeploymentService.Public.xml&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;first-installer-file&#34;&gt;First installer File
-&lt;/h3&gt;&lt;p&gt;Create a .bat file named Solus3AgentInstaller.bat with the following commands.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;cscript&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;exe&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nologo&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AgentInstaller&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;agent_installer.log&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;net.tcp://localhost:52966&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;net.tcp://Your-SIMS-Server:52965&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Solus3.Keys.DeploymentService.Public.xml&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;SOLUS3AgentInstaller_x86.msi&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;SOLUS3AgentInstaller_x64.msi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Update the &lt;code&gt;net.tcp://Your-SIMS-Server:52965&lt;/code&gt; with your server location and save the .bat file in your newly created SIMS folder.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshShell,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshSysEnv;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;fso,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;typeLib;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;fso&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;ActiveXObject(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Scripting.FileSystemObject&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;typeLib&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;ActiveXObject(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Scriptlet.TypeLib&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;wshShell&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.CreateObject(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;logFileName&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;agentAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;dsAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;keyFileName&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;(is&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;())&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;wshShell.Run(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;msiexec.exe /qb /lv* \&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;fso.BuildPath(wshShell.Environment(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SYSTEM&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;TEMP&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;logFileName)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; /i \&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshShell.CurrentDirectory&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;\\&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; AGENTSERVICEADDRESS=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;agentAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; AGENTID=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;typeLib.Guid.toString().substring(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;38&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; DEPLOYMENTSERVERADDRESS=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;dsAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; RSAKEYPATH=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshShell.CurrentDirectory&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;c1&#34;&gt;//&amp;#34;\&amp;#34; PREDEFINEDAGENTTARGETS=\&amp;#34;Sims Fms Discover&amp;#34; +
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;is&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;shell&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.CreateObject(&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;(wshShell.Environment(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SYSTEM&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;PROCESSOR_ARCHITECTURE&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;).indexOf(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;64&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Save the AgentInstaller.js file in your newly created SIMS folder. Your folder should then look something like this.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-1.png&#34;
-	width=&#34;258&#34;
-	height=&#34;193&#34;
-	srcset=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-1_hu_714b8f17d5165d8.png 480w, http://localhost:1313/p/deploysims/post/InstallSims/img/image-1_hu_7d36794359e03b2d.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Install Files&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;133&#34;
-		data-flex-basis=&#34;320px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;h3 id=&#34;wrapping-time&#34;&gt;Wrapping Time
-&lt;/h3&gt;&lt;p&gt;I’ll assume you already know how to wrap packages via &lt;a class=&#34;link&#34; href=&#34;https://go.microsoft.com/fwlink/?linkid=2065730&#34;  title=&#34;Microsoft Win32 Content Prep Tool&#34;
-     target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Microsoft Win32 Content Prep Tool&lt;/a&gt;. Packing the content should look something like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-2.png&#34;
-	width=&#34;588&#34;
-	height=&#34;116&#34;
-	srcset=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-2_hu_16981aeaf4d9b128.png 480w, http://localhost:1313/p/deploysims/post/InstallSims/img/image-2_hu_db19ccb101e49673.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Microsoft Win32 Content Prep Tool&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;506&#34;
-		data-flex-basis=&#34;1216px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;h3 id=&#34;upload-time&#34;&gt;Upload Time
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Install Command: Solus3AgentInstaller.bat
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Uninstall Command: msiexec.exe /qn /x {PRODUCT-CODE} /lv* “%TEMP%\uninstall.log”
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Install behavior: System
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;It should look like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-3.png&#34;
-	width=&#34;774&#34;
-	height=&#34;547&#34;
-	srcset=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-3_hu_fb06c62835fc2f13.png 480w, http://localhost:1313/p/deploysims/post/InstallSims/img/image-3_hu_710ebfdafacb3a9f.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Microsoft Intune Install Commands&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;141&#34;
-		data-flex-basis=&#34;339px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;For the detection, we’ll use a file installed as part of the installer&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Rule Type: File
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Path: C:\Program Files\SOLUS3\AgentService
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;File or Folder: Infrastructure.dll
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Detection Method: File or folder exists
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Associated with a 32-bit app on 64-bit clients: No
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;It should look like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-4.png&#34;
-	width=&#34;557&#34;
-	height=&#34;234&#34;
-	srcset=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-4_hu_702b8cb870cf949e.png 480w, http://localhost:1313/p/deploysims/post/InstallSims/img/image-4_hu_81c8af9430ed1e0a.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Microsoft Intune App Detection&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;238&#34;
-		data-flex-basis=&#34;571px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;h2 id=&#34;deployment-time&#34;&gt;Deployment Time
-&lt;/h2&gt;&lt;p&gt;Assign your newly created and updated app to users or devices as you desire.&lt;/p&gt;
-&lt;h3 id=&#34;success&#34;&gt;Success?
-&lt;/h3&gt;&lt;p&gt;You should now have the app installed.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-5.png&#34;
-	width=&#34;962&#34;
-	height=&#34;540&#34;
-	srcset=&#34;http://localhost:1313/p/deploysims/post/InstallSims/img/image-5_hu_f1053157cd39505b.png 480w, http://localhost:1313/p/deploysims/post/InstallSims/img/image-5_hu_fba00775511b1d98.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Installation Success&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;178&#34;
-		data-flex-basis=&#34;427px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;h2 id=&#34;next-steps&#34;&gt;Next Steps.
-&lt;/h2&gt;&lt;p&gt;Now that you have the Agent installed. You’ll need to login to the Solus3 server and deploy the Sims package to the device from the deployment server.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;While this will deploy the Solus3 agent to devices, what this doesn’t take care of is ongoing updates. You’ll need to package any updates to the Solus3 agent. It’s beyond the scope of this article.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;For now and until the next post, I wish you well…&lt;/p&gt;
-</description>
-        </item>
-        
-    </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SIMS on endpointmgt.com</title><link>https://endpointmgt.com/tags/sims/</link><description>Recent content in SIMS on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 29 Jan 2025 19:45:32 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/sims/index.xml" rel="self" type="application/rss+xml"/><item><title>Deploy SOLUS 3 for SIMS</title><link>https://endpointmgt.com/p/deploysims/</link><pubDate>Wed, 29 Jan 2025 19:45:32 +0100</pubDate><guid>https://endpointmgt.com/p/deploysims/</guid><description>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/cover.png" alt="Featured image of post Deploy SOLUS 3 for SIMS" />&lt;p>On a recent engagement in my day job, I had a challenge to deploy Solus3 agent to Microsoft Entra joined devices. These devices were enrolled via Windows Autopilot and no longer domain joined. The existing deployment deployed the Solus3 agent via a targeted AD OU, which deploys the agent via the deployment server. This of course, isn’t possible with Entra joined devices.&lt;/p>
+&lt;p>To get this to work, its a wrap within a wrap. Keeping it as close the production or what your using or how you might already deploy the app as close the the existing deployment but with a few tweaks. Anyways for now, here are the steps to deploy the agent via Microsoft Intune. After all, it’s why you’re here 🙂&lt;/p>
+&lt;blockquote>
+&lt;p>It should be noted that this approach to deployment is NOT supported. Do so at your own risk. You may still need to keep an instance of a supported deployment. This will allow you to replicate the any issue on a supported deployment for escalation.&lt;/p>&lt;/blockquote>
+&lt;h2 id="preparation">Preparation
+&lt;/h2>&lt;p>You’ll need to gather the relevant files and create a folder for the install files, called SIMS. In my example, I’ve placed the SIMS folder on the root of the D:\ drive. Copy the following files over to the SIMS folder.&lt;/p>
+&lt;ul>
+&lt;li>SOLUS3AgentInstaller_x86.msi&lt;/li>
+&lt;li>SOLUS3AgentInstaller_x64.msi&lt;/li>
+&lt;li>Solus3.Keys.DeploymentService.Public.xml&lt;/li>
+&lt;/ul>
+&lt;h3 id="first-installer-file">First installer File
+&lt;/h3>&lt;p>Create a .bat file named Solus3AgentInstaller.bat with the following commands.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="n">cscript&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">exe&lt;/span> &lt;span class="p">//&lt;/span>&lt;span class="n">nologo&lt;/span> &lt;span class="n">AgentInstaller&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">js&lt;/span> &lt;span class="s2">&amp;#34;agent_installer.log&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;net.tcp://localhost:52966&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;net.tcp://Your-SIMS-Server:52965&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Solus3.Keys.DeploymentService.Public.xml&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;SOLUS3AgentInstaller_x86.msi&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;SOLUS3AgentInstaller_x64.msi&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Update the &lt;code>net.tcp://Your-SIMS-Server:52965&lt;/code> with your server location and save the .bat file in your newly created SIMS folder.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">wshShell,&lt;/span> &lt;span class="err">wshSysEnv;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">fso,&lt;/span> &lt;span class="err">f&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="err">,&lt;/span> &lt;span class="err">typeLib;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">fso&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">new&lt;/span> &lt;span class="err">ActiveXObject(&lt;/span>&lt;span class="s2">&amp;#34;Scripting.FileSystemObject&amp;#34;&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">typeLib&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">new&lt;/span> &lt;span class="err">ActiveXObject(&lt;/span>&lt;span class="s2">&amp;#34;Scriptlet.TypeLib&amp;#34;&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">wshShell&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.CreateObject(&lt;/span>&lt;span class="s2">&amp;#34;WScript.Shell&amp;#34;&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">logFileName&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.Arguments(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">agentAddress&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.Arguments(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">dsAddress&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.Arguments(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">keyFileName&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.Arguments(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">msi&lt;/span>&lt;span class="mi">32&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.Arguments(&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">msi&lt;/span>&lt;span class="mi">64&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.Arguments(&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">var&lt;/span> &lt;span class="err">msi&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="err">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">if&lt;/span> &lt;span class="err">(is&lt;/span>&lt;span class="mi">64&lt;/span>&lt;span class="err">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">msi&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">msi&lt;/span>&lt;span class="mi">64&lt;/span>&lt;span class="err">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">msi&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">msi&lt;/span>&lt;span class="mi">32&lt;/span>&lt;span class="err">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">wshShell.Run(&lt;/span>&lt;span class="s2">&amp;#34;msiexec.exe /qb /lv* \&amp;#34;&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">fso.BuildPath(wshShell.Environment(&lt;/span>&lt;span class="s2">&amp;#34;SYSTEM&amp;#34;&lt;/span>&lt;span class="err">)(&lt;/span>&lt;span class="s2">&amp;#34;TEMP&amp;#34;&lt;/span>&lt;span class="err">),&lt;/span> &lt;span class="err">logFileName)&lt;/span> &lt;span class="err">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;\&amp;#34; /i \&amp;#34;&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">wshShell.CurrentDirectory&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="s2">&amp;#34;\\&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">msi&lt;/span> &lt;span class="err">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;\&amp;#34; AGENTSERVICEADDRESS=\&amp;#34;&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">agentAddress&lt;/span> &lt;span class="err">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;\&amp;#34; AGENTID=\&amp;#34;&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">typeLib.Guid.toString().substring(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="err">,&lt;/span> &lt;span class="mi">38&lt;/span>&lt;span class="err">)&lt;/span> &lt;span class="err">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;\&amp;#34; DEPLOYMENTSERVERADDRESS=\&amp;#34;&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">dsAddress&lt;/span> &lt;span class="err">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;\&amp;#34; RSAKEYPATH=\&amp;#34;&amp;#34;&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="err">wshShell.CurrentDirectory&lt;/span> &lt;span class="err">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//&amp;#34;\&amp;#34; PREDEFINEDAGENTTARGETS=\&amp;#34;Sims Fms Discover&amp;#34; +
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="s2">&amp;#34;\&amp;#34;&amp;#34;&lt;/span>&lt;span class="err">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="err">,&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">function&lt;/span> &lt;span class="err">is&lt;/span>&lt;span class="mi">64&lt;/span>&lt;span class="err">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">var&lt;/span> &lt;span class="err">shell&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">WScript.CreateObject(&lt;/span>&lt;span class="nt">&amp;#34;WScript.Shell&amp;#34;&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">return&lt;/span> &lt;span class="err">(wshShell.Environment(&lt;/span>&lt;span class="s2">&amp;#34;SYSTEM&amp;#34;&lt;/span>&lt;span class="err">)(&lt;/span>&lt;span class="s2">&amp;#34;PROCESSOR_ARCHITECTURE&amp;#34;&lt;/span>&lt;span class="err">).indexOf(&lt;/span>&lt;span class="s2">&amp;#34;64&amp;#34;&lt;/span>&lt;span class="err">)&lt;/span> &lt;span class="err">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="err">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Save the AgentInstaller.js file in your newly created SIMS folder. Your folder should then look something like this.&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-1.png"
+width="258"
+height="193"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-1_hu_714b8f17d5165d8.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-1_hu_7d36794359e03b2d.png 1024w"
+loading="lazy"
+alt="Install Files"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+>&lt;/p>
+&lt;h3 id="wrapping-time">Wrapping Time
+&lt;/h3>&lt;p>I’ll assume you already know how to wrap packages via &lt;a class="link" href="https://go.microsoft.com/fwlink/?linkid=2065730" title="Microsoft Win32 Content Prep Tool"
+target="_blank" rel="noopener"
+>Microsoft Win32 Content Prep Tool&lt;/a>. Packing the content should look something like this…&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-2.png"
+width="588"
+height="116"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-2_hu_16981aeaf4d9b128.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-2_hu_db19ccb101e49673.png 1024w"
+loading="lazy"
+alt="Microsoft Win32 Content Prep Tool"
+class="gallery-image"
+data-flex-grow="506"
+data-flex-basis="1216px"
+>&lt;/p>
+&lt;h3 id="upload-time">Upload Time
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">Install Command: Solus3AgentInstaller.bat
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Uninstall Command: msiexec.exe /qn /x {PRODUCT-CODE} /lv* “%TEMP%\uninstall.log”
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Install behavior: System
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>It should look like this…&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-3.png"
+width="774"
+height="547"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-3_hu_fb06c62835fc2f13.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-3_hu_710ebfdafacb3a9f.png 1024w"
+loading="lazy"
+alt="Microsoft Intune Install Commands"
+class="gallery-image"
+data-flex-grow="141"
+data-flex-basis="339px"
+>&lt;/p>
+&lt;p>For the detection, we’ll use a file installed as part of the installer&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">Rule Type: File
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Path: C:\Program Files\SOLUS3\AgentService
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">File or Folder: Infrastructure.dll
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Detection Method: File or folder exists
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Associated with a 32-bit app on 64-bit clients: No
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>It should look like this…&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-4.png"
+width="557"
+height="234"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-4_hu_702b8cb870cf949e.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-4_hu_81c8af9430ed1e0a.png 1024w"
+loading="lazy"
+alt="Microsoft Intune App Detection"
+class="gallery-image"
+data-flex-grow="238"
+data-flex-basis="571px"
+>&lt;/p>
+&lt;h2 id="deployment-time">Deployment Time
+&lt;/h2>&lt;p>Assign your newly created and updated app to users or devices as you desire.&lt;/p>
+&lt;h3 id="success">Success?
+&lt;/h3>&lt;p>You should now have the app installed.&lt;/p>
+&lt;p>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-5.png"
+width="962"
+height="540"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-5_hu_f1053157cd39505b.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-5_hu_fba00775511b1d98.png 1024w"
+loading="lazy"
+alt="Installation Success"
+class="gallery-image"
+data-flex-grow="178"
+data-flex-basis="427px"
+>&lt;/p>
+&lt;h2 id="next-steps">Next Steps.
+&lt;/h2>&lt;p>Now that you have the Agent installed. You’ll need to login to the Solus3 server and deploy the Sims package to the device from the deployment server.&lt;/p>
+&lt;blockquote>
+&lt;p>While this will deploy the Solus3 agent to devices, what this doesn’t take care of is ongoing updates. You’ll need to package any updates to the Solus3 agent. It’s beyond the scope of this article.&lt;/p>&lt;/blockquote>
+&lt;p>For now and until the next post, I wish you well…&lt;/p></description></item></channel></rss>
