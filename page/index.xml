@@ -1,11 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on endpointmgt.com</title><link>https://endpointmgt.com/page/</link><description>Recent content in Pages on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://endpointmgt.com/page/index.xml" rel="self" type="application/rss+xml"/><item><title>Posts</title><link>https://endpointmgt.com/posts/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/posts/</guid><description/></item><item><title>About Me</title><link>https://endpointmgt.com/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/about/</guid><description>&lt;p>Writing about myself isn’t exactly my favorite pastime, but I’ll give it a go. I’m Chris Sellar, and I’m the creator of endpointmgt.com. With experience in both the private and public sector IT in the UK, I earn my keep as a Cloud Endpoint Technical Consultant for a large Microsoft Partner and software reseller in the UK. My unique position as a technology leader has given me valuable insight into the world of IT, and I hope to share some of that knowledge through my blog.&lt;/p>
-&lt;p>The primary focus of my blog will be on Microsoft Intune, Configuration Manager, Windows Autopilot, and Windows 11. I aim to use it as a practical how-to guide, sharing my personal experiences to help others navigate the world of IT more easily. Any useful how-to guides I create will be posted on this blog.&lt;/p>
-&lt;p>In addition to working in the field of IT for many years, I also have a first class honors degree in IT Management for Business from Robert Gordon University. Along with an ever increasing number of Microsoft certifications, thanks to my current employers willingness for continuous personal development. To that end, I’m delighted to have passed the &lt;a class="link" href="https://learn.microsoft.com/api/credentials/share/en-gb/ChrisSellar-8412/606E4B574C771B5D?sharingId=B707E2744889D373" target="_blank" rel="noopener"
->M365 Admin Expert certification&lt;/a>&lt;/p>
-&lt;h2 id="fyi-and-disclaimer">FYI and Disclaimer
-&lt;/h2>&lt;p>It’s important to note that the views on endpointmgt.com are strictly my own personal views, thoughts and opinions. These are not the views of any current or previous employer or any vendors that I may reference.&lt;/p>
-&lt;p>By sharing some of my experience through this site, I hope that I can assist you in reaching your own goals. I accept no responsibility for the impact and results of following my blog posts in a production environment. All technical changes should be thoroughly tested in a non-production/development environment to assess the impact of any changes.&lt;/p>
-&lt;h2 id="sponsoring">Sponsoring
-&lt;/h2>&lt;p>If you like this content or it&amp;rsquo;s been useful to you, consider supporting its development:&lt;/p>
-&lt;script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="chrissellar" data-color="#081136ff" data-emoji="☕" data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" >&lt;/script>
-&lt;p>By helping support me, it provide a small reward and incentive to produce more relevant content.&lt;/p></description></item><item><title>Links</title><link>https://endpointmgt.com/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/links/</guid><description>&lt;p>Here are some useful sites that you might like to Visit&amp;hellip;&lt;/p></description></item><item><title>Search</title><link>https://endpointmgt.com/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/search/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pages on endpointmgt.com</title>
+        <link>http://localhost:1313/page/</link>
+        <description>Recent content in Pages on endpointmgt.com</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Posts</title>
+        <link>http://localhost:1313/posts/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/posts/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>About Me</title>
+        <link>http://localhost:1313/about/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/about/</guid>
+        <description>&lt;p&gt;Writing about myself isn’t exactly my favorite pastime, but I’ll give it a go. I’m Chris Sellar, and I’m the creator of endpointmgt.com. With experience in both the private and public sector IT in the UK, I earn my keep as a Cloud Endpoint Technical Consultant for a large Microsoft Partner and software reseller in the UK. My unique position as a technology leader has given me valuable insight into the world of IT, and I hope to share some of that knowledge through my blog.&lt;/p&gt;
+&lt;p&gt;The primary focus of my blog will be on Microsoft Intune, Configuration Manager, Windows Autopilot, and Windows 11. I aim to use it as a practical how-to guide, sharing my personal experiences to help others navigate the world of IT more easily. Any useful how-to guides I create will be posted on this blog.&lt;/p&gt;
+&lt;p&gt;In addition to working in the field of IT for many years, I also have a first class honors degree in IT Management for Business from Robert Gordon University. Along with an ever increasing number of Microsoft certifications, thanks to my current employers willingness for continuous personal development. To that end, I’m delighted to have passed the &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/api/credentials/share/en-gb/ChrisSellar-8412/606E4B574C771B5D?sharingId=B707E2744889D373&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;M365 Admin Expert certification&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;fyi-and-disclaimer&#34;&gt;FYI and Disclaimer
+&lt;/h2&gt;&lt;p&gt;It’s important to note that the views on endpointmgt.com are strictly my own personal views, thoughts and opinions. These are not the views of any current or previous employer or any vendors that I may reference.&lt;/p&gt;
+&lt;p&gt;By sharing some of my experience through this site, I hope that I can assist you in reaching your own goals. I accept no responsibility for the impact and results of following my blog posts in a production environment. All technical changes should be thoroughly tested in a non-production/development environment to assess the impact of any changes.&lt;/p&gt;
+&lt;h2 id=&#34;sponsoring&#34;&gt;Sponsoring
+&lt;/h2&gt;&lt;p&gt;If you like this content or it&amp;rsquo;s been useful to you, consider supporting its development:&lt;/p&gt;
+&lt;script type=&#34;text/javascript&#34; src=&#34;https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js&#34; data-name=&#34;bmc-button&#34; data-slug=&#34;chrissellar&#34; data-color=&#34;#081136ff&#34; data-emoji=&#34;☕&#34; data-font=&#34;Lato&#34; data-text=&#34;Buy me a coffee&#34; data-outline-color=&#34;#000000&#34; data-font-color=&#34;#ffffff&#34; data-coffee-color=&#34;#FFDD00&#34; &gt;&lt;/script&gt;
+&lt;p&gt;By helping support me, it provide a small reward and incentive to produce more relevant content.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Links</title>
+        <link>http://localhost:1313/links/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/links/</guid>
+        <description>&lt;p&gt;Here are some useful sites that you might like to Visit&amp;hellip;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Search</title>
+        <link>http://localhost:1313/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/search/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>
