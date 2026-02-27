@@ -1,261 +1,262 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Protection on endpointmgt.com</title><link>https://endpointmgt.com/tags/data-protection/</link><description>Recent content in Data Protection on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Jan 2024 10:59:19 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/data-protection/index.xml" rel="self" type="application/rss+xml"/><item><title>Missing Microsoft Enrolment App</title><link>https://endpointmgt.com/p/recreateenrolmentapp/</link><pubDate>Mon, 22 Jan 2024 10:59:19 +0100</pubDate><guid>https://endpointmgt.com/p/recreateenrolmentapp/</guid><description>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" />&lt;p>Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p>
-&lt;p>As you can see below, the Microsoft Intune app is missing from the Mobility MDM and WIP page.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Protection on endpointmgt.com</title><link>https://endpointmgt.com/tags/data-protection/</link><description>Recent content in Data Protection on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Jan 2024 10:59:19 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/data-protection/index.xml" rel="self" type="application/rss+xml"/><item><title>Missing Microsoft Enrolment App</title><link>https://endpointmgt.com/p/recreateenrolmentapp/</link><pubDate>Mon, 22 Jan 2024 10:59:19 +0100</pubDate><guid>https://endpointmgt.com/p/recreateenrolmentapp/</guid><description>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" /&gt;&lt;p&gt;Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p&gt;
+&lt;p&gt;As you can see below, the Microsoft Intune app is missing from the Mobility MDM and WIP page.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png"
 width="474"
 height="223"
-srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_869cafa68da317a3.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_612badd42150d4b8.png 1024w"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_149ae6245f80ea59.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_1f6a1c3cc9ab2c2d.png 1024w"
 loading="lazy"
 alt="Missing Enrolment App"
 class="gallery-image"
 data-flex-grow="212"
 data-flex-basis="510px"
->&lt;/p>
-&lt;p>As you can also see, it’s missing from the Target Resources within the Conditional Access Policies.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;As you can also see, it’s missing from the Target Resources within the Conditional Access Policies.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png"
 width="889"
 height="569"
-srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_5ffe9ca43b702b6c.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_aee2aa3ac4b62fe9.png 1024w"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_b4d59fee4348dda3.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_986cb2746ac23284.png 1024w"
 loading="lazy"
 alt="Conditional Access Selection"
 class="gallery-image"
 data-flex-grow="156"
 data-flex-basis="374px"
->&lt;/p>
-&lt;p>To resolve the issue, we need a way of recreating the app that Microsoft will recognise as the Intune enrolment app, we can’t simply create an Enterprise Application called the same name. We’ll do this by creating a new Service Principle.&lt;/p>
-&lt;p>First, we’re going to login to Entra ID using Powershell.&lt;/p>
-&lt;p>&lt;code>Connect-AzureAD&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;To resolve the issue, we need a way of recreating the app that Microsoft will recognise as the Intune enrolment app, we can’t simply create an Enterprise Application called the same name. We’ll do this by creating a new Service Principle.&lt;/p&gt;
+&lt;p&gt;First, we’re going to login to Entra ID using Powershell.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Connect-AzureAD&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png"
 width="951"
 height="211"
-srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_acbe48cc74e1b086.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_e87d245b4b6bb559.png 1024w"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_778087c9b4995078.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_3a1557af93c77bcc.png 1024w"
 loading="lazy"
 alt="Connect to Entra"
 class="gallery-image"
 data-flex-grow="450"
 data-flex-basis="1081px"
->&lt;/p>
-&lt;p>Lets now check if the app exists, run the get command to see if it exists.&lt;/p>
-&lt;p>&lt;code>Get-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code>&lt;/p>
-&lt;p>If it returned nothing back and simply returned back to a new command line, then we need to create the app. We’ll first clear any record of it from the tenant by removing the SP.&lt;/p>
-&lt;p>&lt;code>Remove-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code>&lt;/p>
-&lt;p>Once complete, we’re now going to recreate it. Don’t make any changes to the command.&lt;/p>
-&lt;p>&lt;code>New-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code>&lt;/p>
-&lt;p>To confirm it’s created, PS will show you the new Service Principle with the correct display name of the require Intune enrollment app.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;Lets now check if the app exists, run the get command to see if it exists.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Get-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If it returned nothing back and simply returned back to a new command line, then we need to create the app. We’ll first clear any record of it from the tenant by removing the SP.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Remove-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Once complete, we’re now going to recreate it. Don’t make any changes to the command.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;New-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;To confirm it’s created, PS will show you the new Service Principle with the correct display name of the require Intune enrollment app.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png"
 width="975"
 height="205"
-srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_ba846775bc50c6a4.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_ef115481583cc253.png 1024w"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_27ce7b049dcda6d0.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_1d96ea3f53c16b2b.png 1024w"
 loading="lazy"
 alt="Create Entra Service Principal"
 class="gallery-image"
 data-flex-grow="475"
 data-flex-basis="1141px"
->&lt;/p>
-&lt;p>We can now also see the app listed in the Mobility page&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;We can now also see the app listed in the Mobility page&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png"
 width="458"
 height="267"
-srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_856a55f12f637a6d.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_8ac63a3820a18508.png 1024w"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_dfcaba243878ab7b.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_f847b448a2cef91.png 1024w"
 loading="lazy"
 alt="Mobility Page"
 class="gallery-image"
 data-flex-grow="171"
 data-flex-basis="411px"
->&lt;/p>
-&lt;p>And, if you now select the app from the CA policy, it should be listed. You’ll need to refresh the page if you still have it open from checking previously.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;And, if you now select the app from the CA policy, it should be listed. You’ll need to refresh the page if you still have it open from checking previously.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png"
 width="900"
 height="568"
-srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_6059c9c680b98f4d.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_cff216257318c3cd.png 1024w"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_49ecd5a2d22e3b8b.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_d88e477dc2e03f28.png 1024w"
 loading="lazy"
 alt="Updated Conditional Access Selection"
 class="gallery-image"
 data-flex-grow="158"
 data-flex-basis="380px"
->&lt;/p>
-&lt;p>And your done. Now all you have to do is save your CA policy and test the results.&lt;/p></description></item><item><title>MAM for Windows</title><link>https://endpointmgt.com/p/mamforwindows/</link><pubDate>Fri, 13 Oct 2023 11:18:38 +0100</pubDate><guid>https://endpointmgt.com/p/mamforwindows/</guid><description>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" />&lt;p>Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p>
-&lt;p>So we know what is it but how does it work? If all the requirements are met, once setup, the user just has to sign in to Office and they’ll be taken through the process and well apart from one slightly misleading screen where it could all come crashing down, more on that later, it’s a fairly easy process for users to follow and makes accessing M365 almost easier.&lt;/p>
-&lt;p>We’ll take a look at&lt;/p>
-&lt;ol>
-&lt;li>The prerequisites&lt;/li>
-&lt;li>The users experience both in setup and use&lt;/li>
-&lt;li>The configuration from an Intune Admins perspective&lt;/li>
-&lt;li>What else did we see?&lt;/li>
-&lt;li>What didn’t we see that we maybe expected?&lt;/li>
-&lt;/ol>
-&lt;h2 id="what-are-the-prerequisites">What are the prerequisites…
-&lt;/h2>&lt;p>If you look at the Microsoft tech announcement, it will told us that it’s Windows 11 and Microsoft Edge for Windows ver. 117 and above. With the updated learn article Data protection for Windows MAM | Microsoft Learn, this was changed to support Windows 10 running build 19046.3636 and above with KB5031445 or later.&lt;/p>
-&lt;ul>
-&lt;li>Windows 10, build 19046.3636, KB5031445 or later and Windows 11, build 10.0.22621.2506, KB5031455 (22H2) or later&lt;/li>
-&lt;li>Microsoft Intune (2309 release)&lt;/li>
-&lt;li>Microsoft Edge (v117 stable branch and later for Windows 11 and v118.0.2088.71 and later for Windows 11)&lt;/li>
-&lt;li>Windows Security Center (v 1.0.2310.2002 and later) if using Device Risk scores&lt;/li>
-&lt;li>Users must be assigned a licence for Microsoft Intune and a Conditional Access P1 or P2 licence.&lt;/li>
-&lt;/ul>
-&lt;h2 id="the-setup">The Setup…
-&lt;/h2>&lt;p>The first thing users will see when they sign in is a conditional access message saying that they’ll need to sign into the Edge Browser or access the account from a registered device. (we’ll not get into the later, you never know, I may do another post on this separately).&lt;/p>
-&lt;p>Here’s a quick step by step run though of what it looks like for the user&lt;/p>
-&lt;ol>
-&lt;li>they’ll sign into Office.com with their organisational account&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;And your done. Now all you have to do is save your CA policy and test the results.&lt;/p&gt;</description></item><item><title>MAM for Windows</title><link>https://endpointmgt.com/p/mamforwindows/</link><pubDate>Fri, 13 Oct 2023 11:18:38 +0100</pubDate><guid>https://endpointmgt.com/p/mamforwindows/</guid><description>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
+&lt;p&gt;So we know what is it but how does it work? If all the requirements are met, once setup, the user just has to sign in to Office and they’ll be taken through the process and well apart from one slightly misleading screen where it could all come crashing down, more on that later, it’s a fairly easy process for users to follow and makes accessing M365 almost easier.&lt;/p&gt;
+&lt;p&gt;We’ll take a look at&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The prerequisites&lt;/li&gt;
+&lt;li&gt;The users experience both in setup and use&lt;/li&gt;
+&lt;li&gt;The configuration from an Intune Admins perspective&lt;/li&gt;
+&lt;li&gt;What else did we see?&lt;/li&gt;
+&lt;li&gt;What didn’t we see that we maybe expected?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="what-are-the-prerequisites"&gt;What are the prerequisites…
+&lt;/h2&gt;&lt;p&gt;If you look at the Microsoft tech announcement, it will told us that it’s Windows 11 and Microsoft Edge for Windows ver. 117 and above. With the updated learn article Data protection for Windows MAM | Microsoft Learn, this was changed to support Windows 10 running build 19046.3636 and above with KB5031445 or later.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 10, build 19046.3636, KB5031445 or later and Windows 11, build 10.0.22621.2506, KB5031455 (22H2) or later&lt;/li&gt;
+&lt;li&gt;Microsoft Intune (2309 release)&lt;/li&gt;
+&lt;li&gt;Microsoft Edge (v117 stable branch and later for Windows 11 and v118.0.2088.71 and later for Windows 11)&lt;/li&gt;
+&lt;li&gt;Windows Security Center (v 1.0.2310.2002 and later) if using Device Risk scores&lt;/li&gt;
+&lt;li&gt;Users must be assigned a licence for Microsoft Intune and a Conditional Access P1 or P2 licence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="the-setup"&gt;The Setup…
+&lt;/h2&gt;&lt;p&gt;The first thing users will see when they sign in is a conditional access message saying that they’ll need to sign into the Edge Browser or access the account from a registered device. (we’ll not get into the later, you never know, I may do another post on this separately).&lt;/p&gt;
+&lt;p&gt;Here’s a quick step by step run though of what it looks like for the user&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;they’ll sign into Office.com with their organisational account&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1.png"
 width="458"
 height="552"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1_hu_953003221c6a40bd.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d8d2f0e91dc73d38.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w"
 loading="lazy"
 alt="Sign In"
 class="gallery-image"
 data-flex-grow="82"
 data-flex-basis="199px"
->&lt;/p>
-&lt;ol start="2">
-&lt;li>User will be asked to create a work profile, they simply need to select the account and select the Sign in to Sync data and they’ll then be prompted for their password.&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2.png"
+&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;User will be asked to create a work profile, they simply need to select the account and select the Sign in to Sync data and they’ll then be prompted for their password.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2.png"
 width="422"
 height="334"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2_hu_f92270e90e1f1192.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2_hu_2c17b66274e5940f.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w"
 loading="lazy"
 alt="Continue with Work Account"
 class="gallery-image"
 data-flex-grow="126"
 data-flex-basis="303px"
->&lt;/p>
-&lt;ol start="4">
-&lt;li>This is where it gets interesting, the user is provided with a a couple of options on this screen. We need them to register the device but not enrol and allow the organisation to manage the device. Managed devices will block MAM for Windows from working so the user has to untick Allow my organisation to manage my device and then select OK.&lt;/li>
-&lt;/ol>
-&lt;blockquote>
-&lt;p>they only sign into the app by selecting No, this won’t register the device and they’ll get stuck in a loop with MS Edge asking them to sign in and create a work profile. You have been warned.&lt;/p>&lt;/blockquote>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4.png"
+&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;This is where it gets interesting, the user is provided with a a couple of options on this screen. We need them to register the device but not enrol and allow the organisation to manage the device. Managed devices will block MAM for Windows from working so the user has to untick Allow my organisation to manage my device and then select OK.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;they only sign into the app by selecting No, this won’t register the device and they’ll get stuck in a loop with MS Edge asking them to sign in and create a work profile. You have been warned.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4.png"
 width="657"
 height="642"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4_hu_611e43e7059e56e7.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4_hu_936a2f64380962ae.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w"
 loading="lazy"
 alt="Management selection"
 class="gallery-image"
 data-flex-grow="102"
 data-flex-basis="245px"
->&lt;/p>
-&lt;ol start="5">
-&lt;li>Once signed in, the work profile will be created, a couple of customisation screens will appear, they can tailor the browser or simply just click Continue, Next and Done.&lt;/li>
-&lt;/ol>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5.png"
+&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;Once signed in, the work profile will be created, a couple of customisation screens will appear, they can tailor the browser or simply just click Continue, Next and Done.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5.png"
 width="768"
 height="480"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5_hu_14f8a1a0c70bb770.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5_hu_85991f7aa4389f4b.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w"
 loading="lazy"
 alt="Edge Setup"
 class="gallery-image"
 data-flex-grow="160"
 data-flex-basis="384px"
->&lt;/p>
-&lt;p>And its done. A user will now have SSO when they use the Microsoft Edge browser using the newly created Work Profile.&lt;/p>
-&lt;h2 id="in-practice">In Practice…
-&lt;/h2>&lt;p>Here’s the subtle difference between the Personal and Work profiles signed in and how you can select between the two.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;And its done. A user will now have SSO when they use the Microsoft Edge browser using the newly created Work Profile.&lt;/p&gt;
+&lt;h2 id="in-practice"&gt;In Practice…
+&lt;/h2&gt;&lt;p&gt;Here’s the subtle difference between the Personal and Work profiles signed in and how you can select between the two.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6.png"
 width="333"
 height="434"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6_hu_2d962003016a4bf0.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6_hu_a728a6f923af8bd6.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w"
 loading="lazy"
 alt="Work Profile"
 class="gallery-image"
 data-flex-grow="76"
 data-flex-basis="184px"
->, &lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7.png"
+&gt;, &lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7.png"
 width="249"
 height="300"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7_hu_7006beb43c0e71f7.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7_hu_7d4ccb0a3c67ea1.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w"
 loading="lazy"
 alt="Personal Profile"
 class="gallery-image"
 data-flex-grow="83"
 data-flex-basis="199px"
->&lt;/p>
-&lt;p>Trying to download files from OneDrive / SharePoint is blocked (as per our requirement) along with the ability to download the Office installer, rather unexpectedly but when you think about it logically, you can understand why.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;Trying to download files from OneDrive / SharePoint is blocked (as per our requirement) along with the ability to download the Office installer, rather unexpectedly but when you think about it logically, you can understand why.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8.png"
 width="522"
 height="260"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8_hu_3547d76b4ba2d91c.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8_hu_8f156c19a6e7e243.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w"
 loading="lazy"
 alt="Prevented Action"
 class="gallery-image"
 data-flex-grow="200"
 data-flex-basis="481px"
->, &lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9.png"
+&gt;, &lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9.png"
 width="768"
 height="543"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9_hu_970620adb18ad2d9.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9_hu_8202c686e578537f.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w"
 loading="lazy"
 alt="Blocked Download"
 class="gallery-image"
 data-flex-grow="141"
 data-flex-basis="339px"
->&lt;/p>
-&lt;h2 id="how-was-it-configured">How was it configured…
-&lt;/h2>&lt;p>Configuration is carried out in 2 parts. You first have to great an App Protection Policy, followed by a Conditional Access Policy to enforce it.&lt;/p>
-&lt;h3 id="app-protection">App Protection
-&lt;/h3>&lt;p>The App Protection Policy is created within Intune here – Apps – Microsoft Intune admin center and you’ll need the role of Intune Admin or Global Admin (GA) to create this policy. The policy is broken down into 2 areas;&lt;/p>
-&lt;ol>
-&lt;li>Data protection&lt;/li>
-&lt;li>Health Checks (otherwise known as Conditional Launch)&lt;/li>
-&lt;/ol>
-&lt;p>Data Protection allows admins to select where the managed profile can receive data from, send and receive organisational data, whether to allow cut, copy and past and decide if users can print organisational data.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10.png"
+&gt;&lt;/p&gt;
+&lt;h2 id="how-was-it-configured"&gt;How was it configured…
+&lt;/h2&gt;&lt;p&gt;Configuration is carried out in 2 parts. You first have to great an App Protection Policy, followed by a Conditional Access Policy to enforce it.&lt;/p&gt;
+&lt;h3 id="app-protection"&gt;App Protection
+&lt;/h3&gt;&lt;p&gt;The App Protection Policy is created within Intune here – Apps – Microsoft Intune admin center and you’ll need the role of Intune Admin or Global Admin (GA) to create this policy. The policy is broken down into 2 areas;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Data protection&lt;/li&gt;
+&lt;li&gt;Health Checks (otherwise known as Conditional Launch)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Data Protection allows admins to select where the managed profile can receive data from, send and receive organisational data, whether to allow cut, copy and past and decide if users can print organisational data.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10.png"
 width="361"
 height="109"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10_hu_c25379205e1e5444.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10_hu_ac8a220fd6a61188.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w"
 loading="lazy"
 alt="App Protection - Data Controls"
 class="gallery-image"
 data-flex-grow="331"
 data-flex-basis="794px"
->&lt;/p>
-&lt;p>Health Checks allow admins to set criteria that must be met before a user can access M365 data via the work profile, such as Minimum OS, Minimum Edge version and id their account is disabled. It can also use the devices risk score from Microsoft Defender for Endpoint if used to secure unmanaged devices. (we’ll not cover this aspect here)&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;Health Checks allow admins to set criteria that must be met before a user can access M365 data via the work profile, such as Minimum OS, Minimum Edge version and id their account is disabled. It can also use the devices risk score from Microsoft Defender for Endpoint if used to secure unmanaged devices. (we’ll not cover this aspect here)&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11.png"
 width="744"
 height="183"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11_hu_99d87d3958c37f69.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11_hu_86b584689ed4722b.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w"
 loading="lazy"
 alt="App Protection - Health Check"
 class="gallery-image"
 data-flex-grow="406"
 data-flex-basis="975px"
->&lt;/p>
-&lt;p>Once the App Protection Policy is configured, it would be prevalent to assign this to a test group of users before deploying this to production.&lt;/p>
-&lt;h3 id="conditional-access">Conditional Access
-&lt;/h3>&lt;p>The Conditional Access Policy is created within Intune or Entra ID – Conditional Access – Microsoft Intune admin center and you’ll need the role of Conditional Access Admin or Global Admin (GA) to create this policy.&lt;/p>
-&lt;p>This article isn’t designed to teach you how to use CA policies, if you are unfamiliar with these, improve your knowledge here – What is Conditional Access in Microsoft Entra ID? | Microsoft Learn&lt;/p>
-&lt;p>Below is the policy that I created, targeting O365 apps, on windows, via a browser to require app protection. My policy did not follow the Microsoft guidance to either require app protection or require a compliant device. Consider your use case carefully.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;Once the App Protection Policy is configured, it would be prevalent to assign this to a test group of users before deploying this to production.&lt;/p&gt;
+&lt;h3 id="conditional-access"&gt;Conditional Access
+&lt;/h3&gt;&lt;p&gt;The Conditional Access Policy is created within Intune or Entra ID – Conditional Access – Microsoft Intune admin center and you’ll need the role of Conditional Access Admin or Global Admin (GA) to create this policy.&lt;/p&gt;
+&lt;p&gt;This article isn’t designed to teach you how to use CA policies, if you are unfamiliar with these, improve your knowledge here – What is Conditional Access in Microsoft Entra ID? | Microsoft Learn&lt;/p&gt;
+&lt;p&gt;Below is the policy that I created, targeting O365 apps, on windows, via a browser to require app protection. My policy did not follow the Microsoft guidance to either require app protection or require a compliant device. Consider your use case carefully.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12.png"
 width="979"
 height="524"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12_hu_677f5112a237e6d.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12_hu_3dc92ed06052052c.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w"
 loading="lazy"
 alt="Conditional Access"
 class="gallery-image"
 data-flex-grow="186"
 data-flex-basis="448px"
->&lt;/p>
-&lt;h3 id="what-else-did-we-see">What else did we see…
-&lt;/h3>&lt;p>An interesting one here, the Minimum OS was originally set to block older OS but regardless of the version of OS, I found that it always blocked it, even if the OS version was higher. As you can see from below, I changed this to warn so that I could continue but it’s still complaining, despite the Windows version being equal.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13.png"
+&gt;&lt;/p&gt;
+&lt;h3 id="what-else-did-we-see"&gt;What else did we see…
+&lt;/h3&gt;&lt;p&gt;An interesting one here, the Minimum OS was originally set to block older OS but regardless of the version of OS, I found that it always blocked it, even if the OS version was higher. As you can see from below, I changed this to warn so that I could continue but it’s still complaining, despite the Windows version being equal.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13.png"
 width="809"
 height="289"
-srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13_hu_73bb682e73dccd0.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13_hu_6ab0dcb91702e4f5.png 1024w"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w"
 loading="lazy"
 alt="App Protection Health Check in action"
 class="gallery-image"
 data-flex-grow="279"
 data-flex-basis="671px"
->&lt;/p>
-&lt;h3 id="what-didnt-see-see-or-would-like">What didn’t see see or would like
-&lt;/h3>&lt;p>For me, it’s around 2 aspects.&lt;/p>
-&lt;p>The user setup process is confusing that users have to untick the box or face having their device managed. This could be must tidier if Microsoft revised this part of the process.&lt;/p>
-&lt;p>The second is around the app protection policy with there being no access requirements that you get on both iOS and Android App Protection Policies. This means that admins can’t set a PIN or password requirement for users. This missing feature alone may rule out this being a viable option for some organisations.&lt;/p>
-&lt;h3 id="further-info">Further Info
-&lt;/h3>&lt;p>Here’s the official docs from Microsoft&lt;/p>
-&lt;ul>
-&lt;li>Data protection for Windows MAM | Microsoft Learn&lt;/li>
-&lt;li>Frequently asked questions about MAM and app protection | Microsoft Learn&lt;/li>
-&lt;li>Conditional Access – Require app protection policy for Windows | Microsoft Learn&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&gt;&lt;/p&gt;
+&lt;h3 id="what-didnt-see-see-or-would-like"&gt;What didn’t see see or would like
+&lt;/h3&gt;&lt;p&gt;For me, it’s around 2 aspects.&lt;/p&gt;
+&lt;p&gt;The user setup process is confusing that users have to untick the box or face having their device managed. This could be must tidier if Microsoft revised this part of the process.&lt;/p&gt;
+&lt;p&gt;The second is around the app protection policy with there being no access requirements that you get on both iOS and Android App Protection Policies. This means that admins can’t set a PIN or password requirement for users. This missing feature alone may rule out this being a viable option for some organisations.&lt;/p&gt;
+&lt;h3 id="further-info"&gt;Further Info
+&lt;/h3&gt;&lt;p&gt;Here’s the official docs from Microsoft&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Data protection for Windows MAM | Microsoft Learn&lt;/li&gt;
+&lt;li&gt;Frequently asked questions about MAM and app protection | Microsoft Learn&lt;/li&gt;
+&lt;li&gt;Conditional Access – Require app protection policy for Windows | Microsoft Learn&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

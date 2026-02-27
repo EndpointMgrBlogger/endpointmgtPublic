@@ -1,109 +1,111 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Windows Hello for Business on endpointmgt.com</title><link>https://endpointmgt.com/tags/windows-hello-for-business/</link><description>Recent content in Windows Hello for Business on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Jul 2025 16:56:34 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/windows-hello-for-business/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows Hello for Business and Cloud Kerberos Authentication</title><link>https://endpointmgt.com/p/whfbcloudkerberos/</link><pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate><guid>https://endpointmgt.com/p/whfbcloudkerberos/</guid><description>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" />&lt;p>I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p>
-&lt;h2 id="why-might-you-need-it">Why might you need it?
-&lt;/h2>&lt;p>Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p>
-&lt;h3 id="alternatives">Alternatives
-&lt;/h3>&lt;p>As with everything, in short Yes there are but I&amp;rsquo;d consider these older technology. You have the choice of using a key trust or certificate trust. With the later, even if you have your own PKI infrastructure, I still wouldn&amp;rsquo;t recommend it. It&amp;rsquo;s much harder to upkeep and to be honest, it&amp;rsquo;s a royal pain, comes with poor user experience (at step up stage) and doesn&amp;rsquo;t really offer anything else for the complexity that it brings. MIcrosoft themselves, recommend Cloud Kerberos Trust!&lt;/p>
-&lt;h2 id="so-how-does-it-work">So how does it work?
-&lt;/h2>&lt;h2 id="what-are-the-supported-scenarios">What are the supported scenarios?
-&lt;/h2>&lt;p>So imagine, you&amp;rsquo;re moving to the cloud. Existing devices are hybrid domain joined. New pilot devices are Entra joined via Windows Autopilot and you&amp;rsquo;re slowly moving workloads over from on-premise. How does this fit? Well in short, it supports both. So you can deploy CKT, deploy one configuration to devices or users and it&amp;rsquo;ll, well just work!&lt;/p>
-&lt;p>Devices do need support Windows Hello for business for all this to work but that comes down to the device. I&amp;rsquo;ll let you research this part!&lt;/p>
-&lt;h2 id="how-to-deploy-it">How to deploy it&amp;hellip;
-&lt;/h2>&lt;p>This comes in two parts, setting up the kerberos trust and deploying Windows Hello configuration. Do not deploy the Windows Hello configuration to devices or users, until the Cloud Kerberos configuration is in place. Doing so will mean that users will need to delete their WHfB and start again for it to take place.&lt;/p>
-&lt;h3 id="set-up-cloud-kerberos-trust">Set up Cloud Kerberos Trust
-&lt;/h3>&lt;p>Step 1 - First, ensure TLS 1.2 for PowerShell gallery access.&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="no">Net.ServicePointManager&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">SecurityProtocol&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">Net.ServicePointManager&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">SecurityProtocol&lt;/span> &lt;span class="o">-bor&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">Net.SecurityProtocolType&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Tls12&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Step 2 - Install the AzureADHybridAuthenticationManagement PowerShell module.&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Install-Module&lt;/span> &lt;span class="n">-Name&lt;/span> &lt;span class="n">AzureADHybridAuthenticationManagement&lt;/span> &lt;span class="n">-AllowClobber&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Step 3 - Create the new Entra ID Kerberos Server object in Active Directory&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$GAUser&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;PlaceYourAdminCreds@tenantdomain.com&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Set-AzureADKerberosServer&lt;/span> &lt;span class="n">-Domain&lt;/span> &lt;span class="nv">$env:UserDNSDomain&lt;/span> &lt;span class="n">-UserPrincipalName&lt;/span> &lt;span class="nv">$GAUser&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Step 4 - Now you&amp;rsquo;re done but lets verify it&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-Powershell" data-lang="Powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Get-AzureADKerberosServer&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>You should see something like this&amp;hellip;&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Windows Hello for Business on endpointmgt.com</title><link>https://endpointmgt.com/tags/windows-hello-for-business/</link><description>Recent content in Windows Hello for Business on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Jul 2025 16:56:34 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/windows-hello-for-business/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows Hello for Business and Cloud Kerberos Authentication</title><link>https://endpointmgt.com/p/whfbcloudkerberos/</link><pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate><guid>https://endpointmgt.com/p/whfbcloudkerberos/</guid><description>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
+&lt;h2 id="why-might-you-need-it"&gt;Why might you need it?
+&lt;/h2&gt;&lt;p&gt;Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p&gt;
+&lt;h3 id="alternatives"&gt;Alternatives
+&lt;/h3&gt;&lt;p&gt;As with everything, in short Yes there are but I&amp;rsquo;d consider these older technology. You have the choice of using a key trust or certificate trust. With the later, even if you have your own PKI infrastructure, I still wouldn&amp;rsquo;t recommend it. It&amp;rsquo;s much harder to upkeep and to be honest, it&amp;rsquo;s a royal pain, comes with poor user experience (at step up stage) and doesn&amp;rsquo;t really offer anything else for the complexity that it brings. MIcrosoft themselves, recommend Cloud Kerberos Trust!&lt;/p&gt;
+&lt;h2 id="so-how-does-it-work"&gt;So how does it work?
+&lt;/h2&gt;&lt;h2 id="what-are-the-supported-scenarios"&gt;What are the supported scenarios?
+&lt;/h2&gt;&lt;p&gt;So imagine, you&amp;rsquo;re moving to the cloud. Existing devices are hybrid domain joined. New pilot devices are Entra joined via Windows Autopilot and you&amp;rsquo;re slowly moving workloads over from on-premise. How does this fit? Well in short, it supports both. So you can deploy CKT, deploy one configuration to devices or users and it&amp;rsquo;ll, well just work!&lt;/p&gt;
+&lt;p&gt;Devices do need support Windows Hello for business for all this to work but that comes down to the device. I&amp;rsquo;ll let you research this part!&lt;/p&gt;
+&lt;h2 id="how-to-deploy-it"&gt;How to deploy it&amp;hellip;
+&lt;/h2&gt;&lt;p&gt;This comes in two parts, setting up the kerberos trust and deploying Windows Hello configuration. Do not deploy the Windows Hello configuration to devices or users, until the Cloud Kerberos configuration is in place. Doing so will mean that users will need to delete their WHfB and start again for it to take place.&lt;/p&gt;
+&lt;h3 id="set-up-cloud-kerberos-trust"&gt;Set up Cloud Kerberos Trust
+&lt;/h3&gt;&lt;p&gt;Step 1 - First, ensure TLS 1.2 for PowerShell gallery access.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class="p"&gt;]::&lt;/span&gt;&lt;span class="n"&gt;SecurityProtocol&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class="p"&gt;]::&lt;/span&gt;&lt;span class="n"&gt;SecurityProtocol&lt;/span&gt; &lt;span class="o"&gt;-bor&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;Net.SecurityProtocolType&lt;/span&gt;&lt;span class="p"&gt;]::&lt;/span&gt;&lt;span class="n"&gt;Tls12&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Step 2 - Install the AzureADHybridAuthenticationManagement PowerShell module.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Install-Module&lt;/span&gt; &lt;span class="n"&gt;-Name&lt;/span&gt; &lt;span class="n"&gt;AzureADHybridAuthenticationManagement&lt;/span&gt; &lt;span class="n"&gt;-AllowClobber&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Step 3 - Create the new Entra ID Kerberos Server object in Active Directory&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$GAUser&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;PlaceYourAdminCreds@tenantdomain.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Set-AzureADKerberosServer&lt;/span&gt; &lt;span class="n"&gt;-Domain&lt;/span&gt; &lt;span class="nv"&gt;$env:UserDNSDomain&lt;/span&gt; &lt;span class="n"&gt;-UserPrincipalName&lt;/span&gt; &lt;span class="nv"&gt;$GAUser&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Step 4 - Now you&amp;rsquo;re done but lets verify it&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Get-AzureADKerberosServer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;You should see something like this&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png"
 width="634"
 height="247"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_ae1793da91e2ee15.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_dbabff089f7430e4.png 1024w"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w"
 loading="lazy"
 alt="Confirmation of Deployment"
 class="gallery-image"
 data-flex-grow="256"
 data-flex-basis="616px"
->&lt;/p>
-&lt;p>If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png"
 width="1067"
 height="458"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_7f38e7b8a60996a2.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_78f8083b93c34bab.png 1024w"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w"
 loading="lazy"
 alt="Disabled User Object"
 class="gallery-image"
 data-flex-grow="232"
 data-flex-basis="559px"
->&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png"
 width="1066"
 height="456"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_ea96e62b04f96767.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_57d8cde087d09b23.png 1024w"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w"
 loading="lazy"
 alt="Enabled Device Object"
 class="gallery-image"
 data-flex-grow="233"
 data-flex-basis="561px"
->&lt;/p>
-&lt;blockquote>
-&lt;p>Do not delete/move/rename these 2 objects. To do so will break your new Cloud Kerberos Trust!&lt;/p>&lt;/blockquote>
-&lt;h3 id="intune-configuration">Intune Configuration
-&lt;/h3>&lt;ol>
-&lt;li>Create Windows Hello for Business Configuration Profile&lt;/li>
-&lt;/ol>
-&lt;p>Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p>
-&lt;p>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png"
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Do not delete/move/rename these 2 objects. To do so will break your new Cloud Kerberos Trust!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="intune-configuration"&gt;Intune Configuration
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Create Windows Hello for Business Configuration Profile&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png"
 width="615"
 height="831"
-srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_108596622b126fff.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_6b3a4b389ec56f9d.png 1024w"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w"
 loading="lazy"
 alt="Enabled Device Object"
 class="gallery-image"
 data-flex-grow="74"
 data-flex-basis="177px"
->&lt;/p>
-&lt;ol start="2">
-&lt;li>Deploy it to users or devices. Once the user logs back into the device, they should receive a message to setup Windows Hello.&lt;/li>
-&lt;/ol>
-&lt;h3 id="user-setup">User Setup
-&lt;/h3>&lt;p>This works in the exactly the same way as it would without kerberos trust so the user won&amp;rsquo;t notice anything different. They sign in, go through the MFA Prompt and setup faceID, fingerprintID and then a PIN code. Once set, they&amp;rsquo;ll be logged in and WHfB will be the new default sign in option.&lt;/p>
-&lt;blockquote>
-&lt;p>This is one of the biggest benefits of using this method. Whereas using a key trust or certificate trust, means that when a user sets up for the first time, they can&amp;rsquo;t immediately start using it, they have to wait upwards of 60 mins for the device objects in Active Directory to be updated. Not the case with Cloud Kerberos Trust. Use it straight away!&lt;/p>&lt;/blockquote>
-&lt;h2 id="user-experience">User Experience.
-&lt;/h2>&lt;p>I&amp;rsquo;m not going to give you a screen shot of the setup process or accessing on premise file shares. As long as the user has line of sight to the file share, to test Cloud Kerberos, have them sign in with WHfB on the device and access a file share. If it just opens, success! If it prompts for a username/password, we have problems! I&amp;rsquo;d run the &lt;code>Get-AzureADKerberosServer&lt;/code> to check the status.&lt;/p>
-&lt;p>Thanks for reading!&lt;/p></description></item></channel></rss>
+&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Deploy it to users or devices. Once the user logs back into the device, they should receive a message to setup Windows Hello.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="user-setup"&gt;User Setup
+&lt;/h3&gt;&lt;p&gt;This works in the exactly the same way as it would without kerberos trust so the user won&amp;rsquo;t notice anything different. They sign in, go through the MFA Prompt and setup faceID, fingerprintID and then a PIN code. Once set, they&amp;rsquo;ll be logged in and WHfB will be the new default sign in option.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is one of the biggest benefits of using this method. Whereas using a key trust or certificate trust, means that when a user sets up for the first time, they can&amp;rsquo;t immediately start using it, they have to wait upwards of 60 mins for the device objects in Active Directory to be updated. Not the case with Cloud Kerberos Trust. Use it straight away!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="user-experience"&gt;User Experience.
+&lt;/h2&gt;&lt;p&gt;I&amp;rsquo;m not going to give you a screen shot of the setup process or accessing on premise file shares. As long as the user has line of sight to the file share, to test Cloud Kerberos, have them sign in with WHfB on the device and access a file share. If it just opens, success! If it prompts for a username/password, we have problems! I&amp;rsquo;d run the &lt;code&gt;Get-AzureADKerberosServer&lt;/code&gt; to check the status.&lt;/p&gt;
+&lt;p&gt;Thanks for reading!&lt;/p&gt;</description></item></channel></rss>
