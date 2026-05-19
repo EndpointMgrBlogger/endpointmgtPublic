@@ -2,147 +2,153 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:11841/</loc>
+    <loc>http://localhost:25803/</loc>
+    <lastmod>2026-05-19T08:52:10+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:25803/categories/autopilot/</loc>
+    <lastmod>2026-05-19T08:52:10+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:25803/categories/</loc>
+    <lastmod>2026-05-19T08:52:10+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:25803/categories/intune/</loc>
+    <lastmod>2026-05-19T08:52:10+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:25803/post/</loc>
+    <lastmod>2026-05-19T08:52:10+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:25803/p/prenamewindowsautopilotdevices/</loc>
+    <lastmod>2026-05-19T08:52:10+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:25803/tags/authentication/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/authentication/</loc>
+    <loc>http://localhost:25803/categories/configuration/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/</loc>
+    <loc>http://localhost:25803/tags/login/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/configuration/</loc>
+    <loc>http://localhost:25803/p/nonupnsignin/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/intune/</loc>
+    <loc>http://localhost:25803/tags/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/login/</loc>
+    <loc>http://localhost:25803/tags/windows/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/post/</loc>
-    <lastmod>2025-09-04T13:11:54+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:11841/p/nonupnsignin/</loc>
-    <lastmod>2025-09-04T13:11:54+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:11841/tags/</loc>
-    <lastmod>2025-09-04T13:11:54+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:11841/tags/windows/</loc>
-    <lastmod>2025-09-04T13:11:54+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:11841/categories/conditional-access/</loc>
+    <loc>http://localhost:25803/categories/conditional-access/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/conditional-access/</loc>
+    <loc>http://localhost:25803/tags/conditional-access/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/</loc>
+    <loc>http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/mfa/</loc>
+    <loc>http://localhost:25803/tags/mfa/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/shared-devices/</loc>
+    <loc>http://localhost:25803/tags/shared-devices/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/windows/</loc>
+    <loc>http://localhost:25803/categories/windows/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/admin/</loc>
+    <loc>http://localhost:25803/tags/admin/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/device-actions/</loc>
+    <loc>http://localhost:25803/tags/device-actions/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/multiappapproval/</loc>
+    <loc>http://localhost:25803/p/multiappapproval/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/rbac/</loc>
+    <loc>http://localhost:25803/categories/rbac/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/rbac/</loc>
+    <loc>http://localhost:25803/tags/rbac/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/passwordless/</loc>
+    <loc>http://localhost:25803/tags/passwordless/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/whfb/</loc>
+    <loc>http://localhost:25803/tags/whfb/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/windows-hello/</loc>
+    <loc>http://localhost:25803/categories/windows-hello/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/windows-hello-for-business/</loc>
+    <loc>http://localhost:25803/tags/windows-hello-for-business/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/whfbcloudkerberos/</loc>
+    <loc>http://localhost:25803/p/whfbcloudkerberos/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/app-packaging/</loc>
+    <loc>http://localhost:25803/categories/app-packaging/</loc>
     <lastmod>2025-01-29T19:45:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/deploysims/</loc>
+    <loc>http://localhost:25803/p/deploysims/</loc>
     <lastmod>2025-01-29T19:45:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/sims/</loc>
+    <loc>http://localhost:25803/tags/sims/</loc>
     <lastmod>2025-01-29T19:45:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/data-protection/</loc>
+    <loc>http://localhost:25803/tags/data-protection/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/enrolment/</loc>
+    <loc>http://localhost:25803/categories/enrolment/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/enrolment/</loc>
+    <loc>http://localhost:25803/tags/enrolment/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/recreateenrolmentapp/</loc>
+    <loc>http://localhost:25803/p/recreateenrolmentapp/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/zero-trust/</loc>
+    <loc>http://localhost:25803/tags/zero-trust/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/app-protection/</loc>
+    <loc>http://localhost:25803/categories/app-protection/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/app-protection/</loc>
+    <loc>http://localhost:25803/tags/app-protection/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/mam/</loc>
+    <loc>http://localhost:25803/categories/mam/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/mamforwindows/</loc>
+    <loc>http://localhost:25803/p/mamforwindows/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/mam-for-windows/</loc>
+    <loc>http://localhost:25803/tags/mam-for-windows/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/company-portal/</loc>
+    <loc>http://localhost:25803/tags/company-portal/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/p/companyportal/</loc>
+    <loc>http://localhost:25803/p/companyportal/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/self-service/</loc>
+    <loc>http://localhost:25803/tags/self-service/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/tags/software-deployments/</loc>
+    <loc>http://localhost:25803/tags/software-deployments/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/page/</loc>
+    <loc>http://localhost:25803/page/</loc>
     <lastmod>2022-03-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/posts/</loc>
+    <loc>http://localhost:25803/posts/</loc>
     <lastmod>2022-03-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:11841/categories/example-category/</loc>
+    <loc>http://localhost:25803/categories/example-category/</loc>
   </url><url>
-    <loc>http://localhost:11841/about/</loc>
+    <loc>http://localhost:25803/about/</loc>
   </url><url>
-    <loc>http://localhost:11841/links/</loc>
+    <loc>http://localhost:25803/links/</loc>
   </url><url>
-    <loc>http://localhost:11841/search/</loc>
+    <loc>http://localhost:25803/search/</loc>
   </url>
 </urlset>

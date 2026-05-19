@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>MFA on endpointmgt.com</title>
-        <link>http://localhost:11841/tags/mfa/</link>
+        <link>http://localhost:25803/tags/mfa/</link>
         <description>Recent content in MFA on endpointmgt.com</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 01 Sep 2025 16:23:48 +0100</lastBuildDate><atom:link href="http://localhost:11841/tags/mfa/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 01 Sep 2025 16:23:48 +0100</lastBuildDate><atom:link href="http://localhost:25803/tags/mfa/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Conditional Access and MFA on Shared Windows Devices with Intune</title>
-        <link>http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/</link>
+        <link>http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/</link>
         <pubDate>Mon, 01 Sep 2025 16:23:48 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/</guid>
-        <description>&lt;img src="http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class=&#34;link&#34; href=&#34;http://localhost:11841/p/whfbcloudkerberos/&#34; &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
+        <guid>http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/</guid>
+        <description>&lt;img src="http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class=&#34;link&#34; href=&#34;http://localhost:25803/p/whfbcloudkerberos/&#34; &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
 &lt;p&gt;Shared Windows devices in teaching labs, libraries, and lecture theatres need to “just work.” But when Microsoft Intune and Conditional Access are combined with Windows Autopilot pre-provisioning, things can go wrong in unexpected ways.&lt;/p&gt;
 &lt;p&gt;A common issue we’ve seen is that MFA never prompts the user during login. On the surface, this might look like a smoother experience. In reality, it means no Primary Refresh Token (PRT) is established and without a PRT, seamless SSO fails. The knock-on effect is that students (or staff) can’t sync Company Portal policies, device configuration stalls, and Windows subscription activation doesn’t apply correctly.&lt;/p&gt;
 &lt;h2 id=&#34;why-it-happens&#34;&gt;Why It Happens
@@ -24,10 +24,10 @@
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Interactive vs. Non-Interactive Sign-Ins in Entra ID&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;When a user signs in to a device or application, Entra ID records the sign-in as either interactive or non-interactive.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png&#34;
 	width=&#34;1220&#34;
 	height=&#34;256&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_488804f62a75b722.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_5e572b2cae984621.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_488804f62a75b722.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_5e572b2cae984621.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Entra Sign in&#34;
@@ -58,10 +58,10 @@
 &lt;p&gt;You can first this in 2 way; one the affected device or via the entra sign in logs.&lt;/p&gt;
 &lt;h3 id=&#34;on-the-device&#34;&gt;On the device
 &lt;/h3&gt;&lt;p&gt;The simplest way to check is get the user to login and launch the start menu. Select their user account icon (either their picture or initials, if they don&amp;rsquo;t have a picture), if MFA is at fault here, they&amp;rsquo;ll get&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png&#34;
 	width=&#34;528&#34;
 	height=&#34;324&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8c5aabbd986fcf17.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_cfeda06595d57674.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8c5aabbd986fcf17.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_cfeda06595d57674.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Verify Account Prompt&#34;
@@ -117,10 +117,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png&#34;
 	width=&#34;598&#34;
 	height=&#34;872&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_2ad4f26054e53ac2.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_e6209dc0c86cd5e3.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_2ad4f26054e53ac2.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_e6209dc0c86cd5e3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Microsoft Intune&#34;
@@ -156,10 +156,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png&#34;
 	width=&#34;626&#34;
 	height=&#34;864&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_4af30f4ee6ebcc29.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_514316662a8adcd0.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_4af30f4ee6ebcc29.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_514316662a8adcd0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Windows Store for Business&#34;
@@ -201,10 +201,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png&#34;
 	width=&#34;746&#34;
 	height=&#34;716&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_1da00ef532e252b6.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_feb0e748b9ab2bd4.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_1da00ef532e252b6.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_feb0e748b9ab2bd4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Network Location&#34;
@@ -223,10 +223,10 @@
 &lt;h4 id=&#34;filter-for-devices-approach&#34;&gt;Filter for Devices Approach
 &lt;/h4&gt;&lt;p&gt;You&amp;rsquo;re still with us. Good, this is where it gets interesting and becomes tailored to your device use case. If you only want to exclude the shared devices from the policies, this is where we&amp;rsquo;ll use Filter for Devices. It&amp;rsquo;s been around for quite some time but in my experience, it&amp;rsquo;s relatively less known.&lt;/p&gt;
 &lt;p&gt;You can use &amp;ldquo;Filter for Devices&amp;rdquo; within a Conditional Access policy to control if it should or shouldn&amp;rsquo;t apply via includes and excludes criteria. There are a number of filter options that can be selected. From Intune Compliance state, Device Name, EnrolmentProfileName and so on. Some of these are safer to use than others. I&amp;rsquo;d recommend not using a filter that a user could manipulate. For example a user could change their Device Name for exclude their device from a targeted CA policy.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png&#34;
 	width=&#34;1615&#34;
 	height=&#34;882&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_c439b42d7447f75e.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_73afbfed212a650d.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_c439b42d7447f75e.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_73afbfed212a650d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Filter for Devices&#34;
@@ -272,10 +272,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png&#34;
 	width=&#34;1609&#34;
 	height=&#34;872&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_cbcc0380e1826e84.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_7732deb9905376d.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_cbcc0380e1826e84.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_7732deb9905376d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Using Filer for Devices&#34;
@@ -292,10 +292,10 @@
 &lt;/ol&gt;
 &lt;p&gt;If you&amp;rsquo;ve used the EnrollmentProfileName property and devices are enrolled using that deployment profile, your work here is done and you can test with a new enrolment. If however you&amp;rsquo;ve opted for ExtensionAttribute, the device(s) still need to be tagged.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Add Extension Attributes to devices&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png&#34;
 	width=&#34;549&#34;
 	height=&#34;49&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_3fe24d085cedfdf3.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_be7a076d6c408cb4.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_3fe24d085cedfdf3.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_be7a076d6c408cb4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Extension Attribute&#34;
@@ -364,10 +364,10 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
 &lt;li&gt;Select the device, in my case &lt;kbd&gt;DEVENV-34429856&lt;/kbd&gt;&lt;/li&gt;
 &lt;li&gt;At the bottom of the record you should now see the extensionAttribute set.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png&#34;
 	width=&#34;1010&#34;
 	height=&#34;821&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_805082e135bc0a.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_111409672905d99c.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_805082e135bc0a.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_111409672905d99c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Extension Attribute Set&#34;

@@ -201,8 +201,8 @@ Takes a CSV you provide, maps serial numbers to desired device names, and applie
 &lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up
 &lt;/h2&gt;&lt;p&gt;This script came out of a real need I kept running into across different environments — particularly where organisations already had asset numbering systems or CMDB records in place and needed device names to align with those, not with whatever Autopilot&amp;rsquo;s prefix+serial template would produce. The serial-to-name CSV approach means your existing asset data becomes the source of truth, and the export-edit-update loop makes it practical to maintain naming standards across large Autopilot estates without touching the portal. The &lt;code&gt;-WhatIf&lt;/code&gt; support means you can validate confidently before making any changes.&lt;/p&gt;
 &lt;p&gt;The full source is on &lt;a class=&#34;link&#34; href=&#34;https://github.com/endpointmgtgit/AutopilotDeviceNameTool&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;GitHub&lt;/a&gt; and the script is published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames/0.3.1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;PowerShell Gallery&lt;/a&gt; at version 0.3.1. If you run into any issues or have suggestions, feel free to raise them on the repo.&lt;/p&gt;
+    &gt;GitHub&lt;/a&gt; and the script is published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PowerShell Gallery&lt;/a&gt; If you run into any issues or have suggestions, feel free to raise them on the repo.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Build it right.&lt;br&gt;
 Name it right.&lt;br&gt;

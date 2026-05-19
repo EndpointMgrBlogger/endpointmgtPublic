@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Autopilot on endpointmgt.com</title>
-        <link>http://localhost:1313/categories/autopilot/</link>
+        <link>http://localhost:25803/categories/autopilot/</link>
         <description>Recent content in Autopilot on endpointmgt.com</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 19 May 2026 08:52:10 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/autopilot/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 19 May 2026 08:52:10 +0100</lastBuildDate><atom:link href="http://localhost:25803/categories/autopilot/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Set Windows Autopilot Device Names</title>
-        <link>http://localhost:1313/p/prenamewindowsautopilotdevices/</link>
+        <link>http://localhost:25803/p/prenamewindowsautopilotdevices/</link>
         <pubDate>Tue, 19 May 2026 08:52:10 +0100</pubDate>
         
-        <guid>http://localhost:1313/p/prenamewindowsautopilotdevices/</guid>
-        <description>&lt;img src="http://localhost:1313/img/cover.png" alt="Featured image of post Set Windows Autopilot Device Names" /&gt;&lt;h1 id=&#34;automate-windows-autopilot-device-naming-with-powershell--introducing-update-autopilotdevicenames&#34;&gt;Automate Windows Autopilot Device Naming with PowerShell – Introducing Update-AutopilotDeviceNames
+        <guid>http://localhost:25803/p/prenamewindowsautopilotdevices/</guid>
+        <description>&lt;img src="http://localhost:25803/p/prenamewindowsautopilotdevices/post/WindowsAutopilotNaming/img/cover.png" alt="Featured image of post Set Windows Autopilot Device Names" /&gt;&lt;h1 id=&#34;automate-windows-autopilot-device-naming-with-powershell--introducing-update-autopilotdevicenames&#34;&gt;Automate Windows Autopilot Device Naming with PowerShell – Introducing Update-AutopilotDeviceNames
 &lt;/h1&gt;&lt;p&gt;If you&amp;rsquo;ve spent any time managing Windows Autopilot at scale, you&amp;rsquo;ve almost certainly wrestled with device naming. Autopilot does give you &lt;em&gt;some&lt;/em&gt; native options here — but as soon as your organisation has its own asset numbering system, those options fall short fast.&lt;/p&gt;
 &lt;p&gt;That&amp;rsquo;s why I built &lt;strong&gt;Update-AutopilotDeviceNames&lt;/strong&gt;, a PowerShell script now published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames/0.3.1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;PowerShell Gallery&lt;/a&gt; and available on &lt;a class=&#34;link&#34; href=&#34;https://github.com/endpointmgtgit/AutopilotDeviceNameTool&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

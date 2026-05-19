@@ -2,17 +2,220 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Intune on endpointmgt.com</title>
-        <link>http://localhost:11841/categories/intune/</link>
+        <link>http://localhost:25803/categories/intune/</link>
         <description>Recent content in Intune on endpointmgt.com</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 04 Sep 2025 13:11:54 +0100</lastBuildDate><atom:link href="http://localhost:11841/categories/intune/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 19 May 2026 08:52:10 +0100</lastBuildDate><atom:link href="http://localhost:25803/categories/intune/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Set Windows Autopilot Device Names</title>
+        <link>http://localhost:25803/p/prenamewindowsautopilotdevices/</link>
+        <pubDate>Tue, 19 May 2026 08:52:10 +0100</pubDate>
+        
+        <guid>http://localhost:25803/p/prenamewindowsautopilotdevices/</guid>
+        <description>&lt;img src="http://localhost:25803/p/prenamewindowsautopilotdevices/post/WindowsAutopilotNaming/img/cover.png" alt="Featured image of post Set Windows Autopilot Device Names" /&gt;&lt;h1 id=&#34;automate-windows-autopilot-device-naming-with-powershell--introducing-update-autopilotdevicenames&#34;&gt;Automate Windows Autopilot Device Naming with PowerShell – Introducing Update-AutopilotDeviceNames
+&lt;/h1&gt;&lt;p&gt;If you&amp;rsquo;ve spent any time managing Windows Autopilot at scale, you&amp;rsquo;ve almost certainly wrestled with device naming. Autopilot does give you &lt;em&gt;some&lt;/em&gt; native options here — but as soon as your organisation has its own asset numbering system, those options fall short fast.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s why I built &lt;strong&gt;Update-AutopilotDeviceNames&lt;/strong&gt;, a PowerShell script now published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames/0.3.1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PowerShell Gallery&lt;/a&gt; and available on &lt;a class=&#34;link&#34; href=&#34;https://github.com/endpointmgtgit/AutopilotDeviceNameTool&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;the-problem--and-why-autopilots-native-naming-isnt-always-enough&#34;&gt;The Problem — and Why Autopilot&amp;rsquo;s Native Naming Isn&amp;rsquo;t Always Enough
+&lt;/h2&gt;&lt;p&gt;Windows Autopilot supports device naming through Autopilot Deployment Profiles. You can define a name template using a prefix combined with either a random alphanumeric string or the device&amp;rsquo;s serial number — for example, &lt;code&gt;CORP-%SERIAL%&lt;/code&gt; or &lt;code&gt;WKS-%RAND:5%&lt;/code&gt;. For many environments, that&amp;rsquo;s perfectly adequate.&lt;/p&gt;
+&lt;p&gt;But here&amp;rsquo;s where it breaks down: what if your organisation already has a CMDB with unique asset numbers assigned to every device? What if your hardware arrives with asset labels physically attached — stickers on the chassis that your service desk, finance team, and CMDB all refer to? In those cases, &lt;code&gt;CORP-%SERIAL%&lt;/code&gt; is next to useless. You don&amp;rsquo;t want a name derived from the serial number — you want the device named after the asset number that&amp;rsquo;s already on record.&lt;/p&gt;
+&lt;p&gt;Maybe you&amp;rsquo;re a procurement team that receives a bulk order of 200 laptops. Before they even reach users, your CMDB has assigned asset IDs to each one, cross-referenced against serial numbers captured at the point of receipt. You have a spreadsheet — or can easily produce one — with two columns: serial number and desired device name. The serial number is the link between your asset register and the Autopilot record. What you need is a way to feed that mapping directly into Autopilot so the device gets the right name when it enrols.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s exactly the gap this tool fills.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;what-the-script-does&#34;&gt;What the Script Does
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Update-AutopilotDeviceNames&lt;/strong&gt; connects to Microsoft Graph and handles two core jobs:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Export Mode (&lt;code&gt;-ExportCurrent&lt;/code&gt;)&lt;/strong&gt;
+Pulls all Windows Autopilot device identities from your tenant and writes them to a timestamped CSV. The export includes serial number, current display name, manufacturer, model, group tag, purchase order, and enrolment state. This gives you a clean baseline to work from — you can review what&amp;rsquo;s already named, spot gaps, and edit the file to feed back into the update process.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Update Mode (default)&lt;/strong&gt;
+Takes a CSV you provide, maps serial numbers to desired device names, and applies them via the Graph Beta endpoint using the &lt;code&gt;updateDeviceProperties&lt;/code&gt; action. It&amp;rsquo;s smart about what it touches: by default it skips devices that already have a display name, so you&amp;rsquo;re not accidentally overwriting intentional names. Use &lt;code&gt;-ForceUpdate&lt;/code&gt; if you need to overwrite existing values.&lt;/p&gt;
+&lt;p&gt;The script produces a full results report CSV with one of these statuses for every device processed:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Status&lt;/th&gt;
+          &lt;th&gt;Meaning&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;Updated&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Display name was successfully applied&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;AlreadyNamed&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Device already had a name; skipped (use &lt;code&gt;-ForceUpdate&lt;/code&gt; to override)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NoDeviceFound&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Serial number wasn&amp;rsquo;t found in your Autopilot tenant&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;DuplicateName&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;The desired name appears more than once in your CSV; skipped to avoid conflicts&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NoChange&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Current name already matches the desired name; no action taken&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;WhatIf&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Would have updated, but &lt;code&gt;-WhatIf&lt;/code&gt; was passed; no changes made&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;Failed&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;An error occurred during the update attempt&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;key-features-worth-highlighting&#34;&gt;Key Features Worth Highlighting
+&lt;/h2&gt;&lt;h3 id=&#34;-whatif-support&#34;&gt;&lt;code&gt;-WhatIf&lt;/code&gt; Support
+&lt;/h3&gt;&lt;p&gt;Before committing any changes, run the script with &lt;code&gt;-WhatIf&lt;/code&gt;. It goes through the full logic — connects to Graph, loads your CSV, evaluates every device — but makes zero changes. It still generates a report CSV showing exactly what &lt;em&gt;would&lt;/em&gt; happen. This is the first thing I&amp;rsquo;d recommend doing before any production run.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-CsvPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\NewDeviceNames.csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-WhatIf&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;flexible-csv-input&#34;&gt;Flexible CSV Input
+&lt;/h3&gt;&lt;p&gt;The script accepts either a &lt;code&gt;DeviceName&lt;/code&gt; or &lt;code&gt;DisplayName&lt;/code&gt; column alongside &lt;code&gt;SerialNumber&lt;/code&gt;, so it works whether you&amp;rsquo;re building a fresh naming list or editing an export you&amp;rsquo;ve already generated with &lt;code&gt;-ExportCurrent&lt;/code&gt;. The &lt;code&gt;-ExportCurrent&lt;/code&gt; workflow is probably the cleanest path: export what you have, edit the &lt;code&gt;DisplayName&lt;/code&gt; column, then feed it straight back in.&lt;/p&gt;
+&lt;h3 id=&#34;configurable-report-output&#34;&gt;Configurable Report Output
+&lt;/h3&gt;&lt;p&gt;You can pass &lt;code&gt;-ReportOutputPath&lt;/code&gt; with either a folder path (the script generates a timestamped filename for you) or a full file path if you want to control the exact output name. It defaults to &lt;code&gt;C:\Temp&lt;/code&gt; if you don&amp;rsquo;t specify anything.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Auto-named file in a folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Explicit file path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Temp\Autopilot-Current.csv&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;duplicate-name-detection&#34;&gt;Duplicate Name Detection
+&lt;/h3&gt;&lt;p&gt;If your CSV accidentally contains the same desired device name against two different serial numbers, the script detects it, flags both entries in the report as &lt;code&gt;DuplicateName&lt;/code&gt;, and skips them entirely. No silent conflicts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Module:&lt;/strong&gt; &lt;code&gt;Microsoft.Graph.Authentication&lt;/code&gt; must be installed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permissions:&lt;/strong&gt; &lt;code&gt;DeviceManagementServiceConfig.ReadWrite.All&lt;/code&gt; via Microsoft Graph&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Graph endpoint:&lt;/strong&gt; Uses the Beta endpoint for Autopilot device identity properties&lt;/li&gt;
+&lt;li&gt;The script authenticates interactively using &lt;code&gt;Connect-MgGraph&lt;/code&gt; — it&amp;rsquo;ll prompt for credentials if you&amp;rsquo;re not already connected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;how-to-install&#34;&gt;How to Install
+&lt;/h2&gt;&lt;p&gt;The script is published to the PowerShell Gallery, so installation is straightforward:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Install-Script&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Name&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Or if you&amp;rsquo;re using PSResourceGet:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Install-PSResource&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Name&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;a-typical-workflow&#34;&gt;A Typical Workflow
+&lt;/h2&gt;&lt;p&gt;Here&amp;rsquo;s how I&amp;rsquo;d approach this for an organisation receiving a bulk device order where the CMDB already has asset numbers assigned against serial numbers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 1 — Prepare your CSV&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Your starting point is a CSV with two columns: &lt;code&gt;SerialNumber&lt;/code&gt; and &lt;code&gt;DeviceName&lt;/code&gt;. This is the mapping between the serial number captured at receipt (or from your supplier&amp;rsquo;s delivery manifest) and the asset label or CMDB asset number you want the device named after. It might look something like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-csv&#34; data-lang=&#34;csv&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;SerialNumber&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;DeviceName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;5CG12345AB&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;ASSET-10042&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;5CG12346CD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;ASSET-10043&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;5CG12347EF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;ASSET-10044&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If you already have an existing Autopilot estate and want to see what&amp;rsquo;s currently named before making changes, use &lt;code&gt;-ExportCurrent&lt;/code&gt; first to generate a baseline:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Open the CSV, review the current &lt;code&gt;DisplayName&lt;/code&gt; values, and update any that need changing.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 2 — Preview the changes&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-CsvPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\Autopilot-Current-edited.csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-WhatIf&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Check the WhatIf report. Confirm the &lt;code&gt;Updated&lt;/code&gt; count looks right and there are no unexpected &lt;code&gt;NoDeviceFound&lt;/code&gt; entries.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 3 — Apply&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-CsvPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\Autopilot-Current-edited.csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Step 4 — Verify&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Run a fresh export and confirm the &lt;code&gt;DisplayName&lt;/code&gt; values have propagated as expected. The script even reminds you to do this at the end of every update run.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;important-limitations-to-be-aware-of&#34;&gt;Important Limitations to Be Aware Of
+&lt;/h2&gt;&lt;p&gt;Because this is built on top of how Windows Autopilot actually works, there are constraints that are by design:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Naming only applies at enrolment.&lt;/strong&gt; If a device is already provisioned, updating the display name in Autopilot does not rename the device — it only takes effect the next time that device goes through the Autopilot provisioning process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Microsoft Entra joined devices only.&lt;/strong&gt; Hybrid Azure AD Join scenarios are not supported for Autopilot device naming.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These aren&amp;rsquo;t limitations of the script itself — they reflect the underlying platform behaviour.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up
+&lt;/h2&gt;&lt;p&gt;This script came out of a real need I kept running into across different environments — particularly where organisations already had asset numbering systems or CMDB records in place and needed device names to align with those, not with whatever Autopilot&amp;rsquo;s prefix+serial template would produce. The serial-to-name CSV approach means your existing asset data becomes the source of truth, and the export-edit-update loop makes it practical to maintain naming standards across large Autopilot estates without touching the portal. The &lt;code&gt;-WhatIf&lt;/code&gt; support means you can validate confidently before making any changes.&lt;/p&gt;
+&lt;p&gt;The full source is on &lt;a class=&#34;link&#34; href=&#34;https://github.com/endpointmgtgit/AutopilotDeviceNameTool&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt; and the script is published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames/0.3.1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PowerShell Gallery&lt;/a&gt; at version 0.3.1. If you run into any issues or have suggestions, feel free to raise them on the repo.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Build it right.&lt;br&gt;
+Name it right.&lt;br&gt;
+Before it ever turns on.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Sign into an Entra join device with only the SAM account name instead of the full UPN</title>
-        <link>http://localhost:11841/p/nonupnsignin/</link>
+        <link>http://localhost:25803/p/nonupnsignin/</link>
         <pubDate>Thu, 04 Sep 2025 13:11:54 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/nonupnsignin/</guid>
-        <description>&lt;img src="http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/cover.png" alt="Featured image of post Sign into an Entra join device with only the SAM account name instead of the full UPN" /&gt;&lt;p&gt;So you&amp;rsquo;re making the leap into the world of Cloud only or cloud first and moving devices to Entra joined. Did you know the standard login process for entra join changes the way users sign in? By default, entra join devices will require the user to sign in with their work or school account, in other words, their Microsoft 365 email address or more accurately, their User Principle Name (UPN). Whereas domain or hybrid domain join devices will expect the user to login with their SAM Account Name.&lt;/p&gt;
+        <guid>http://localhost:25803/p/nonupnsignin/</guid>
+        <description>&lt;img src="http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/cover.png" alt="Featured image of post Sign into an Entra join device with only the SAM account name instead of the full UPN" /&gt;&lt;p&gt;So you&amp;rsquo;re making the leap into the world of Cloud only or cloud first and moving devices to Entra joined. Did you know the standard login process for entra join changes the way users sign in? By default, entra join devices will require the user to sign in with their work or school account, in other words, their Microsoft 365 email address or more accurately, their User Principle Name (UPN). Whereas domain or hybrid domain join devices will expect the user to login with their SAM Account Name.&lt;/p&gt;
 &lt;p&gt;Did you know that we can change this?&lt;/p&gt;
 &lt;h2 id=&#34;reasons-to-update&#34;&gt;Reasons to Update
 &lt;/h2&gt;&lt;ul&gt;
@@ -23,7 +226,7 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;understanding-the-upn&#34;&gt;Understanding the UPN
 &lt;/h2&gt;&lt;p&gt;Lets break it down. You can see that the UPN is name of the SAM Account Name and the email domain name. As already explained, by default the user needs to type in the full UPN when signing in.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp.svg&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp.svg&#34;
 	
 	
 	
@@ -36,10 +239,10 @@
 &lt;p&gt;Now that you understand the concept of where the UPN comes from, lets change the sign in experience to just require the first part and save users having to type out the entire UPN.&lt;/p&gt;
 &lt;h2 id=&#34;what-youll-currently-see&#34;&gt;What you&amp;rsquo;ll currently see
 &lt;/h2&gt;&lt;p&gt;If you have the default configuration, this is what you&amp;rsquo;re users will see when logging in. You can tell it&amp;rsquo;s the default as it&amp;rsquo;ll say &lt;strong&gt;Sign in to: Your Work or School Account&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore.png&#34;
 	width=&#34;1275&#34;
 	height=&#34;956&#34;
-	srcset=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_42d03afcc82c70f2.png 480w, http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_b1a99c6c73d304b8.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_42d03afcc82c70f2.png 480w, http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_b1a99c6c73d304b8.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Before Change&#34;
@@ -52,10 +255,10 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;what-it-could-look-like&#34;&gt;What it could look like
 &lt;/h2&gt;&lt;p&gt;Once you&amp;rsquo;ve deployed the configuration below, this is what you&amp;rsquo;re users will see when logging in. The login experience will update to show  &lt;strong&gt;Sign In to: DomainName.com&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter.png&#34;
 	width=&#34;1022&#34;
 	height=&#34;766&#34;
-	srcset=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_9763c89e2ddc9b96.png 480w, http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_60dea645c7237790.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_9763c89e2ddc9b96.png 480w, http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_60dea645c7237790.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;After Change&#34;
@@ -86,10 +289,10 @@
 Note - I would suggest a static test group for the testing phase then moving when you&amp;rsquo;re ready to deploy to production, using the &lt;strong&gt;All Devices&lt;/strong&gt; with an assignment filter or a dynamic entra group once you&amp;rsquo;re ready to deploy.&lt;/li&gt;
 &lt;li&gt;The policy should look something like this&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy.png&#34;
 	width=&#34;698&#34;
 	height=&#34;852&#34;
-	srcset=&#34;http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_da61d6a5bc409a4c.png 480w, http://localhost:11841/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_297de76f68f6effc.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_da61d6a5bc409a4c.png 480w, http://localhost:25803/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_297de76f68f6effc.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Intune Configuration&#34;
@@ -113,11 +316,11 @@ Note - I would suggest a static test group for the testing phase then moving whe
         </item>
         <item>
         <title>Conditional Access and MFA on Shared Windows Devices with Intune</title>
-        <link>http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/</link>
+        <link>http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/</link>
         <pubDate>Mon, 01 Sep 2025 16:23:48 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/</guid>
-        <description>&lt;img src="http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class=&#34;link&#34; href=&#34;http://localhost:11841/p/whfbcloudkerberos/&#34; &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
+        <guid>http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/</guid>
+        <description>&lt;img src="http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class=&#34;link&#34; href=&#34;http://localhost:25803/p/whfbcloudkerberos/&#34; &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
 &lt;p&gt;Shared Windows devices in teaching labs, libraries, and lecture theatres need to “just work.” But when Microsoft Intune and Conditional Access are combined with Windows Autopilot pre-provisioning, things can go wrong in unexpected ways.&lt;/p&gt;
 &lt;p&gt;A common issue we’ve seen is that MFA never prompts the user during login. On the surface, this might look like a smoother experience. In reality, it means no Primary Refresh Token (PRT) is established and without a PRT, seamless SSO fails. The knock-on effect is that students (or staff) can’t sync Company Portal policies, device configuration stalls, and Windows subscription activation doesn’t apply correctly.&lt;/p&gt;
 &lt;h2 id=&#34;why-it-happens&#34;&gt;Why It Happens
@@ -129,10 +332,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Interactive vs. Non-Interactive Sign-Ins in Entra ID&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;When a user signs in to a device or application, Entra ID records the sign-in as either interactive or non-interactive.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png&#34;
 	width=&#34;1220&#34;
 	height=&#34;256&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_488804f62a75b722.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_5e572b2cae984621.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_488804f62a75b722.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_5e572b2cae984621.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Entra Sign in&#34;
@@ -163,10 +366,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;p&gt;You can first this in 2 way; one the affected device or via the entra sign in logs.&lt;/p&gt;
 &lt;h3 id=&#34;on-the-device&#34;&gt;On the device
 &lt;/h3&gt;&lt;p&gt;The simplest way to check is get the user to login and launch the start menu. Select their user account icon (either their picture or initials, if they don&amp;rsquo;t have a picture), if MFA is at fault here, they&amp;rsquo;ll get&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png&#34;
 	width=&#34;528&#34;
 	height=&#34;324&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8c5aabbd986fcf17.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_cfeda06595d57674.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8c5aabbd986fcf17.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_cfeda06595d57674.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Verify Account Prompt&#34;
@@ -222,10 +425,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png&#34;
 	width=&#34;598&#34;
 	height=&#34;872&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_2ad4f26054e53ac2.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_e6209dc0c86cd5e3.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_2ad4f26054e53ac2.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_e6209dc0c86cd5e3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Microsoft Intune&#34;
@@ -261,10 +464,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png&#34;
 	width=&#34;626&#34;
 	height=&#34;864&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_4af30f4ee6ebcc29.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_514316662a8adcd0.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_4af30f4ee6ebcc29.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_514316662a8adcd0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Windows Store for Business&#34;
@@ -306,10 +509,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png&#34;
 	width=&#34;746&#34;
 	height=&#34;716&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_1da00ef532e252b6.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_feb0e748b9ab2bd4.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_1da00ef532e252b6.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_feb0e748b9ab2bd4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Network Location&#34;
@@ -328,10 +531,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;h4 id=&#34;filter-for-devices-approach&#34;&gt;Filter for Devices Approach
 &lt;/h4&gt;&lt;p&gt;You&amp;rsquo;re still with us. Good, this is where it gets interesting and becomes tailored to your device use case. If you only want to exclude the shared devices from the policies, this is where we&amp;rsquo;ll use Filter for Devices. It&amp;rsquo;s been around for quite some time but in my experience, it&amp;rsquo;s relatively less known.&lt;/p&gt;
 &lt;p&gt;You can use &amp;ldquo;Filter for Devices&amp;rdquo; within a Conditional Access policy to control if it should or shouldn&amp;rsquo;t apply via includes and excludes criteria. There are a number of filter options that can be selected. From Intune Compliance state, Device Name, EnrolmentProfileName and so on. Some of these are safer to use than others. I&amp;rsquo;d recommend not using a filter that a user could manipulate. For example a user could change their Device Name for exclude their device from a targeted CA policy.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png&#34;
 	width=&#34;1615&#34;
 	height=&#34;882&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_c439b42d7447f75e.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_73afbfed212a650d.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_c439b42d7447f75e.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_73afbfed212a650d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Filter for Devices&#34;
@@ -377,10 +580,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png&#34;
 	width=&#34;1609&#34;
 	height=&#34;872&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_cbcc0380e1826e84.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_7732deb9905376d.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_cbcc0380e1826e84.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_7732deb9905376d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Exclude Using Filer for Devices&#34;
@@ -397,10 +600,10 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ol&gt;
 &lt;p&gt;If you&amp;rsquo;ve used the EnrollmentProfileName property and devices are enrolled using that deployment profile, your work here is done and you can test with a new enrolment. If however you&amp;rsquo;ve opted for ExtensionAttribute, the device(s) still need to be tagged.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Add Extension Attributes to devices&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png&#34;
 	width=&#34;549&#34;
 	height=&#34;49&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_3fe24d085cedfdf3.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_be7a076d6c408cb4.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_3fe24d085cedfdf3.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_be7a076d6c408cb4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Extension Attribute&#34;
@@ -469,10 +672,10 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
 &lt;li&gt;Select the device, in my case &lt;kbd&gt;DEVENV-34429856&lt;/kbd&gt;&lt;/li&gt;
 &lt;li&gt;At the bottom of the record you should now see the extensionAttribute set.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png&#34;
 	width=&#34;1010&#34;
 	height=&#34;821&#34;
-	srcset=&#34;http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_805082e135bc0a.png 480w, http://localhost:11841/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_111409672905d99c.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_805082e135bc0a.png 480w, http://localhost:25803/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_111409672905d99c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Extension Attribute Set&#34;
@@ -504,11 +707,11 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
         </item>
         <item>
         <title>Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)</title>
-        <link>http://localhost:11841/p/multiappapproval/</link>
+        <link>http://localhost:25803/p/multiappapproval/</link>
         <pubDate>Thu, 28 Aug 2025 09:10:17 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/multiappapproval/</guid>
-        <description>&lt;img src="http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/cover.png" alt="Featured image of post Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)" /&gt;&lt;p&gt;If you’ve ever woken up in a cold sweat wondering, “What if one of my admin accounts got compromised and someone wiped 5,000 devices overnight?” Firstly, you need more restful sleep, but second, Microsoft has finally heard you.&lt;/p&gt;
+        <guid>http://localhost:25803/p/multiappapproval/</guid>
+        <description>&lt;img src="http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/cover.png" alt="Featured image of post Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)" /&gt;&lt;p&gt;If you’ve ever woken up in a cold sweat wondering, “What if one of my admin accounts got compromised and someone wiped 5,000 devices overnight?” Firstly, you need more restful sleep, but second, Microsoft has finally heard you.&lt;/p&gt;
 &lt;p&gt;Enter &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/multi-admin-approval&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Multiple Administrative Approval (MAA)&lt;/a&gt; in Intune. Think of it like that classic buddy system from school trips, you can’t make a move without a partner watching you. Except instead of making sure you don’t wander off at the museum gift shop, MAA makes sure no single admin can make big changes to your tenant without someone else giving the thumbs up. Good Right?&lt;/p&gt;
 &lt;p&gt;Here’s the gist:&lt;/p&gt;
@@ -550,10 +753,10 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
 &lt;li&gt;On the Approvers page, select &lt;kbd&gt;Add groups&lt;/kbd&gt; and pick which group of admins will approve changes for this policy.
 Important: You can’t exclude groups or get fancy with scoping here—it’s one group, one policy, all users.&lt;/li&gt;
 &lt;li&gt;Review your settings, and add a &amp;lsquo;business justification&amp;rsquo; for the approver. Something like this;
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy.png&#34;
 	width=&#34;770&#34;
 	height=&#34;655&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_55ae87f5c387ca0c.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_e530f02f41453d1a.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_55ae87f5c387ca0c.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_e530f02f41453d1a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Review Policy before submission&#34;
@@ -567,10 +770,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 &lt;li&gt;Then hit &lt;kbd&gt;Submit for Approval&lt;/kbd&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;At this point, your shiny new policy is created, but it’s not live until it’s approved. You&amp;rsquo;ll see this under My Requests
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval.png&#34;
 	width=&#34;1392&#34;
 	height=&#34;240&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_c5c65551991ed37b.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_321b692c4fe013dc.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_c5c65551991ed37b.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_321b692c4fe013dc.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Pending Approval&#34;
@@ -586,10 +789,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 &lt;li&gt;Sign out of your first admin account and sign back in with a different admin account that’s either an GA, Intune Admin or has the permission Approve MAA within RBAC.&lt;/li&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;Tenant administration &amp;gt; Multi Admin Approval &amp;gt; All requests&lt;/kbd&gt;.&lt;/li&gt;
 &lt;li&gt;Find the pending request for your new access policy.
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest.png&#34;
 	width=&#34;1393&#34;
 	height=&#34;234&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_1b1e6862478c43eb.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_df9f5486a21f1212.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_1b1e6862478c43eb.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_df9f5486a21f1212.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Approval Request&#34;
@@ -602,10 +805,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 &gt;&lt;/li&gt;
 &lt;li&gt;Open it up, review the details (including the justification) and add in your &lt;/kbd&gt;approver notes&lt;/kbd&gt;. This is required&lt;/li&gt;
 &lt;li&gt;Then hit &lt;kbd&gt;Approve request&lt;/kbd&gt; (or reject request if your future self is having second thoughts).
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approve.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approve.png&#34;
 	width=&#34;1107&#34;
 	height=&#34;863&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_eba0e387f1cd9c04.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_585ce8b8549e8cdf.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_eba0e387f1cd9c04.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_585ce8b8549e8cdf.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Approve&#34;
@@ -617,10 +820,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 	
 &gt;&lt;/li&gt;
 &lt;li&gt;You&amp;rsquo;ll then see the policy as approved, if you refresh the page.
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approved.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approved.png&#34;
 	width=&#34;1390&#34;
 	height=&#34;75&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_2ec8c84c1518cf5e.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_e4bce4c0b316b735.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_2ec8c84c1518cf5e.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_e4bce4c0b316b735.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Approved&#34;
@@ -638,10 +841,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 &lt;li&gt;Sign out of your second admin account and sign back in with the fist admin account.&lt;/li&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;Tenant administration &amp;gt; Multi Admin Approval &amp;gt; My requests&lt;/kbd&gt;.&lt;/li&gt;
 &lt;li&gt;You&amp;rsquo;ll see your new policy as approved
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approved2.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approved2.png&#34;
 	width=&#34;1381&#34;
 	height=&#34;239&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_31efe2ba4d7c3d76.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_29a5cfa2ea0cd3f8.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_31efe2ba4d7c3d76.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_29a5cfa2ea0cd3f8.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Approved for second admin&#34;
@@ -653,10 +856,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 	
 &gt;&lt;/li&gt;
 &lt;li&gt;Select the policy and select &lt;kbd&gt;Complete request&lt;/kbd&gt;.
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest.png&#34;
 	width=&#34;1114&#34;
 	height=&#34;860&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_c12b7d3eb9f4fc86.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_fcac3ccb84f13d61.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_c12b7d3eb9f4fc86.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_fcac3ccb84f13d61.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Complete Request&#34;
@@ -674,10 +877,10 @@ Important: You can’t exclude groups or get fancy with scoping here—it’s on
 &lt;ol&gt;
 &lt;li&gt;The Admin Makes a Change
 Imagine an admin tries to wipe a device (or maybe deploy a script). Normally, that action would go straight through. But now, when they hit save, Intune steps in and says: “Hold on, explain yourself.” A Business justification box appears at the bottom of the screen. The admin types in why the change is needed—something like “User lost laptop on the train again” (we all know that person).
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/WipeAction.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/WipeAction.png&#34;
 	width=&#34;770&#34;
 	height=&#34;301&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_1e9e502e024bceab.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_97c06190fb5dc94.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_1e9e502e024bceab.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_97c06190fb5dc94.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Wipe Action&#34;
@@ -690,10 +893,10 @@ Imagine an admin tries to wipe a device (or maybe deploy a script). Normally, th
 &gt;&lt;/li&gt;
 &lt;li&gt;The Request Gets Parked
 Instead of being processed immediately, the request now sits in limbo under My requests in the Intune admin center. The status will show as Needs approval.
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending.png&#34;
 	width=&#34;1392&#34;
 	height=&#34;238&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_a2eb88736b6205ee.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_8f2e68905935e838.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_a2eb88736b6205ee.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_8f2e68905935e838.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Device Action Pending Approval&#34;
@@ -707,10 +910,10 @@ Instead of being processed immediately, the request now sits in limbo under My r
 &lt;li&gt;The Approver Steps In
 Another admin, one who’s in the designated approver group, logs into Intune and heads to &lt;kbd&gt;Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Received requests&lt;/kbd&gt;.
 They’ll see the pending request, complete with details of what action was attempted, who submitted it, and that all-important &amp;lsquo;business justification&amp;rsquo;.
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2.png&#34;
 	width=&#34;1112&#34;
 	height=&#34;858&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_88fa941755cb8244.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_4ea6c3694671a3dd.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_88fa941755cb8244.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_4ea6c3694671a3dd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Device Action Pending Approval for second admin&#34;
@@ -725,10 +928,10 @@ They’ll see the pending request, complete with details of what action was atte
 The approver can either hit Approve or Reject, and they’ve got a notes field to leave comments—helpful for feedback, or the occasional passive-aggressive remark like “Stop wiping devices on Friday afternoons.”&lt;/li&gt;
 &lt;li&gt;The Requestor Finishes the Job
 Here’s the twist: even after approval, the original requestor has to go back in and hit Complete before the action actually happens. This ensures the person who started the process is still in the loop. Once completed, the status updates to Completed, and Intune carries out the change.
-&lt;img src=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved.png&#34;
 	width=&#34;1116&#34;
 	height=&#34;858&#34;
-	srcset=&#34;http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_78271518956b2f3e.png 480w, http://localhost:11841/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_f774fc67933caa3b.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_78271518956b2f3e.png 480w, http://localhost:25803/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_f774fc67933caa3b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Device Action Approved&#34;
@@ -751,11 +954,11 @@ If the request is rejected, the notes from the approver are visible to the reque
         </item>
         <item>
         <title>Windows Hello for Business and Cloud Kerberos Authentication</title>
-        <link>http://localhost:11841/p/whfbcloudkerberos/</link>
+        <link>http://localhost:25803/p/whfbcloudkerberos/</link>
         <pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/whfbcloudkerberos/</guid>
-        <description>&lt;img src="http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
+        <guid>http://localhost:25803/p/whfbcloudkerberos/</guid>
+        <description>&lt;img src="http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
 &lt;h2 id=&#34;why-might-you-need-it&#34;&gt;Why might you need it?
 &lt;/h2&gt;&lt;p&gt;Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p&gt;
 &lt;h3 id=&#34;alternatives&#34;&gt;Alternatives
@@ -806,10 +1009,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;You should see something like this&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png&#34;
 	width=&#34;634&#34;
 	height=&#34;247&#34;
-	srcset=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Confirmation of Deployment&#34;
@@ -821,10 +1024,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;458&#34;
-	srcset=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Disabled User Object&#34;
@@ -835,10 +1038,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 		data-flex-basis=&#34;559px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png&#34;
 	width=&#34;1066&#34;
 	height=&#34;456&#34;
-	srcset=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Enabled Device Object&#34;
@@ -857,10 +1060,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;li&gt;Create Windows Hello for Business Configuration Profile&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png&#34;
 	width=&#34;615&#34;
 	height=&#34;831&#34;
-	srcset=&#34;http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, http://localhost:11841/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, http://localhost:25803/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Enabled Device Object&#34;
@@ -886,11 +1089,11 @@ If the request is rejected, the notes from the approver are visible to the reque
         </item>
         <item>
         <title>Deploy SOLUS 3 for SIMS</title>
-        <link>http://localhost:11841/p/deploysims/</link>
+        <link>http://localhost:25803/p/deploysims/</link>
         <pubDate>Wed, 29 Jan 2025 19:45:32 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/deploysims/</guid>
-        <description>&lt;img src="http://localhost:11841/p/deploysims/post/InstallSims/img/cover.png" alt="Featured image of post Deploy SOLUS 3 for SIMS" /&gt;&lt;p&gt;On a recent engagement in my day job, I had a challenge to deploy Solus3 agent to Microsoft Entra joined devices. These devices were enrolled via Windows Autopilot and no longer domain joined. The existing deployment deployed the Solus3 agent via a targeted AD OU, which deploys the agent via the deployment server. This of course, isn’t possible with Entra joined devices.&lt;/p&gt;
+        <guid>http://localhost:25803/p/deploysims/</guid>
+        <description>&lt;img src="http://localhost:25803/p/deploysims/post/InstallSims/img/cover.png" alt="Featured image of post Deploy SOLUS 3 for SIMS" /&gt;&lt;p&gt;On a recent engagement in my day job, I had a challenge to deploy Solus3 agent to Microsoft Entra joined devices. These devices were enrolled via Windows Autopilot and no longer domain joined. The existing deployment deployed the Solus3 agent via a targeted AD OU, which deploys the agent via the deployment server. This of course, isn’t possible with Entra joined devices.&lt;/p&gt;
 &lt;p&gt;To get this to work, its a wrap within a wrap. Keeping it as close the production or what your using or how you might already deploy the app as close the the existing deployment but with a few tweaks. Anyways for now, here are the steps to deploy the agent via Microsoft Intune. After all, it’s why you’re here 🙂&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;It should be noted that this approach to deployment is NOT supported. Do so at your own risk. You may still need to keep an instance of a supported deployment. This will allow you to replicate the any issue on a supported deployment for escalation.&lt;/p&gt;
@@ -976,10 +1179,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Save the AgentInstaller.js file in your newly created SIMS folder. Your folder should then look something like this.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-1.png&#34;
 	width=&#34;258&#34;
 	height=&#34;193&#34;
-	srcset=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-1_hu_76715fd85077e857.png 480w, http://localhost:11841/p/deploysims/post/InstallSims/img/image-1_hu_cdaa27a93d01e402.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-1_hu_76715fd85077e857.png 480w, http://localhost:25803/p/deploysims/post/InstallSims/img/image-1_hu_cdaa27a93d01e402.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Install Files&#34;
@@ -994,10 +1197,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/h3&gt;&lt;p&gt;I’ll assume you already know how to wrap packages via &lt;a class=&#34;link&#34; href=&#34;https://go.microsoft.com/fwlink/?linkid=2065730&#34;  title=&#34;Microsoft Win32 Content Prep Tool&#34;
      target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Microsoft Win32 Content Prep Tool&lt;/a&gt;. Packing the content should look something like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-2.png&#34;
 	width=&#34;588&#34;
 	height=&#34;116&#34;
-	srcset=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-2_hu_405465bf0873d17e.png 480w, http://localhost:11841/p/deploysims/post/InstallSims/img/image-2_hu_b9fc634c6a1c9a94.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-2_hu_405465bf0873d17e.png 480w, http://localhost:25803/p/deploysims/post/InstallSims/img/image-2_hu_b9fc634c6a1c9a94.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Microsoft Win32 Content Prep Tool&#34;
@@ -1022,10 +1225,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;It should look like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-3.png&#34;
 	width=&#34;774&#34;
 	height=&#34;547&#34;
-	srcset=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-3_hu_58f71c649c2862a3.png 480w, http://localhost:11841/p/deploysims/post/InstallSims/img/image-3_hu_29bf22cd539d43ac.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-3_hu_58f71c649c2862a3.png 480w, http://localhost:25803/p/deploysims/post/InstallSims/img/image-3_hu_29bf22cd539d43ac.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Microsoft Intune Install Commands&#34;
@@ -1054,10 +1257,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;It should look like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-4.png&#34;
 	width=&#34;557&#34;
 	height=&#34;234&#34;
-	srcset=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-4_hu_b8642a77f09f8826.png 480w, http://localhost:11841/p/deploysims/post/InstallSims/img/image-4_hu_bc05dfdc1ed36592.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-4_hu_b8642a77f09f8826.png 480w, http://localhost:25803/p/deploysims/post/InstallSims/img/image-4_hu_bc05dfdc1ed36592.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Microsoft Intune App Detection&#34;
@@ -1072,10 +1275,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/h2&gt;&lt;p&gt;Assign your newly created and updated app to users or devices as you desire.&lt;/p&gt;
 &lt;h3 id=&#34;success&#34;&gt;Success?
 &lt;/h3&gt;&lt;p&gt;You should now have the app installed.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-5.png&#34;
 	width=&#34;962&#34;
 	height=&#34;540&#34;
-	srcset=&#34;http://localhost:11841/p/deploysims/post/InstallSims/img/image-5_hu_caffd6a6d41a374.png 480w, http://localhost:11841/p/deploysims/post/InstallSims/img/image-5_hu_973945a4cfcd80cf.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/deploysims/post/InstallSims/img/image-5_hu_caffd6a6d41a374.png 480w, http://localhost:25803/p/deploysims/post/InstallSims/img/image-5_hu_973945a4cfcd80cf.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Installation Success&#34;
@@ -1096,16 +1299,16 @@ If the request is rejected, the notes from the approver are visible to the reque
         </item>
         <item>
         <title>Missing Microsoft Enrolment App</title>
-        <link>http://localhost:11841/p/recreateenrolmentapp/</link>
+        <link>http://localhost:25803/p/recreateenrolmentapp/</link>
         <pubDate>Mon, 22 Jan 2024 10:59:19 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/recreateenrolmentapp/</guid>
-        <description>&lt;img src="http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" /&gt;&lt;p&gt;Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p&gt;
+        <guid>http://localhost:25803/p/recreateenrolmentapp/</guid>
+        <description>&lt;img src="http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" /&gt;&lt;p&gt;Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p&gt;
 &lt;p&gt;As you can see below, the Microsoft Intune app is missing from the Mobility MDM and WIP page.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png&#34;
 	width=&#34;474&#34;
 	height=&#34;223&#34;
-	srcset=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_149ae6245f80ea59.png 480w, http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_1f6a1c3cc9ab2c2d.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_149ae6245f80ea59.png 480w, http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_1f6a1c3cc9ab2c2d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Missing Enrolment App&#34;
@@ -1117,10 +1320,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;As you can also see, it’s missing from the Target Resources within the Conditional Access Policies.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png&#34;
 	width=&#34;889&#34;
 	height=&#34;569&#34;
-	srcset=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_b4d59fee4348dda3.png 480w, http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_986cb2746ac23284.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_b4d59fee4348dda3.png 480w, http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_986cb2746ac23284.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Conditional Access Selection&#34;
@@ -1134,10 +1337,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;p&gt;To resolve the issue, we need a way of recreating the app that Microsoft will recognise as the Intune enrolment app, we can’t simply create an Enterprise Application called the same name. We’ll do this by creating a new Service Principle.&lt;/p&gt;
 &lt;p&gt;First, we’re going to login to Entra ID using Powershell.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Connect-AzureAD&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png&#34;
 	width=&#34;951&#34;
 	height=&#34;211&#34;
-	srcset=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_778087c9b4995078.png 480w, http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_3a1557af93c77bcc.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_778087c9b4995078.png 480w, http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_3a1557af93c77bcc.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Connect to Entra&#34;
@@ -1155,10 +1358,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;p&gt;Once complete, we’re now going to recreate it. Don’t make any changes to the command.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;New-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;To confirm it’s created, PS will show you the new Service Principle with the correct display name of the require Intune enrollment app.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png&#34;
 	width=&#34;975&#34;
 	height=&#34;205&#34;
-	srcset=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_27ce7b049dcda6d0.png 480w, http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_1d96ea3f53c16b2b.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_27ce7b049dcda6d0.png 480w, http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_1d96ea3f53c16b2b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Create Entra Service Principal&#34;
@@ -1170,10 +1373,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;We can now also see the app listed in the Mobility page&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png&#34;
 	width=&#34;458&#34;
 	height=&#34;267&#34;
-	srcset=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_dfcaba243878ab7b.png 480w, http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_f847b448a2cef91.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_dfcaba243878ab7b.png 480w, http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_f847b448a2cef91.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Mobility Page&#34;
@@ -1185,10 +1388,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;And, if you now select the app from the CA policy, it should be listed. You’ll need to refresh the page if you still have it open from checking previously.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png&#34;
 	width=&#34;900&#34;
 	height=&#34;568&#34;
-	srcset=&#34;http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_49ecd5a2d22e3b8b.png 480w, http://localhost:11841/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_d88e477dc2e03f28.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_49ecd5a2d22e3b8b.png 480w, http://localhost:25803/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_d88e477dc2e03f28.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Updated Conditional Access Selection&#34;
@@ -1204,11 +1407,11 @@ If the request is rejected, the notes from the approver are visible to the reque
         </item>
         <item>
         <title>MAM for Windows</title>
-        <link>http://localhost:11841/p/mamforwindows/</link>
+        <link>http://localhost:25803/p/mamforwindows/</link>
         <pubDate>Fri, 13 Oct 2023 11:18:38 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/mamforwindows/</guid>
-        <description>&lt;img src="http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
+        <guid>http://localhost:25803/p/mamforwindows/</guid>
+        <description>&lt;img src="http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
 &lt;p&gt;So we know what is it but how does it work? If all the requirements are met, once setup, the user just has to sign in to Office and they’ll be taken through the process and well apart from one slightly misleading screen where it could all come crashing down, more on that later, it’s a fairly easy process for users to follow and makes accessing M365 almost easier.&lt;/p&gt;
 &lt;p&gt;We’ll take a look at&lt;/p&gt;
 &lt;ol&gt;
@@ -1233,10 +1436,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;ol&gt;
 &lt;li&gt;they’ll sign into Office.com with their organisational account&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-1.png&#34;
 	width=&#34;458&#34;
 	height=&#34;552&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Sign In&#34;
@@ -1250,10 +1453,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;User will be asked to create a work profile, they simply need to select the account and select the Sign in to Sync data and they’ll then be prompted for their password.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-2.png&#34;
 	width=&#34;422&#34;
 	height=&#34;334&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Continue with Work Account&#34;
@@ -1270,10 +1473,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;blockquote&gt;
 &lt;p&gt;they only sign into the app by selecting No, this won’t register the device and they’ll get stuck in a loop with MS Edge asking them to sign in and create a work profile. You have been warned.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-4.png&#34;
 	width=&#34;657&#34;
 	height=&#34;642&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Management selection&#34;
@@ -1287,10 +1490,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;ol start=&#34;5&#34;&gt;
 &lt;li&gt;Once signed in, the work profile will be created, a couple of customisation screens will appear, they can tailor the browser or simply just click Continue, Next and Done.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-5.png&#34;
 	width=&#34;768&#34;
 	height=&#34;480&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Edge Setup&#34;
@@ -1304,10 +1507,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;p&gt;And its done. A user will now have SSO when they use the Microsoft Edge browser using the newly created Work Profile.&lt;/p&gt;
 &lt;h2 id=&#34;in-practice&#34;&gt;In Practice…
 &lt;/h2&gt;&lt;p&gt;Here’s the subtle difference between the Personal and Work profiles signed in and how you can select between the two.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-6.png&#34;
 	width=&#34;333&#34;
 	height=&#34;434&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Work Profile&#34;
@@ -1317,10 +1520,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 		data-flex-grow=&#34;76&#34;
 		data-flex-basis=&#34;184px&#34;
 	
-&gt;, &lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-7.png&#34;
+&gt;, &lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-7.png&#34;
 	width=&#34;249&#34;
 	height=&#34;300&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Personal Profile&#34;
@@ -1332,10 +1535,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Trying to download files from OneDrive / SharePoint is blocked (as per our requirement) along with the ability to download the Office installer, rather unexpectedly but when you think about it logically, you can understand why.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-8.png&#34;
 	width=&#34;522&#34;
 	height=&#34;260&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prevented Action&#34;
@@ -1345,10 +1548,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 		data-flex-grow=&#34;200&#34;
 		data-flex-basis=&#34;481px&#34;
 	
-&gt;, &lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-9.png&#34;
+&gt;, &lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-9.png&#34;
 	width=&#34;768&#34;
 	height=&#34;543&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Blocked Download&#34;
@@ -1368,10 +1571,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;li&gt;Health Checks (otherwise known as Conditional Launch)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Data Protection allows admins to select where the managed profile can receive data from, send and receive organisational data, whether to allow cut, copy and past and decide if users can print organisational data.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-10.png&#34;
 	width=&#34;361&#34;
 	height=&#34;109&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Protection - Data Controls&#34;
@@ -1383,10 +1586,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Health Checks allow admins to set criteria that must be met before a user can access M365 data via the work profile, such as Minimum OS, Minimum Edge version and id their account is disabled. It can also use the devices risk score from Microsoft Defender for Endpoint if used to secure unmanaged devices. (we’ll not cover this aspect here)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-11.png&#34;
 	width=&#34;744&#34;
 	height=&#34;183&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Protection - Health Check&#34;
@@ -1402,10 +1605,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;/h3&gt;&lt;p&gt;The Conditional Access Policy is created within Intune or Entra ID – Conditional Access – Microsoft Intune admin center and you’ll need the role of Conditional Access Admin or Global Admin (GA) to create this policy.&lt;/p&gt;
 &lt;p&gt;This article isn’t designed to teach you how to use CA policies, if you are unfamiliar with these, improve your knowledge here – What is Conditional Access in Microsoft Entra ID? | Microsoft Learn&lt;/p&gt;
 &lt;p&gt;Below is the policy that I created, targeting O365 apps, on windows, via a browser to require app protection. My policy did not follow the Microsoft guidance to either require app protection or require a compliant device. Consider your use case carefully.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-12.png&#34;
 	width=&#34;979&#34;
 	height=&#34;524&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Conditional Access&#34;
@@ -1418,10 +1621,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;what-else-did-we-see&#34;&gt;What else did we see…
 &lt;/h3&gt;&lt;p&gt;An interesting one here, the Minimum OS was originally set to block older OS but regardless of the version of OS, I found that it always blocked it, even if the OS version was higher. As you can see from below, I changed this to warn so that I could continue but it’s still complaining, despite the Windows version being equal.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-13.png&#34;
 	width=&#34;809&#34;
 	height=&#34;289&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Protection Health Check in action&#34;
@@ -1447,16 +1650,16 @@ If the request is rejected, the notes from the approver are visible to the reque
         </item>
         <item>
         <title>Company Portal Set up</title>
-        <link>http://localhost:11841/p/companyportal/</link>
+        <link>http://localhost:25803/p/companyportal/</link>
         <pubDate>Tue, 22 Nov 2022 14:40:57 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/companyportal/</guid>
-        <description>&lt;img src="http://localhost:11841/p/companyportal/post/CompanyPortal/img/cover.png" alt="Featured image of post Company Portal Set up" /&gt;&lt;p&gt;If you’re in a Hybrid environment using SCCM and Intune already or in the process of moving to a Hybrid deployment, a decision that will need to be made is where you direct users to install applications.&lt;/p&gt;
+        <guid>http://localhost:25803/p/companyportal/</guid>
+        <description>&lt;img src="http://localhost:25803/p/companyportal/post/CompanyPortal/img/cover.png" alt="Featured image of post Company Portal Set up" /&gt;&lt;p&gt;If you’re in a Hybrid environment using SCCM and Intune already or in the process of moving to a Hybrid deployment, a decision that will need to be made is where you direct users to install applications.&lt;/p&gt;
 &lt;p&gt;Many of you may have already deployed the company portal but in this post; I’ll look at the benefits of deploying company portal to Windows devices, how to deploy it to devices, what’s visible within Company Portal and what the user experience is.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-1.png&#34;
 	width=&#34;720&#34;
 	height=&#34;451&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-1_hu_c7075a82912c2056.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-1_hu_12b630db80f4aa01.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-1_hu_c7075a82912c2056.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-1_hu_12b630db80f4aa01.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Software Center&#34;
@@ -1467,10 +1670,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 		data-flex-basis=&#34;383px&#34;
 	
 &gt;
-&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-2.png&#34;
+&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-2.png&#34;
 	width=&#34;1024&#34;
 	height=&#34;750&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-2_hu_df9cd7ac7852d7ca.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-2_hu_59626fd052c757b6.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-2_hu_df9cd7ac7852d7ca.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-2_hu_59626fd052c757b6.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Company Portal&#34;
@@ -1486,10 +1689,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;h2 id=&#34;how-to-deploy-company-portal&#34;&gt;How to deploy Company Portal
 &lt;/h2&gt;&lt;p&gt;In this example, we’ll use the new Microsoft store experience natively built into Intune.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Open Intune via https://endpoint.microsoft.com as a Global Admin or Intune Administrator. Navigate to Apps&amp;gt;Windows Devices&amp;gt; Add App, select the App type, “Microsoft Store app (new)”&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-3.png&#34;
 	width=&#34;1536&#34;
 	height=&#34;506&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-3_hu_d0f4399c630061d0.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-3_hu_522aa005c07a915b.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-3_hu_d0f4399c630061d0.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-3_hu_522aa005c07a915b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Windows App List&#34;
@@ -1501,10 +1704,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Search and select Company Portal&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-4.png&#34;
 	width=&#34;844&#34;
 	height=&#34;248&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-4_hu_889f740b541b1c68.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-4_hu_651427c430a32784.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-4_hu_889f740b541b1c68.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-4_hu_651427c430a32784.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Search for Company Portal&#34;
@@ -1517,10 +1720,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Confirm the app details.&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;One thing to note is with the new store experience, apps do not have application Icons (a bit like SCCM doesn’t, you;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-5.png&#34;
 	width=&#34;796&#34;
 	height=&#34;907&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-5_hu_b3abe8e454e8540c.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-5_hu_618e2a31f7da26ac.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-5_hu_b3abe8e454e8540c.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-5_hu_618e2a31f7da26ac.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Update App details&#34;
@@ -1540,10 +1743,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;li&gt;Office Online Applications&lt;/li&gt;
 &lt;li&gt;Configuration Manager Applications&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-6.png&#34;
 	width=&#34;823&#34;
 	height=&#34;654&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-6_hu_826b649d4a0c1d59.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-6_hu_bb87ed3a22511be6.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-6_hu_826b649d4a0c1d59.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-6_hu_bb87ed3a22511be6.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Tenant Branding within Intune&#34;
@@ -1556,10 +1759,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &gt;&lt;/p&gt;
 &lt;p&gt;The defaults are shown above. To change these defaults –&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Scroll up to edit, scroll down to App Sources and change the hide to show as necessary before selecting Review and Save.&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-7.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-7.png&#34;
 	width=&#34;533&#34;
 	height=&#34;186&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-7_hu_c73a3660ff378b56.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-7_hu_10ac1061fc583a1c.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-7_hu_c73a3660ff378b56.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-7_hu_10ac1061fc583a1c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Sources&#34;
@@ -1576,10 +1779,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;code&gt;Navigate to Administration&amp;gt;Client Settings, right click and create a Custom Device Client setting&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;!Configuration Manager Client Settings](img/image-8.png)&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Give the client device setting a name, I’ve gone for “Company Portal Workload”, tick the option of software centre&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-9.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-9.png&#34;
 	width=&#34;777&#34;
 	height=&#34;724&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-9_hu_81586a73800170e6.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-9_hu_48e502bd934e753e.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-9_hu_81586a73800170e6.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-9_hu_48e502bd934e753e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Custom Client Settings&#34;
@@ -1591,10 +1794,10 @@ If the request is rejected, the notes from the approver are visible to the reque
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Select on Software Center and under device settings, change the select the user portal from Software Center to Company Portal and click OK&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-10.png&#34;
 	width=&#34;778&#34;
 	height=&#34;724&#34;
-	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-10_hu_5f77e5177d9f64a8.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-10_hu_c6170f66a20e90bb.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-10_hu_5f77e5177d9f64a8.png 480w, http://localhost:25803/p/companyportal/post/CompanyPortal/img/image-10_hu_c6170f66a20e90bb.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Custom Client Settings Continued&#34;

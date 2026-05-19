@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>App Protection on endpointmgt.com</title>
-        <link>http://localhost:11841/tags/app-protection/</link>
+        <link>http://localhost:25803/tags/app-protection/</link>
         <description>Recent content in App Protection on endpointmgt.com</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 13 Oct 2023 11:18:38 +0100</lastBuildDate><atom:link href="http://localhost:11841/tags/app-protection/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 13 Oct 2023 11:18:38 +0100</lastBuildDate><atom:link href="http://localhost:25803/tags/app-protection/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>MAM for Windows</title>
-        <link>http://localhost:11841/p/mamforwindows/</link>
+        <link>http://localhost:25803/p/mamforwindows/</link>
         <pubDate>Fri, 13 Oct 2023 11:18:38 +0100</pubDate>
         
-        <guid>http://localhost:11841/p/mamforwindows/</guid>
-        <description>&lt;img src="http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
+        <guid>http://localhost:25803/p/mamforwindows/</guid>
+        <description>&lt;img src="http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
 &lt;p&gt;So we know what is it but how does it work? If all the requirements are met, once setup, the user just has to sign in to Office and they’ll be taken through the process and well apart from one slightly misleading screen where it could all come crashing down, more on that later, it’s a fairly easy process for users to follow and makes accessing M365 almost easier.&lt;/p&gt;
 &lt;p&gt;We’ll take a look at&lt;/p&gt;
 &lt;ol&gt;
@@ -37,10 +37,10 @@
 &lt;ol&gt;
 &lt;li&gt;they’ll sign into Office.com with their organisational account&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-1.png&#34;
 	width=&#34;458&#34;
 	height=&#34;552&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Sign In&#34;
@@ -54,10 +54,10 @@
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;User will be asked to create a work profile, they simply need to select the account and select the Sign in to Sync data and they’ll then be prompted for their password.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-2.png&#34;
 	width=&#34;422&#34;
 	height=&#34;334&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Continue with Work Account&#34;
@@ -74,10 +74,10 @@
 &lt;blockquote&gt;
 &lt;p&gt;they only sign into the app by selecting No, this won’t register the device and they’ll get stuck in a loop with MS Edge asking them to sign in and create a work profile. You have been warned.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-4.png&#34;
 	width=&#34;657&#34;
 	height=&#34;642&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Management selection&#34;
@@ -91,10 +91,10 @@
 &lt;ol start=&#34;5&#34;&gt;
 &lt;li&gt;Once signed in, the work profile will be created, a couple of customisation screens will appear, they can tailor the browser or simply just click Continue, Next and Done.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-5.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-5.png&#34;
 	width=&#34;768&#34;
 	height=&#34;480&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Edge Setup&#34;
@@ -108,10 +108,10 @@
 &lt;p&gt;And its done. A user will now have SSO when they use the Microsoft Edge browser using the newly created Work Profile.&lt;/p&gt;
 &lt;h2 id=&#34;in-practice&#34;&gt;In Practice…
 &lt;/h2&gt;&lt;p&gt;Here’s the subtle difference between the Personal and Work profiles signed in and how you can select between the two.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-6.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-6.png&#34;
 	width=&#34;333&#34;
 	height=&#34;434&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Work Profile&#34;
@@ -121,10 +121,10 @@
 		data-flex-grow=&#34;76&#34;
 		data-flex-basis=&#34;184px&#34;
 	
-&gt;, &lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-7.png&#34;
+&gt;, &lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-7.png&#34;
 	width=&#34;249&#34;
 	height=&#34;300&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Personal Profile&#34;
@@ -136,10 +136,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Trying to download files from OneDrive / SharePoint is blocked (as per our requirement) along with the ability to download the Office installer, rather unexpectedly but when you think about it logically, you can understand why.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-8.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-8.png&#34;
 	width=&#34;522&#34;
 	height=&#34;260&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Prevented Action&#34;
@@ -149,10 +149,10 @@
 		data-flex-grow=&#34;200&#34;
 		data-flex-basis=&#34;481px&#34;
 	
-&gt;, &lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-9.png&#34;
+&gt;, &lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-9.png&#34;
 	width=&#34;768&#34;
 	height=&#34;543&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Blocked Download&#34;
@@ -172,10 +172,10 @@
 &lt;li&gt;Health Checks (otherwise known as Conditional Launch)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Data Protection allows admins to select where the managed profile can receive data from, send and receive organisational data, whether to allow cut, copy and past and decide if users can print organisational data.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-10.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-10.png&#34;
 	width=&#34;361&#34;
 	height=&#34;109&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Protection - Data Controls&#34;
@@ -187,10 +187,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Health Checks allow admins to set criteria that must be met before a user can access M365 data via the work profile, such as Minimum OS, Minimum Edge version and id their account is disabled. It can also use the devices risk score from Microsoft Defender for Endpoint if used to secure unmanaged devices. (we’ll not cover this aspect here)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-11.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-11.png&#34;
 	width=&#34;744&#34;
 	height=&#34;183&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Protection - Health Check&#34;
@@ -206,10 +206,10 @@
 &lt;/h3&gt;&lt;p&gt;The Conditional Access Policy is created within Intune or Entra ID – Conditional Access – Microsoft Intune admin center and you’ll need the role of Conditional Access Admin or Global Admin (GA) to create this policy.&lt;/p&gt;
 &lt;p&gt;This article isn’t designed to teach you how to use CA policies, if you are unfamiliar with these, improve your knowledge here – What is Conditional Access in Microsoft Entra ID? | Microsoft Learn&lt;/p&gt;
 &lt;p&gt;Below is the policy that I created, targeting O365 apps, on windows, via a browser to require app protection. My policy did not follow the Microsoft guidance to either require app protection or require a compliant device. Consider your use case carefully.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-12.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-12.png&#34;
 	width=&#34;979&#34;
 	height=&#34;524&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Conditional Access&#34;
@@ -222,10 +222,10 @@
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;what-else-did-we-see&#34;&gt;What else did we see…
 &lt;/h3&gt;&lt;p&gt;An interesting one here, the Minimum OS was originally set to block older OS but regardless of the version of OS, I found that it always blocked it, even if the OS version was higher. As you can see from below, I changed this to warn so that I could continue but it’s still complaining, despite the Windows version being equal.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-13.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-13.png&#34;
 	width=&#34;809&#34;
 	height=&#34;289&#34;
-	srcset=&#34;http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, http://localhost:11841/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w&#34;
+	srcset=&#34;http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, http://localhost:25803/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;App Protection Health Check in action&#34;
