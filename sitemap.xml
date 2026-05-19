@@ -2,147 +2,147 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>http://localhost:46528/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/authentication/</loc>
+    <loc>http://localhost:46528/tags/authentication/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://localhost:46528/categories/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/configuration/</loc>
+    <loc>http://localhost:46528/categories/configuration/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/intune/</loc>
+    <loc>http://localhost:46528/categories/intune/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/login/</loc>
+    <loc>http://localhost:46528/tags/login/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>http://localhost:46528/post/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/nonupnsignin/</loc>
+    <loc>http://localhost:46528/p/nonupnsignin/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>http://localhost:46528/tags/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/windows/</loc>
+    <loc>http://localhost:46528/tags/windows/</loc>
     <lastmod>2025-09-04T13:11:54+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/conditional-access/</loc>
+    <loc>http://localhost:46528/categories/conditional-access/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/conditional-access/</loc>
+    <loc>http://localhost:46528/tags/conditional-access/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/intune-shared-devices-mfa-conditional-access/</loc>
+    <loc>http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/mfa/</loc>
+    <loc>http://localhost:46528/tags/mfa/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/shared-devices/</loc>
+    <loc>http://localhost:46528/tags/shared-devices/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/windows/</loc>
+    <loc>http://localhost:46528/categories/windows/</loc>
     <lastmod>2025-09-01T16:23:48+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/admin/</loc>
+    <loc>http://localhost:46528/tags/admin/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/device-actions/</loc>
+    <loc>http://localhost:46528/tags/device-actions/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/multiappapproval/</loc>
+    <loc>http://localhost:46528/p/multiappapproval/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/rbac/</loc>
+    <loc>http://localhost:46528/categories/rbac/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rbac/</loc>
+    <loc>http://localhost:46528/tags/rbac/</loc>
     <lastmod>2025-08-28T09:10:17+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/passwordless/</loc>
+    <loc>http://localhost:46528/tags/passwordless/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/whfb/</loc>
+    <loc>http://localhost:46528/tags/whfb/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/windows-hello/</loc>
+    <loc>http://localhost:46528/categories/windows-hello/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/windows-hello-for-business/</loc>
+    <loc>http://localhost:46528/tags/windows-hello-for-business/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/whfbcloudkerberos/</loc>
+    <loc>http://localhost:46528/p/whfbcloudkerberos/</loc>
     <lastmod>2025-07-05T16:56:34+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/app-packaging/</loc>
+    <loc>http://localhost:46528/categories/app-packaging/</loc>
     <lastmod>2025-01-29T19:45:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/deploysims/</loc>
+    <loc>http://localhost:46528/p/deploysims/</loc>
     <lastmod>2025-01-29T19:45:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/sims/</loc>
+    <loc>http://localhost:46528/tags/sims/</loc>
     <lastmod>2025-01-29T19:45:32+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/data-protection/</loc>
+    <loc>http://localhost:46528/tags/data-protection/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/enrolment/</loc>
+    <loc>http://localhost:46528/categories/enrolment/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/enrolment/</loc>
+    <loc>http://localhost:46528/tags/enrolment/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/recreateenrolmentapp/</loc>
+    <loc>http://localhost:46528/p/recreateenrolmentapp/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/zero-trust/</loc>
+    <loc>http://localhost:46528/tags/zero-trust/</loc>
     <lastmod>2024-01-22T10:59:19+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/app-protection/</loc>
+    <loc>http://localhost:46528/categories/app-protection/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/app-protection/</loc>
+    <loc>http://localhost:46528/tags/app-protection/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/mam/</loc>
+    <loc>http://localhost:46528/categories/mam/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/mamforwindows/</loc>
+    <loc>http://localhost:46528/p/mamforwindows/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/mam-for-windows/</loc>
+    <loc>http://localhost:46528/tags/mam-for-windows/</loc>
     <lastmod>2023-10-13T11:18:38+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/company-portal/</loc>
+    <loc>http://localhost:46528/tags/company-portal/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/companyportal/</loc>
+    <loc>http://localhost:46528/p/companyportal/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/self-service/</loc>
+    <loc>http://localhost:46528/tags/self-service/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/software-deployments/</loc>
+    <loc>http://localhost:46528/tags/software-deployments/</loc>
     <lastmod>2022-11-22T14:40:57+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/</loc>
+    <loc>http://localhost:46528/page/</loc>
     <lastmod>2022-03-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>http://localhost:46528/posts/</loc>
     <lastmod>2022-03-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/example-category/</loc>
+    <loc>http://localhost:46528/categories/example-category/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>http://localhost:46528/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/links/</loc>
+    <loc>http://localhost:46528/links/</loc>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>http://localhost:46528/search/</loc>
   </url>
 </urlset>

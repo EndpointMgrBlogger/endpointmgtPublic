@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Windows Hello on endpointmgt.com</title>
-        <link>http://localhost:1313/categories/windows-hello/</link>
+        <link>http://localhost:46528/categories/windows-hello/</link>
         <description>Recent content in Windows Hello on endpointmgt.com</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 05 Jul 2025 16:56:34 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/windows-hello/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 05 Jul 2025 16:56:34 +0100</lastBuildDate><atom:link href="http://localhost:46528/categories/windows-hello/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Windows Hello for Business and Cloud Kerberos Authentication</title>
-        <link>http://localhost:1313/p/whfbcloudkerberos/</link>
+        <link>http://localhost:46528/p/whfbcloudkerberos/</link>
         <pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate>
         
-        <guid>http://localhost:1313/p/whfbcloudkerberos/</guid>
-        <description>&lt;img src="http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
+        <guid>http://localhost:46528/p/whfbcloudkerberos/</guid>
+        <description>&lt;img src="http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
 &lt;h2 id=&#34;why-might-you-need-it&#34;&gt;Why might you need it?
 &lt;/h2&gt;&lt;p&gt;Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p&gt;
 &lt;h3 id=&#34;alternatives&#34;&gt;Alternatives
@@ -63,10 +63,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;You should see something like this&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png&#34;
 	width=&#34;634&#34;
 	height=&#34;247&#34;
-	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w&#34;
+	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Confirmation of Deployment&#34;
@@ -78,10 +78,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;458&#34;
-	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w&#34;
+	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Disabled User Object&#34;
@@ -92,10 +92,10 @@
 		data-flex-basis=&#34;559px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png&#34;
 	width=&#34;1066&#34;
 	height=&#34;456&#34;
-	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w&#34;
+	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Enabled Device Object&#34;
@@ -114,10 +114,10 @@
 &lt;li&gt;Create Windows Hello for Business Configuration Profile&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png&#34;
 	width=&#34;615&#34;
 	height=&#34;831&#34;
-	srcset=&#34;http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, http://localhost:1313/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w&#34;
+	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Enabled Device Object&#34;
