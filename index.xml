@@ -1,74 +1,46 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>endpointmgt.com</title>
-        <link>http://localhost:46528/</link>
-        <description>Recent content on endpointmgt.com</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Thu, 04 Sep 2025 13:11:54 +0100</lastBuildDate><atom:link href="http://localhost:46528/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Sign into an Entra join device with only the SAM account name instead of the full UPN</title>
-        <link>http://localhost:46528/p/nonupnsignin/</link>
-        <pubDate>Thu, 04 Sep 2025 13:11:54 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/nonupnsignin/</guid>
-        <description>&lt;img src="http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/cover.png" alt="Featured image of post Sign into an Entra join device with only the SAM account name instead of the full UPN" /&gt;&lt;p&gt;So you&amp;rsquo;re making the leap into the world of Cloud only or cloud first and moving devices to Entra joined. Did you know the standard login process for entra join changes the way users sign in? By default, entra join devices will require the user to sign in with their work or school account, in other words, their Microsoft 365 email address or more accurately, their User Principle Name (UPN). Whereas domain or hybrid domain join devices will expect the user to login with their SAM Account Name.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>endpointmgt.com</title><link>https://endpointmgt.com/</link><description>Recent content on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 04 Sep 2025 13:11:54 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Sign into an Entra join device with only the SAM account name instead of the full UPN</title><link>https://endpointmgt.com/p/nonupnsignin/</link><pubDate>Thu, 04 Sep 2025 13:11:54 +0100</pubDate><guid>https://endpointmgt.com/p/nonupnsignin/</guid><description>&lt;img src="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/cover.png" alt="Featured image of post Sign into an Entra join device with only the SAM account name instead of the full UPN" /&gt;&lt;p&gt;So you&amp;rsquo;re making the leap into the world of Cloud only or cloud first and moving devices to Entra joined. Did you know the standard login process for entra join changes the way users sign in? By default, entra join devices will require the user to sign in with their work or school account, in other words, their Microsoft 365 email address or more accurately, their User Principle Name (UPN). Whereas domain or hybrid domain join devices will expect the user to login with their SAM Account Name.&lt;/p&gt;
 &lt;p&gt;Did you know that we can change this?&lt;/p&gt;
-&lt;h2 id=&#34;reasons-to-update&#34;&gt;Reasons to Update
+&lt;h2 id="reasons-to-update"&gt;Reasons to Update
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;Keep user experience consistent between the different device join types&lt;/li&gt;
 &lt;li&gt;Reduce failed login attempts with typos or users not realising the change&lt;/li&gt;
 &lt;li&gt;Reduced communication to users for login changes&lt;/li&gt;
 &lt;li&gt;Speed up the login process&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;understanding-the-upn&#34;&gt;Understanding the UPN
+&lt;h2 id="understanding-the-upn"&gt;Understanding the UPN
 &lt;/h2&gt;&lt;p&gt;Lets break it down. You can see that the UPN is name of the SAM Account Name and the email domain name. As already explained, by default the user needs to type in the full UPN when signing in.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp.svg&#34;
-	
-	
-	
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Login&#34;
-	
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/AccountMakeUp.svg"
+loading="lazy"
+alt="Login"
 &gt;&lt;/p&gt;
 &lt;p&gt;Now that you understand the concept of where the UPN comes from, lets change the sign in experience to just require the first part and save users having to type out the entire UPN.&lt;/p&gt;
-&lt;h2 id=&#34;what-youll-currently-see&#34;&gt;What you&amp;rsquo;ll currently see
+&lt;h2 id="what-youll-currently-see"&gt;What you&amp;rsquo;ll currently see
 &lt;/h2&gt;&lt;p&gt;If you have the default configuration, this is what you&amp;rsquo;re users will see when logging in. You can tell it&amp;rsquo;s the default as it&amp;rsquo;ll say &lt;strong&gt;Sign in to: Your Work or School Account&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore.png&#34;
-	width=&#34;1275&#34;
-	height=&#34;956&#34;
-	srcset=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_42d03afcc82c70f2.png 480w, http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_b1a99c6c73d304b8.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Before Change&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;133&#34;
-		data-flex-basis=&#34;320px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore.png"
+width="1275"
+height="956"
+srcset="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_42d03afcc82c70f2.png 480w, https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/SigninBefore_hu_b1a99c6c73d304b8.png 1024w"
+loading="lazy"
+alt="Before Change"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;what-it-could-look-like&#34;&gt;What it could look like
-&lt;/h2&gt;&lt;p&gt;Once you&amp;rsquo;ve deployed the configuration below, this is what you&amp;rsquo;re users will see when logging in. The login experience will update to show  &lt;strong&gt;Sign In to: DomainName.com&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter.png&#34;
-	width=&#34;1022&#34;
-	height=&#34;766&#34;
-	srcset=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_9763c89e2ddc9b96.png 480w, http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_60dea645c7237790.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;After Change&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;133&#34;
-		data-flex-basis=&#34;320px&#34;
-	
+&lt;h2 id="what-it-could-look-like"&gt;What it could look like
+&lt;/h2&gt;&lt;p&gt;Once you&amp;rsquo;ve deployed the configuration below, this is what you&amp;rsquo;re users will see when logging in. The login experience will update to show &lt;strong&gt;Sign In to: DomainName.com&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter.png"
+width="1022"
+height="766"
+srcset="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_9763c89e2ddc9b96.png 480w, https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/SigninAfter_hu_60dea645c7237790.png 1024w"
+loading="lazy"
+alt="After Change"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;configure-the-the-login-experience&#34;&gt;Configure the the login experience
+&lt;h2 id="configure-the-the-login-experience"&gt;Configure the the login experience
 &lt;/h2&gt;&lt;p&gt;To configure the login, we&amp;rsquo;re going to utilise a setting within Intune&amp;rsquo;s settings catalogue&lt;/p&gt;
-&lt;h3 id=&#34;configure-preferred-aad-tenant-domain-name-policy&#34;&gt;Configure Preferred Aad Tenant Domain Name Policy
+&lt;h3 id="configure-preferred-aad-tenant-domain-name-policy"&gt;Configure Preferred Aad Tenant Domain Name Policy
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;Log into Intune&lt;/li&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;Devices &amp;gt; Windows &amp;gt; Configuration &amp;gt; Create &amp;gt; New Policy&lt;/kbd&gt;&lt;/li&gt;
@@ -86,41 +58,28 @@
 Note - I would suggest a static test group for the testing phase then moving when you&amp;rsquo;re ready to deploy to production, using the &lt;strong&gt;All Devices&lt;/strong&gt; with an assignment filter or a dynamic entra group once you&amp;rsquo;re ready to deploy.&lt;/li&gt;
 &lt;li&gt;The policy should look something like this&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy.png&#34;
-	width=&#34;698&#34;
-	height=&#34;852&#34;
-	srcset=&#34;http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_da61d6a5bc409a4c.png 480w, http://localhost:46528/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_297de76f68f6effc.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Intune Configuration&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;81&#34;
-		data-flex-basis=&#34;196px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy.png"
+width="698"
+height="852"
+srcset="https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_da61d6a5bc409a4c.png 480w, https://endpointmgt.com/p/nonupnsignin/post/nonUPNSignIn/img/IntunePolicy_hu_297de76f68f6effc.png 1024w"
+loading="lazy"
+alt="Intune Configuration"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;13&#34;&gt;
+&lt;ol start="13"&gt;
 &lt;li&gt;&lt;kbd&gt;Create&lt;/kbd&gt; once you&amp;rsquo;re happy with the configuration and assignment&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;test-the-new-login-experience&#34;&gt;Test the new login experience
+&lt;h3 id="test-the-new-login-experience"&gt;Test the new login experience
 &lt;/h3&gt;&lt;p&gt;Once a device is added and sync&amp;rsquo;d to the test group and the policy is received by the device. The login experience will update to show &lt;strong&gt;Sign In to: DomainName.com&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Log into the device with just the SAM Account Name. If you&amp;rsquo;re logged in successful, you&amp;rsquo;ve successful improved the login experience and can deploy wider.&lt;/p&gt;
-&lt;h3 id=&#34;other-upn-domains&#34;&gt;Other UPN Domains
+&lt;h3 id="other-upn-domains"&gt;Other UPN Domains
 &lt;/h3&gt;&lt;p&gt;Within some environments, you may have users with different domains or even sub domains, these are also supported. All the user has to do is type in their normal UPN. You&amp;rsquo;ll notice that as soon as you type the &lt;strong&gt;@&lt;/strong&gt; sign, the &lt;strong&gt;Sign In to: DomainName.com&lt;/strong&gt; will update back to the default &lt;strong&gt;Sign in to: Your Work or School Account&lt;/strong&gt;, allowing the user to login as normal.&lt;/p&gt;
-&lt;p&gt;As always, thanks for reading!&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Conditional Access and MFA on Shared Windows Devices with Intune</title>
-        <link>http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/</link>
-        <pubDate>Mon, 01 Sep 2025 16:23:48 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/</guid>
-        <description>&lt;img src="http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class=&#34;link&#34; href=&#34;http://localhost:46528/p/whfbcloudkerberos/&#34; &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
+&lt;p&gt;As always, thanks for reading!&lt;/p&gt;</description></item><item><title>Conditional Access and MFA on Shared Windows Devices with Intune</title><link>https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/</link><pubDate>Mon, 01 Sep 2025 16:23:48 +0100</pubDate><guid>https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/</guid><description>&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/cover.png" alt="Featured image of post Conditional Access and MFA on Shared Windows Devices with Intune" /&gt;&lt;p&gt;Imagine the scene; You&amp;rsquo;ve started to adopt Microsoft Intune for device management, moving fully to the cloud. ✅ Getting shot of Group Policy management and even Configuration Manager ✅, you&amp;rsquo;ve nailed single user affinity devices ✅ and even rolled out &lt;a class="link" href="https://endpointmgt.com/p/whfbcloudkerberos/" &gt;Windows Hello for Business&lt;/a&gt; ✅ to improve the user sign in experience and security. You then turn your hand to shared devices and its not going so well. It works ✅ — but it isn’t seamless ⚠️. Did you know your MFA configuration might be the culprit?&lt;/p&gt;
 &lt;p&gt;Shared Windows devices in teaching labs, libraries, and lecture theatres need to “just work.” But when Microsoft Intune and Conditional Access are combined with Windows Autopilot pre-provisioning, things can go wrong in unexpected ways.&lt;/p&gt;
 &lt;p&gt;A common issue we’ve seen is that MFA never prompts the user during login. On the surface, this might look like a smoother experience. In reality, it means no Primary Refresh Token (PRT) is established and without a PRT, seamless SSO fails. The knock-on effect is that students (or staff) can’t sync Company Portal policies, device configuration stalls, and Windows subscription activation doesn’t apply correctly.&lt;/p&gt;
-&lt;h2 id=&#34;why-it-happens&#34;&gt;Why It Happens
+&lt;h2 id="why-it-happens"&gt;Why It Happens
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;Shared Windows devices (Azure AD joined, Intune managed, no primary user) don’t issue MFA at login.&lt;/li&gt;
 &lt;li&gt;Conditional Access policies apply to all users and apps without exclusions.&lt;/li&gt;
@@ -129,26 +88,22 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Interactive vs. Non-Interactive Sign-Ins in Entra ID&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;When a user signs in to a device or application, Entra ID records the sign-in as either interactive or non-interactive.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png&#34;
-	width=&#34;1220&#34;
-	height=&#34;256&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_488804f62a75b722.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_5e572b2cae984621.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Entra Sign in&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;476&#34;
-		data-flex-basis=&#34;1143px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype.png"
+width="1220"
+height="256"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_488804f62a75b722.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/logintype_hu_5e572b2cae984621.png 1024w"
+loading="lazy"
+alt="Entra Sign in"
+class="gallery-image"
+data-flex-grow="476"
+data-flex-basis="1143px"
 &gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Interactive sign-ins occur when the user is directly prompted to enter their credentials or complete an MFA challenge. This includes typing in a password, using Windows Hello, or approving a prompt on their phone. Interactive sign-ins always involve visible user interaction.&lt;/li&gt;
 &lt;li&gt;Non-interactive sign-ins happen silently in the background, usually when a token is being refreshed or when applications/services request access on behalf of the user. For example, Microsoft Intune, Company Portal, or Office apps will often use non-interactive sign-ins to request tokens without interrupting the user.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The distinction matters in Conditional Access: if MFA is required on a non-interactive sign-in, the user won’t see a prompt right away. Instead, the process fails until something triggers an interactive sign-in, which can lead to confusion and policy mis-applications on shared devices.&lt;/p&gt;
-&lt;h2 id=&#34;the-user-experience&#34;&gt;The user experience
+&lt;h2 id="the-user-experience"&gt;The user experience
 &lt;/h2&gt;&lt;p&gt;Instead of being prompted for MFA at sign-in, students only discover the problem when:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Device configuration targeted at the user is delayed&lt;/li&gt;
@@ -158,27 +113,23 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;li&gt;Windows Enterprise/Education edition activation is delayed&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In teaching environments, this disruption is magnified — students move rapidly between machines, and IT staff can’t troubleshoot MFA prompts that never appear.&lt;/p&gt;
-&lt;h2 id=&#34;issue-confirmation&#34;&gt;Issue confirmation
+&lt;h2 id="issue-confirmation"&gt;Issue confirmation
 &lt;/h2&gt;&lt;p&gt;So you&amp;rsquo;ve read this far and wonder if the user experience witnessed is caused by Conditional Access too? Let&amp;rsquo;s confirm before remediating.&lt;/p&gt;
 &lt;p&gt;You can first this in 2 way; one the affected device or via the entra sign in logs.&lt;/p&gt;
-&lt;h3 id=&#34;on-the-device&#34;&gt;On the device
+&lt;h3 id="on-the-device"&gt;On the device
 &lt;/h3&gt;&lt;p&gt;The simplest way to check is get the user to login and launch the start menu. Select their user account icon (either their picture or initials, if they don&amp;rsquo;t have a picture), if MFA is at fault here, they&amp;rsquo;ll get&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png&#34;
-	width=&#34;528&#34;
-	height=&#34;324&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8c5aabbd986fcf17.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_cfeda06595d57674.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Verify Account Prompt&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;162&#34;
-		data-flex-basis=&#34;391px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt.png"
+width="528"
+height="324"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_8c5aabbd986fcf17.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/verifyprompt_hu_cfeda06595d57674.png 1024w"
+loading="lazy"
+alt="Verify Account Prompt"
+class="gallery-image"
+data-flex-grow="162"
+data-flex-basis="391px"
 &gt;&lt;/p&gt;
 &lt;p&gt;They can always verify account here and configuration will start to apply but by this point, the damage to SSO and the user experience is already disrupted. Not to mention that they might need to log off and on to get OneDrive, Edge and other configuration to automatically apply.&lt;/p&gt;
-&lt;h3 id=&#34;entra-logs&#34;&gt;Entra Logs
+&lt;h3 id="entra-logs"&gt;Entra Logs
 &lt;/h3&gt;&lt;p&gt;You&amp;rsquo;ll need a role that allows access to user sign in logs and conditional access (to see the problematic policy report). Remember that sign in logs take around 10 minutes to populate so log into an affected device and wait before looking to the logs.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
@@ -191,9 +142,9 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;li&gt;Here you&amp;rsquo;ll the policy causing the issue&lt;/li&gt;
 &lt;li&gt;You&amp;rsquo;ll see within the grant control required.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;intune-conditional-access-remediation-options-for-mfa-on-shared-devices&#34;&gt;Intune Conditional Access Remediation Options for MFA on Shared Devices
+&lt;h2 id="intune-conditional-access-remediation-options-for-mfa-on-shared-devices"&gt;Intune Conditional Access Remediation Options for MFA on Shared Devices
 &lt;/h2&gt;&lt;p&gt;Now that you&amp;rsquo;ve confirmed the issue, we need a solution! To balance security and usability, organisations need to exclude shared devices from strict MFA requirements, while still maintaining strong controls elsewhere.&lt;/p&gt;
-&lt;h3 id=&#34;which-approach-should-you-use&#34;&gt;Which Approach Should You Use?
+&lt;h3 id="which-approach-should-you-use"&gt;Which Approach Should You Use?
 &lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;✅ &lt;strong&gt;Exclude Intune / Windows Store for Business&lt;/strong&gt; → if device sync and subscription activation are the main blockers.&lt;/li&gt;
 &lt;li&gt;✅ &lt;strong&gt;Filter by Enrollment Profile&lt;/strong&gt; → if all shared devices use a dedicated Autopilot profile.&lt;/li&gt;
@@ -201,7 +152,7 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;li&gt;❌ &lt;strong&gt;Exclude by Network Location&lt;/strong&gt; → only safe if you can guarantee shared devices are the only ones using those public IPs. Avoid if BYOD devices connect to the same network.&lt;/li&gt;
 &lt;li&gt;❌ &lt;strong&gt;Introduce Web Signin&lt;/strong&gt; → only safe if you can guarantee shared devices will always have an internet connection.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;exclude-microsoft-intune&#34;&gt;Exclude Microsoft Intune
+&lt;h3 id="exclude-microsoft-intune"&gt;Exclude Microsoft Intune
 &lt;/h3&gt;&lt;p&gt;To prevent Company Portal and user initiated sync&amp;rsquo;s with Microsoft Intune being affected by your conditional access, the best advice would be to simply exclude the app entirely from the offending CA.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
@@ -211,7 +162,7 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;ul&gt;
 &lt;li&gt;It might be a good idea here to review your other policies for grant controls and consider adding this exclude to those too. For example &amp;ldquo;Require Compliant devices&amp;rdquo;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;ol start=&#34;4&#34;&gt;
+&lt;ol start="4"&gt;
 &lt;li&gt;Select &lt;kbd&gt;Target resources&lt;/kbd&gt;&lt;/li&gt;
 &lt;li&gt;Select &lt;kbd&gt;Exclude&lt;/kbd&gt;&lt;/li&gt;
 &lt;li&gt;Select &lt;kbd&gt;Select or the blue text below select&lt;/kbd&gt;&lt;/li&gt;
@@ -222,27 +173,23 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png&#34;
-	width=&#34;598&#34;
-	height=&#34;872&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_2ad4f26054e53ac2.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_e6209dc0c86cd5e3.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Exclude Microsoft Intune&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;68&#34;
-		data-flex-basis=&#34;164px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune.png"
+width="598"
+height="872"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_2ad4f26054e53ac2.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExIntune_hu_e6209dc0c86cd5e3.png 1024w"
+loading="lazy"
+alt="Exclude Microsoft Intune"
+class="gallery-image"
+data-flex-grow="68"
+data-flex-basis="164px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;9&#34;&gt;
+&lt;ol start="9"&gt;
 &lt;li&gt;Save the policy.&lt;/li&gt;
 &lt;li&gt;The policy will be updated with the new exclusion and take around 20 minutes to apply.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;exclude-windows-store-for-business&#34;&gt;Exclude Windows Store for Business
-&lt;/h3&gt;&lt;p&gt;In the same way as Microsoft Intune. Subscription Activation of Windows is handled by Windows Store for Business. If devices are failing to uplift to Enterprise, exclude the Windows Store for Business Enterprise app entirely from the offending CA. Microsoft also include this in their &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/windows/deployment/windows-subscription-activation?pivots=windows-11#adding-conditional-access-policy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;documentation.&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="exclude-windows-store-for-business"&gt;Exclude Windows Store for Business
+&lt;/h3&gt;&lt;p&gt;In the same way as Microsoft Intune. Subscription Activation of Windows is handled by Windows Store for Business. If devices are failing to uplift to Enterprise, exclude the Windows Store for Business Enterprise app entirely from the offending CA. Microsoft also include this in their &lt;a class="link" href="https://learn.microsoft.com/en-us/windows/deployment/windows-subscription-activation?pivots=windows-11#adding-conditional-access-policy" target="_blank" rel="noopener"
+&gt;documentation.&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;entra.microsoft.com&lt;/kbd&gt;&lt;/li&gt;
 &lt;li&gt;Go to &lt;kbd&gt;Entra ID &amp;gt; Conditional Access &amp;gt; Policies&lt;/kbd&gt;&lt;/li&gt;
@@ -261,27 +208,23 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png&#34;
-	width=&#34;626&#34;
-	height=&#34;864&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_4af30f4ee6ebcc29.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_514316662a8adcd0.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Exclude Windows Store for Business&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;72&#34;
-		data-flex-basis=&#34;173px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore.png"
+width="626"
+height="864"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_4af30f4ee6ebcc29.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExWindowsStore_hu_514316662a8adcd0.png 1024w"
+loading="lazy"
+alt="Exclude Windows Store for Business"
+class="gallery-image"
+data-flex-grow="72"
+data-flex-basis="173px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;9&#34;&gt;
+&lt;ol start="9"&gt;
 &lt;li&gt;&lt;kbd&gt;Save&lt;/kbd&gt; the policy.&lt;/li&gt;
 &lt;li&gt;The policy will be updated with the new exclusion and take around 20 minutes to apply.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;filter-for-shared-devices&#34;&gt;Filter for shared devices
+&lt;h3 id="filter-for-shared-devices"&gt;Filter for shared devices
 &lt;/h3&gt;&lt;p&gt;Now comes the fun part! Depending on your environment will depend on the best approach here. I&amp;rsquo;ll cover off a general exclude and then a 2 tailored options for shared devices.&lt;/p&gt;
-&lt;h4 id=&#34;network-approach&#34;&gt;Network Approach
+&lt;h4 id="network-approach"&gt;Network Approach
 &lt;/h4&gt;&lt;p&gt;This option only works if you want to exclude all devices that reside on your internal network. If you have other device use cases or allow users to connect personal devices to the same network, even connected to different vlans, this isn&amp;rsquo;t the option for you. To clarify, if internet traffic for these devices is all route through the same public IP addresses to M365, I don&amp;rsquo;t recommend this approach. Be warned!&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Obtain your public facing IP address(es)&lt;/li&gt;
@@ -306,47 +249,39 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png&#34;
-	width=&#34;746&#34;
-	height=&#34;716&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_1da00ef532e252b6.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_feb0e748b9ab2bd4.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Exclude Network Location&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;104&#34;
-		data-flex-basis=&#34;250px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation.png"
+width="746"
+height="716"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_1da00ef532e252b6.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeNetworkLocation_hu_feb0e748b9ab2bd4.png 1024w"
+loading="lazy"
+alt="Exclude Network Location"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="250px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;18&#34;&gt;
+&lt;ol start="18"&gt;
 &lt;li&gt;Remember to then &lt;kbd&gt;Save&lt;/kbd&gt; the conditional access policy.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Now that you&amp;rsquo;ve excluded the MFA from the named location, the policy will take around 20 minutes to update and from then, MFA will not prompt users on this network. If you&amp;rsquo;ve selected the route, it would be a good idea to add an additional MFA policy that is targeted to this network. For example you could have a policy that includes this network but only targets the browser and Office 365.&lt;/p&gt;
 &lt;p&gt;Note- This will only work if devices are logging in, when on your network. If they take a shared device home and login for the first time, this solution doesn&amp;rsquo;t address the issue. Keep reading ;).&lt;/p&gt;
-&lt;h4 id=&#34;filter-for-devices-approach&#34;&gt;Filter for Devices Approach
+&lt;h4 id="filter-for-devices-approach"&gt;Filter for Devices Approach
 &lt;/h4&gt;&lt;p&gt;You&amp;rsquo;re still with us. Good, this is where it gets interesting and becomes tailored to your device use case. If you only want to exclude the shared devices from the policies, this is where we&amp;rsquo;ll use Filter for Devices. It&amp;rsquo;s been around for quite some time but in my experience, it&amp;rsquo;s relatively less known.&lt;/p&gt;
 &lt;p&gt;You can use &amp;ldquo;Filter for Devices&amp;rdquo; within a Conditional Access policy to control if it should or shouldn&amp;rsquo;t apply via includes and excludes criteria. There are a number of filter options that can be selected. From Intune Compliance state, Device Name, EnrolmentProfileName and so on. Some of these are safer to use than others. I&amp;rsquo;d recommend not using a filter that a user could manipulate. For example a user could change their Device Name for exclude their device from a targeted CA policy.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png&#34;
-	width=&#34;1615&#34;
-	height=&#34;882&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_c439b42d7447f75e.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_73afbfed212a650d.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Filter for Devices&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;183&#34;
-		data-flex-basis=&#34;439px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices.png"
+width="1615"
+height="882"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_c439b42d7447f75e.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/CA-FilterforDevices_hu_73afbfed212a650d.png 1024w"
+loading="lazy"
+alt="Filter for Devices"
+class="gallery-image"
+data-flex-grow="183"
+data-flex-basis="439px"
 &gt;&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll run through 2 exclude options here, based on;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Windows Autopilot enrolment profile&lt;/strong&gt; - used by the shared devices onboarding via Windows Autopilot&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Extension Attributes&lt;/strong&gt; (often used for &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-deployment&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Privileged Access Workstations - PAW&lt;/a&gt;) used when you want to target all or a subset of devices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extension Attributes&lt;/strong&gt; (often used for &lt;a class="link" href="https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-deployment" target="_blank" rel="noopener"
+&gt;Privileged Access Workstations - PAW&lt;/a&gt;) used when you want to target all or a subset of devices.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The mechanics behind Filter for devices is the same;&lt;/p&gt;
 &lt;ol&gt;
@@ -366,8 +301,8 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;li&gt;Value should is a string with the value of
 &lt;ul&gt;
 &lt;li&gt;In our case it&amp;rsquo;ll be the EnrollmentProfileName from the Windows Autopilot Deployment Profiles blade within&lt;br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://intune.microsoft.com/#view/Microsoft_Intune_Enrollment/AutopilotDeploymentProfiles.ReactView&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Microsoft Intune&lt;/a&gt;&lt;/li&gt;
+&lt;a class="link" href="https://intune.microsoft.com/#view/Microsoft_Intune_Enrollment/AutopilotDeploymentProfiles.ReactView" target="_blank" rel="noopener"
+&gt;Microsoft Intune&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Or a string value of our choice for the ExtensionAttribute, such as &amp;ldquo;Shared-MFAExcluded&amp;rdquo;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -377,88 +312,80 @@ Note - I would suggest a static test group for the testing phase then moving whe
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png&#34;
-	width=&#34;1609&#34;
-	height=&#34;872&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_cbcc0380e1826e84.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_7732deb9905376d.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Exclude Using Filer for Devices&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;184&#34;
-		data-flex-basis=&#34;442px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice.png"
+width="1609"
+height="872"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_cbcc0380e1826e84.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/ExcludeDevice_hu_7732deb9905376d.png 1024w"
+loading="lazy"
+alt="Exclude Using Filer for Devices"
+class="gallery-image"
+data-flex-grow="184"
+data-flex-basis="442px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;12&#34;&gt;
+&lt;ol start="12"&gt;
 &lt;li&gt;Remember to Save the policy to finish editing the CA policy&lt;/li&gt;
 &lt;li&gt;Again, wait around 20 minutes for the policy changes to take effect.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;If you&amp;rsquo;ve used the EnrollmentProfileName property and devices are enrolled using that deployment profile, your work here is done and you can test with a new enrolment. If however you&amp;rsquo;ve opted for ExtensionAttribute, the device(s) still need to be tagged.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Add Extension Attributes to devices&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png&#34;
-	width=&#34;549&#34;
-	height=&#34;49&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_3fe24d085cedfdf3.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_be7a076d6c408cb4.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Extension Attribute&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;1120&#34;
-		data-flex-basis=&#34;2688px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo.png"
+width="549"
+height="49"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_3fe24d085cedfdf3.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeDemo_hu_be7a076d6c408cb4.png 1024w"
+loading="lazy"
+alt="Extension Attribute"
+class="gallery-image"
+data-flex-grow="1120"
+data-flex-basis="2688px"
 &gt;&lt;/p&gt;
 &lt;p&gt;This has been covered by many blog posts over the years so I&amp;rsquo;ll keep this part brief. I might even revise this in future and profile a Powershell script to call graph, watch this space. To understand adding this attributes, you have to understand that these attributes live within Entra, not Intune. The attributes gets added to the Autopilot Entra record. The bonus is that you only ever have to do this once. The downside is that it can&amp;rsquo;t be done via the Entra portal. It has to be done via Graph.&lt;/p&gt;
 &lt;p&gt;These blog posts cover how to add the extension attributes to devices&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://ourcloudnetwork.com/configure-device-extension-attributes-in-azure-ad-with-powershell/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;ourcloudnetwork.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://smbtothecloud.com/dynamically-add-device-extension-attributes-using-remediations/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;smbtothecloud.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://ourcloudnetwork.com/configure-device-extension-attributes-in-azure-ad-with-powershell/" target="_blank" rel="noopener"
+&gt;ourcloudnetwork.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://smbtothecloud.com/dynamically-add-device-extension-attributes-using-remediations/" target="_blank" rel="noopener"
+&gt;smbtothecloud.com&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The concept is simple however;
 As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp;ldquo;extensionAttribute1&amp;rdquo; of a selected device, based on it&amp;rsquo;s name. I&amp;rsquo;ve kept it very simply without an if query to check the device exists etc but just so you get the concept and to allow for testing.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Load the Microsoft Graph module&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Import-Module&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Microsoft&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Graph&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Identity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;DirectoryManagement&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Connect to Microsoft Graph with required permissions&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Connect-MgGraph&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Scopes&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Directory.ReadWrite.All&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Define the device name you want to update&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$DeviceName&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;DEVENV-34429856&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Find the device by name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$Device&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-MgDevice&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Filter&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;displayName eq &amp;#39;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$DeviceName&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#39;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Update extensionAttribute1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;Update-MgDevice&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-DeviceId&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$Device&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Id&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-AdditionalProperties&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;extensionAttributes&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;s2&#34;&gt;&amp;#34;extensionAttribute1&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Shared-MFAExcluded&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Load the Microsoft Graph module&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Import-Module&lt;/span&gt; &lt;span class="n"&gt;Microsoft&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;Graph&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;Identity&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;DirectoryManagement&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Connect to Microsoft Graph with required permissions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Connect-MgGraph&lt;/span&gt; &lt;span class="n"&gt;-Scopes&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Directory.ReadWrite.All&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Define the device name you want to update&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$DeviceName&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;DEVENV-34429856&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Find the device by name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$Device&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Get-MgDevice&lt;/span&gt; &lt;span class="n"&gt;-Filter&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;displayName eq &amp;#39;&lt;/span&gt;&lt;span class="nv"&gt;$DeviceName&lt;/span&gt;&lt;span class="s2"&gt;&amp;#39;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Update extensionAttribute1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;Update-MgDevice&lt;/span&gt; &lt;span class="n"&gt;-DeviceId&lt;/span&gt; &lt;span class="nv"&gt;$Device&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;Id&lt;/span&gt; &lt;span class="n"&gt;-AdditionalProperties&lt;/span&gt; &lt;span class="vm"&gt;@&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;extensionAttributes&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="vm"&gt;@&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;extensionAttribute1&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Shared-MFAExcluded&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;To confirm that it&amp;rsquo;s worked, you should now see the extensionAttribute within Entra&lt;/p&gt;
@@ -469,55 +396,42 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
 &lt;li&gt;Select the device, in my case &lt;kbd&gt;DEVENV-34429856&lt;/kbd&gt;&lt;/li&gt;
 &lt;li&gt;At the bottom of the record you should now see the extensionAttribute set.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png&#34;
-	width=&#34;1010&#34;
-	height=&#34;821&#34;
-	srcset=&#34;http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_805082e135bc0a.png 480w, http://localhost:46528/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_111409672905d99c.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Extension Attribute Set&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;123&#34;
-		data-flex-basis=&#34;295px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet.png"
+width="1010"
+height="821"
+srcset="https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_805082e135bc0a.png 480w, https://endpointmgt.com/p/intune-shared-devices-mfa-conditional-access/post/SharedWindowsDeviceandMFA/Img/extensionAttributeSet_hu_111409672905d99c.png 1024w"
+loading="lazy"
+alt="Extension Attribute Set"
+class="gallery-image"
+data-flex-grow="123"
+data-flex-basis="295px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;6&#34;&gt;
+&lt;ol start="6"&gt;
 &lt;li&gt;Now to test your policy exclusion&amp;hellip;.&lt;/li&gt;
 &lt;li&gt;You should now see that the MFA policy now excludes this device from the policy&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;an-alternative-option-web-sign-in&#34;&gt;&lt;strong&gt;An Alternative Option: Web Sign-in&lt;/strong&gt;
+&lt;h3 id="an-alternative-option-web-sign-in"&gt;&lt;strong&gt;An Alternative Option: Web Sign-in&lt;/strong&gt;
 &lt;/h3&gt;&lt;p&gt;In addition to traditional sign-in methods, &lt;strong&gt;Web sign-in&lt;/strong&gt; offers another possibility for shared devices. This option provides a streamlined experience by leveraging cloud-based authentication like MFA, Microsoft Authenticator, Temporary Access Pass (TAP), or FIDO2 security keys.&lt;/p&gt;
 &lt;p&gt;The primary drawback of Web sign-in is its complete dependence on a reliable internet connection. Unlike cached credentials from a traditional password login, the Web sign-in option requires an internet connection for &lt;em&gt;every single login&lt;/em&gt;, even if the user has previously signed in to the device. This means if a device loses its network connection, users will be unable to sign in using this method.&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/windows/security/identity-protection/web-sign-in/?tabs=intune&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;More on Web Sign from Microsoft&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&#34;what-if-a-login-fails&#34;&gt;&lt;strong&gt;What if a Login Fails?&lt;/strong&gt;
+&lt;p&gt;&lt;a class="link" href="https://learn.microsoft.com/en-us/windows/security/identity-protection/web-sign-in/?tabs=intune" target="_blank" rel="noopener"
+&gt;More on Web Sign from Microsoft&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="what-if-a-login-fails"&gt;&lt;strong&gt;What if a Login Fails?&lt;/strong&gt;
 &lt;/h4&gt;&lt;p&gt;You might be wondering if users will know how to switch options if their Web sign-in fails. The good news is that Windows is designed to handle this gracefully. The lock screen will always show multiple sign-in options if they are enabled on the device (e.g., password, PIN, Web sign-in).&lt;/p&gt;
 &lt;p&gt;If a Web sign-in attempt fails due to a network issue, the user can simply press &lt;strong&gt;Ctrl + Alt + Delete&lt;/strong&gt; to return to the main login screen. From there, they can select an alternative sign-in method, such as a cached password or PIN, allowing them to complete their login without interruption.&lt;/p&gt;
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+&lt;h2 id="conclusion"&gt;Conclusion
 &lt;/h2&gt;&lt;p&gt;Conditional Access and MFA are essential for securing identities in Microsoft 365, but shared devices introduce edge cases that can easily break the user experience. The challenge is that non-interactive logins silently fail when MFA is required but never prompted, leaving users confused and admins troubleshooting stalled configurations.&lt;/p&gt;
 &lt;p&gt;By carefully excluding the right enterprise applications, or by using targeted device filters such as Autopilot profiles or extension attributes, you can strike the balance between &lt;strong&gt;security and usability&lt;/strong&gt;. The goal isn’t to weaken MFA, but to apply it intelligently so that shared devices remain functional while personal or high-risk scenarios stay protected.&lt;/p&gt;
 &lt;p&gt;As always, test exclusions thoroughly in a controlled environment before rolling them out broadly, and keep monitoring your Entra sign-in logs to validate that policies are working as intended.&lt;/p&gt;
-&lt;p&gt;Done right, Conditional Access doesn’t have to be a blocker — it becomes an enabler for seamless, secure, and scalable device management in Microsoft Intune environments.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)</title>
-        <link>http://localhost:46528/p/multiappapproval/</link>
-        <pubDate>Thu, 28 Aug 2025 09:10:17 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/multiappapproval/</guid>
-        <description>&lt;img src="http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/cover.png" alt="Featured image of post Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)" /&gt;&lt;p&gt;If you’ve ever woken up in a cold sweat wondering, “What if one of my admin accounts got compromised and someone wiped 5,000 devices overnight?” Firstly, you need more restful sleep, but second, Microsoft has finally heard you.&lt;/p&gt;
-&lt;p&gt;Enter &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/multi-admin-approval&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Multiple Administrative Approval (MAA)&lt;/a&gt; in Intune. Think of it like that classic buddy system from school trips, you can’t make a move without a partner watching you. Except instead of making sure you don’t wander off at the museum gift shop, MAA makes sure no single admin can make big changes to your tenant without someone else giving the thumbs up. Good Right?&lt;/p&gt;
+&lt;p&gt;Done right, Conditional Access doesn’t have to be a blocker — it becomes an enabler for seamless, secure, and scalable device management in Microsoft Intune environments.&lt;/p&gt;</description></item><item><title>Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)</title><link>https://endpointmgt.com/p/multiappapproval/</link><pubDate>Thu, 28 Aug 2025 09:10:17 +0100</pubDate><guid>https://endpointmgt.com/p/multiappapproval/</guid><description>&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/cover.png" alt="Featured image of post Intune Multi-Admin Approval: Keeping Your Admins Honest (and Safe)" /&gt;&lt;p&gt;If you’ve ever woken up in a cold sweat wondering, “What if one of my admin accounts got compromised and someone wiped 5,000 devices overnight?” Firstly, you need more restful sleep, but second, Microsoft has finally heard you.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a class="link" href="https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/multi-admin-approval" target="_blank" rel="noopener"
+&gt;Multiple Administrative Approval (MAA)&lt;/a&gt; in Intune. Think of it like that classic buddy system from school trips, you can’t make a move without a partner watching you. Except instead of making sure you don’t wander off at the museum gift shop, MAA makes sure no single admin can make big changes to your tenant without someone else giving the thumbs up. Good Right?&lt;/p&gt;
 &lt;p&gt;Here’s the gist:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;You create access policies that protect certain things called a &amp;ldquo;protection action&amp;rdquo; (apps, device wipe actions, scripts, RBAC changes, and even the MAA policies themselves).&lt;/li&gt;
 &lt;li&gt;When an admin makes a change, with a policy configured to protect an action, Intune says, “Not so fast, cowboy”, and holds that request hostage until another admin, someone in your designated approver group reviews it and hits Approve.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;It’s a neat safeguard, but before you run off to secure the kingdom, let’s talk about what you can and can’t do with it.&lt;/p&gt;
-&lt;h2 id=&#34;the-big-gotcha-its-all-or-nothing&#34;&gt;The Big Gotcha: It’s All or Nothing
+&lt;h2 id="the-big-gotcha-its-all-or-nothing"&gt;The Big Gotcha: It’s All or Nothing
 &lt;/h2&gt;&lt;p&gt;When you set an access policy, it applies &lt;b&gt;tenant-wide&lt;/b&gt;. That means all admins are covered by it, regardless of whether they’re junior Service Desk tech or your top-level cloud architect. You can’t yet assign policies to specific groups, devices, or scenarios.&lt;/p&gt;
 &lt;p&gt;For example, wouldn’t it be brilliant if:&lt;/p&gt;
 &lt;ul&gt;
@@ -525,22 +439,22 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
 &lt;li&gt;Or if corporate-owned devices could be wiped without fuss, but BYOD devices required approval because, let’s face it, accidentally nuking someone’s personal phone is a fast track to HR complaints or even worse?&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Sadly, that flexibility isn’t here—at least not yet. Right now, it’s a blanket rule for everyone.&lt;/p&gt;
-&lt;h2 id=&#34;why-its-still-worth-it&#34;&gt;Why It’s Still Worth It
+&lt;h2 id="why-its-still-worth-it"&gt;Why It’s Still Worth It
 &lt;/h2&gt;&lt;p&gt;Limitations aside, MAA is a strong step toward protecting against compromised accounts and fat-finger mistakes. Even the best admins occasionally click the wrong thing, and having that extra checkpoint could save your bacon.&lt;/p&gt;
 &lt;p&gt;The process also builds transparency: business justifications are logged, approvals and rejections are documented, and everything shows up in the audit logs. That’s not just good for governance, it’s fantastic for compliance conversations when someone inevitably asks, “So, who approved this?”&lt;/p&gt;
-&lt;h2 id=&#34;living-with-maa&#34;&gt;Living with MAA
+&lt;h2 id="living-with-maa"&gt;Living with MAA
 &lt;/h2&gt;&lt;p&gt;If you’re going to use it, here are a few practical tips:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Have at least two active admin accounts (sounds obvious, but you’d be surprised how often tenants rely on a single person).&lt;/li&gt;
-&lt;li&gt;Both admin accounts require either Intune Admin or the appropriate Multi Admin Approval permissions with &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/role-based-access-control&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Role Based Access Controls (RBAC)&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Both admin accounts require either Intune Admin or the appropriate Multi Admin Approval permissions with &lt;a class="link" href="https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/role-based-access-control" target="_blank" rel="noopener"
+&gt;Role Based Access Controls (RBAC)&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Communicate with your approvers. There’s no built-in notification system for new requests yet, so if it’s urgent, you’ll need to poke them directly.&lt;/li&gt;
 &lt;li&gt;Keep an eye on requests, pending changes expire after 30 days if nobody acts on them.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;how-to-configure&#34;&gt;How to Configure
+&lt;h2 id="how-to-configure"&gt;How to Configure
 &lt;/h2&gt;&lt;p&gt;Alright, so you’re sold on the idea and want to set this up. The good news? The process isn’t rocket science. The bad news? You’ll need two admin accounts handy, because you can’t approve your own request (no cheating the system).&lt;/p&gt;
 &lt;p&gt;I&amp;rsquo;ll take you through the process of creating a protected device action of wiping a device. The same process can be followed for other actions.&lt;/p&gt;
-&lt;h3 id=&#34;create-the-access-policy&#34;&gt;Create the Access Policy
+&lt;h3 id="create-the-access-policy"&gt;Create the Access Policy
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;Sign in to the Microsoft Intune admin center with your first admin account.&lt;/li&gt;
 &lt;li&gt;Create a group in Entra or if your old fashioned (and stuck in your ways), Active Directory and wait for the group to sync up. (I won&amp;rsquo;t start on why using AD groups in Entra with sync&amp;rsquo;d admins is a bad idea, that&amp;rsquo;s for another day.). This group will act as the Approvers List. Once a protected action is triggered, it&amp;rsquo;ll be this group of users that can approve the action. Even if they&amp;rsquo;re already a GA or Intune admin. Not in this group, they can&amp;rsquo;t approve it!&lt;/li&gt;
@@ -550,603 +464,484 @@ As an example, this script adds &amp;ldquo;Shared-MFAExcluded&amp;rdquo; to &amp
 &lt;li&gt;On the Approvers page, select &lt;kbd&gt;Add groups&lt;/kbd&gt; and pick which group of admins will approve changes for this policy.
 Important: You can’t exclude groups or get fancy with scoping here—it’s one group, one policy, all users.&lt;/li&gt;
 &lt;li&gt;Review your settings, and add a &amp;lsquo;business justification&amp;rsquo; for the approver. Something like this;
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy.png&#34;
-	width=&#34;770&#34;
-	height=&#34;655&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_55ae87f5c387ca0c.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_e530f02f41453d1a.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Review Policy before submission&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;117&#34;
-		data-flex-basis=&#34;282px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy.png"
+width="770"
+height="655"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_55ae87f5c387ca0c.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CreatePolicy_hu_e530f02f41453d1a.png 1024w"
+loading="lazy"
+alt="Review Policy before submission"
+class="gallery-image"
+data-flex-grow="117"
+data-flex-basis="282px"
 &gt;&lt;/li&gt;
 &lt;li&gt;Then hit &lt;kbd&gt;Submit for Approval&lt;/kbd&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;At this point, your shiny new policy is created, but it’s not live until it’s approved. You&amp;rsquo;ll see this under My Requests
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval.png&#34;
-	width=&#34;1392&#34;
-	height=&#34;240&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_c5c65551991ed37b.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_321b692c4fe013dc.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Pending Approval&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;580&#34;
-		data-flex-basis=&#34;1392px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval.png"
+width="1392"
+height="240"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_c5c65551991ed37b.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/RequireApproval_hu_321b692c4fe013dc.png 1024w"
+loading="lazy"
+alt="Pending Approval"
+class="gallery-image"
+data-flex-grow="580"
+data-flex-basis="1392px"
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;approve-the-policy&#34;&gt;Approve the Policy
+&lt;h3 id="approve-the-policy"&gt;Approve the Policy
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;Sign out of your first admin account and sign back in with a different admin account that’s either an GA, Intune Admin or has the permission Approve MAA within RBAC.&lt;/li&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;Tenant administration &amp;gt; Multi Admin Approval &amp;gt; All requests&lt;/kbd&gt;.&lt;/li&gt;
 &lt;li&gt;Find the pending request for your new access policy.
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest.png&#34;
-	width=&#34;1393&#34;
-	height=&#34;234&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_1b1e6862478c43eb.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_df9f5486a21f1212.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Approval Request&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;595&#34;
-		data-flex-basis=&#34;1428px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest.png"
+width="1393"
+height="234"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_1b1e6862478c43eb.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/ApproveRequest_hu_df9f5486a21f1212.png 1024w"
+loading="lazy"
+alt="Approval Request"
+class="gallery-image"
+data-flex-grow="595"
+data-flex-basis="1428px"
 &gt;&lt;/li&gt;
 &lt;li&gt;Open it up, review the details (including the justification) and add in your &lt;/kbd&gt;approver notes&lt;/kbd&gt;. This is required&lt;/li&gt;
 &lt;li&gt;Then hit &lt;kbd&gt;Approve request&lt;/kbd&gt; (or reject request if your future self is having second thoughts).
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approve.png&#34;
-	width=&#34;1107&#34;
-	height=&#34;863&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_eba0e387f1cd9c04.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_585ce8b8549e8cdf.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Approve&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;128&#34;
-		data-flex-basis=&#34;307px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approve.png"
+width="1107"
+height="863"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_eba0e387f1cd9c04.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approve_hu_585ce8b8549e8cdf.png 1024w"
+loading="lazy"
+alt="Approve"
+class="gallery-image"
+data-flex-grow="128"
+data-flex-basis="307px"
 &gt;&lt;/li&gt;
 &lt;li&gt;You&amp;rsquo;ll then see the policy as approved, if you refresh the page.
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approved.png&#34;
-	width=&#34;1390&#34;
-	height=&#34;75&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_2ec8c84c1518cf5e.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_e4bce4c0b316b735.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Approved&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;1853&#34;
-		data-flex-basis=&#34;4448px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved.png"
+width="1390"
+height="75"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_2ec8c84c1518cf5e.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved_hu_e4bce4c0b316b735.png 1024w"
+loading="lazy"
+alt="Approved"
+class="gallery-image"
+data-flex-grow="1853"
+data-flex-basis="4448px"
 &gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;complete-the-policy&#34;&gt;Complete the Policy
+&lt;h3 id="complete-the-policy"&gt;Complete the Policy
 &lt;/h3&gt;&lt;p&gt;You would think, that&amp;rsquo;s it, right? No, it&amp;rsquo;s not! The first admin, now needs to complete the policy before it becomes live.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Sign out of your second admin account and sign back in with the fist admin account.&lt;/li&gt;
 &lt;li&gt;Navigate to &lt;kbd&gt;Tenant administration &amp;gt; Multi Admin Approval &amp;gt; My requests&lt;/kbd&gt;.&lt;/li&gt;
 &lt;li&gt;You&amp;rsquo;ll see your new policy as approved
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approved2.png&#34;
-	width=&#34;1381&#34;
-	height=&#34;239&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_31efe2ba4d7c3d76.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_29a5cfa2ea0cd3f8.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Approved for second admin&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;577&#34;
-		data-flex-basis=&#34;1386px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved2.png"
+width="1381"
+height="239"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_31efe2ba4d7c3d76.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/Approved2_hu_29a5cfa2ea0cd3f8.png 1024w"
+loading="lazy"
+alt="Approved for second admin"
+class="gallery-image"
+data-flex-grow="577"
+data-flex-basis="1386px"
 &gt;&lt;/li&gt;
 &lt;li&gt;Select the policy and select &lt;kbd&gt;Complete request&lt;/kbd&gt;.
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest.png&#34;
-	width=&#34;1114&#34;
-	height=&#34;860&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_c12b7d3eb9f4fc86.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_fcac3ccb84f13d61.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Complete Request&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;129&#34;
-		data-flex-basis=&#34;310px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest.png"
+width="1114"
+height="860"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_c12b7d3eb9f4fc86.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/CompleteRequest_hu_fcac3ccb84f13d61.png 1024w"
+loading="lazy"
+alt="Complete Request"
+class="gallery-image"
+data-flex-grow="129"
+data-flex-basis="310px"
 &gt;&lt;/li&gt;
 &lt;li&gt;Now wait! It takes around 10 minutes in my testing for the policy be adopted and the action to be protected. You&amp;rsquo;ll know when it is as you&amp;rsquo;ll see a business justification field, when you try to carry out the protected action. If you don&amp;rsquo;t see it, it&amp;rsquo;s not live yet!&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;what-does-it-look-like-in-action&#34;&gt;What does it look like in action?
+&lt;h3 id="what-does-it-look-like-in-action"&gt;What does it look like in action?
 &lt;/h3&gt;&lt;p&gt;So you’ve got this far and set up your shiny new access policy. What actually happens when an admin tries to make a change that’s now protected? Let’s walk through it, no popcorn required.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The Admin Makes a Change
 Imagine an admin tries to wipe a device (or maybe deploy a script). Normally, that action would go straight through. But now, when they hit save, Intune steps in and says: “Hold on, explain yourself.” A Business justification box appears at the bottom of the screen. The admin types in why the change is needed—something like “User lost laptop on the train again” (we all know that person).
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/WipeAction.png&#34;
-	width=&#34;770&#34;
-	height=&#34;301&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_1e9e502e024bceab.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_97c06190fb5dc94.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Wipe Action&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;255&#34;
-		data-flex-basis=&#34;613px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/WipeAction.png"
+width="770"
+height="301"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_1e9e502e024bceab.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/WipeAction_hu_97c06190fb5dc94.png 1024w"
+loading="lazy"
+alt="Wipe Action"
+class="gallery-image"
+data-flex-grow="255"
+data-flex-basis="613px"
 &gt;&lt;/li&gt;
 &lt;li&gt;The Request Gets Parked
 Instead of being processed immediately, the request now sits in limbo under My requests in the Intune admin center. The status will show as Needs approval.
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending.png&#34;
-	width=&#34;1392&#34;
-	height=&#34;238&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_a2eb88736b6205ee.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_8f2e68905935e838.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Device Action Pending Approval&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;584&#34;
-		data-flex-basis=&#34;1403px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending.png"
+width="1392"
+height="238"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_a2eb88736b6205ee.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending_hu_8f2e68905935e838.png 1024w"
+loading="lazy"
+alt="Device Action Pending Approval"
+class="gallery-image"
+data-flex-grow="584"
+data-flex-basis="1403px"
 &gt;&lt;/li&gt;
 &lt;li&gt;The Approver Steps In
 Another admin, one who’s in the designated approver group, logs into Intune and heads to &lt;kbd&gt;Tenant administration &amp;gt; Multi Admin Approval &amp;gt; Received requests&lt;/kbd&gt;.
 They’ll see the pending request, complete with details of what action was attempted, who submitted it, and that all-important &amp;lsquo;business justification&amp;rsquo;.
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2.png&#34;
-	width=&#34;1112&#34;
-	height=&#34;858&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_88fa941755cb8244.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_4ea6c3694671a3dd.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Device Action Pending Approval for second admin&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;129&#34;
-		data-flex-basis=&#34;311px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2.png"
+width="1112"
+height="858"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_88fa941755cb8244.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionPending2_hu_4ea6c3694671a3dd.png 1024w"
+loading="lazy"
+alt="Device Action Pending Approval for second admin"
+class="gallery-image"
+data-flex-grow="129"
+data-flex-basis="311px"
 &gt;&lt;/li&gt;
 &lt;li&gt;Decision Time
 The approver can either hit Approve or Reject, and they’ve got a notes field to leave comments—helpful for feedback, or the occasional passive-aggressive remark like “Stop wiping devices on Friday afternoons.”&lt;/li&gt;
 &lt;li&gt;The Requestor Finishes the Job
 Here’s the twist: even after approval, the original requestor has to go back in and hit Complete before the action actually happens. This ensures the person who started the process is still in the loop. Once completed, the status updates to Completed, and Intune carries out the change.
-&lt;img src=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved.png&#34;
-	width=&#34;1116&#34;
-	height=&#34;858&#34;
-	srcset=&#34;http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_78271518956b2f3e.png 480w, http://localhost:46528/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_f774fc67933caa3b.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Device Action Approved&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;130&#34;
-		data-flex-basis=&#34;312px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved.png"
+width="1116"
+height="858"
+srcset="https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_78271518956b2f3e.png 480w, https://endpointmgt.com/p/multiappapproval/post/MultiAdminApproval/img/DeviceActionApproved_hu_f774fc67933caa3b.png 1024w"
+loading="lazy"
+alt="Device Action Approved"
+class="gallery-image"
+data-flex-grow="130"
+data-flex-basis="312px"
 &gt;&lt;/li&gt;
 &lt;li&gt;Everyone Stays in the Loop
 If the request is rejected, the notes from the approver are visible to the requestor, so they know why. Every step is logged in audit logs, so you’ve got the receipts if you need them later.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The whole process feels a bit like tagging in a teammate during a wrestling match, one person starts the move, but someone else has to back them up before it lands. It adds a couple of extra clicks, but in exchange, you’re massively reducing the risk of one compromised account (or one tired admin mis-click) causing chaos.&lt;/p&gt;
-&lt;h2 id=&#34;looking-ahead&#34;&gt;Looking Ahead
+&lt;h2 id="looking-ahead"&gt;Looking Ahead
 &lt;/h2&gt;&lt;p&gt;Will Microsoft eventually let us scope approvals to specific groups or device types? One can hope. The ideal future is granular control: different approval paths for different admin roles, device ownership types, or even for high-risk vs. low-risk actions.&lt;/p&gt;
 &lt;p&gt;Until then, MAA is a solid foundation. It might not be the dream scenario where your junior admin can reset a password but needs approval to delete a fleet of laptops—but it’s still a powerful safety net for every organization running Intune.&lt;/p&gt;
-&lt;p&gt;And hey, if nothing else, it makes sure your admins are talking to each other. Who knew security could double up as team bonding?&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Windows Hello for Business and Cloud Kerberos Authentication</title>
-        <link>http://localhost:46528/p/whfbcloudkerberos/</link>
-        <pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/whfbcloudkerberos/</guid>
-        <description>&lt;img src="http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
-&lt;h2 id=&#34;why-might-you-need-it&#34;&gt;Why might you need it?
+&lt;p&gt;And hey, if nothing else, it makes sure your admins are talking to each other. Who knew security could double up as team bonding?&lt;/p&gt;</description></item><item><title>Windows Hello for Business and Cloud Kerberos Authentication</title><link>https://endpointmgt.com/p/whfbcloudkerberos/</link><pubDate>Sat, 05 Jul 2025 16:56:34 +0100</pubDate><guid>https://endpointmgt.com/p/whfbcloudkerberos/</guid><description>&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/cover.png" alt="Featured image of post Windows Hello for Business and Cloud Kerberos Authentication" /&gt;&lt;p&gt;I don&amp;rsquo;t know about you but as soon as you hear the word Kerberos, I immediately want to shy away. For it sounds complicated and scary but what is it? Well, in simple terms, it&amp;rsquo;s a modern authentication that can allow organisations to reduce the reliance on passwords on Windows devices.&lt;/p&gt;
+&lt;h2 id="why-might-you-need-it"&gt;Why might you need it?
 &lt;/h2&gt;&lt;p&gt;Imagine a world where you&amp;rsquo;d like to have Entra ID /Azure AD joined devices, authenticating back to on-premise resources. As long as you have hybrid user identities sync&amp;rsquo;d via AD sync connect, you can have just that but what if you wish to make use of Windows Hello for Business? Then you&amp;rsquo;ll start to run into some problems and users will be prompted for re-authentication. Why, well the on-premise resources, don&amp;rsquo;t trust your WHfB authentication token. This is where Cloud Kerberos trust comes to aid. It allows for WHfB configured devices to access on-premise resources without re-authentication and provide a secure authentication trust between Entra ID and the on-premise AD.&lt;/p&gt;
-&lt;h3 id=&#34;alternatives&#34;&gt;Alternatives
+&lt;h3 id="alternatives"&gt;Alternatives
 &lt;/h3&gt;&lt;p&gt;As with everything, in short Yes there are but I&amp;rsquo;d consider these older technology. You have the choice of using a key trust or certificate trust. With the later, even if you have your own PKI infrastructure, I still wouldn&amp;rsquo;t recommend it. It&amp;rsquo;s much harder to upkeep and to be honest, it&amp;rsquo;s a royal pain, comes with poor user experience (at step up stage) and doesn&amp;rsquo;t really offer anything else for the complexity that it brings. MIcrosoft themselves, recommend Cloud Kerberos Trust!&lt;/p&gt;
-&lt;h2 id=&#34;so-how-does-it-work&#34;&gt;So how does it work?
-&lt;/h2&gt;&lt;h2 id=&#34;what-are-the-supported-scenarios&#34;&gt;What are the supported scenarios?
+&lt;h2 id="so-how-does-it-work"&gt;So how does it work?
+&lt;/h2&gt;&lt;h2 id="what-are-the-supported-scenarios"&gt;What are the supported scenarios?
 &lt;/h2&gt;&lt;p&gt;So imagine, you&amp;rsquo;re moving to the cloud. Existing devices are hybrid domain joined. New pilot devices are Entra joined via Windows Autopilot and you&amp;rsquo;re slowly moving workloads over from on-premise. How does this fit? Well in short, it supports both. So you can deploy CKT, deploy one configuration to devices or users and it&amp;rsquo;ll, well just work!&lt;/p&gt;
 &lt;p&gt;Devices do need support Windows Hello for business for all this to work but that comes down to the device. I&amp;rsquo;ll let you research this part!&lt;/p&gt;
-&lt;h2 id=&#34;how-to-deploy-it&#34;&gt;How to deploy it&amp;hellip;
+&lt;h2 id="how-to-deploy-it"&gt;How to deploy it&amp;hellip;
 &lt;/h2&gt;&lt;p&gt;This comes in two parts, setting up the kerberos trust and deploying Windows Hello configuration. Do not deploy the Windows Hello configuration to devices or users, until the Cloud Kerberos configuration is in place. Doing so will mean that users will need to delete their WHfB and start again for it to take place.&lt;/p&gt;
-&lt;h3 id=&#34;set-up-cloud-kerberos-trust&#34;&gt;Set up Cloud Kerberos Trust
+&lt;h3 id="set-up-cloud-kerberos-trust"&gt;Set up Cloud Kerberos Trust
 &lt;/h3&gt;&lt;p&gt;Step 1 - First, ensure TLS 1.2 for PowerShell gallery access.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SecurityProtocol&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SecurityProtocol&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-bor&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Net.SecurityProtocolType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tls12&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class="p"&gt;]::&lt;/span&gt;&lt;span class="n"&gt;SecurityProtocol&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;Net.ServicePointManager&lt;/span&gt;&lt;span class="p"&gt;]::&lt;/span&gt;&lt;span class="n"&gt;SecurityProtocol&lt;/span&gt; &lt;span class="o"&gt;-bor&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;Net.SecurityProtocolType&lt;/span&gt;&lt;span class="p"&gt;]::&lt;/span&gt;&lt;span class="n"&gt;Tls12&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Step 2 - Install the AzureADHybridAuthenticationManagement PowerShell module.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Install-Module&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Name&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AzureADHybridAuthenticationManagement&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-AllowClobber&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Install-Module&lt;/span&gt; &lt;span class="n"&gt;-Name&lt;/span&gt; &lt;span class="n"&gt;AzureADHybridAuthenticationManagement&lt;/span&gt; &lt;span class="n"&gt;-AllowClobber&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Step 3 - Create the new Entra ID Kerberos Server object in Active Directory&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$GAUser&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;PlaceYourAdminCreds@tenantdomain.com&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Set-AzureADKerberosServer&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Domain&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$env:UserDNSDomain&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-UserPrincipalName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$GAUser&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;$GAUser&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;PlaceYourAdminCreds@tenantdomain.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Set-AzureADKerberosServer&lt;/span&gt; &lt;span class="n"&gt;-Domain&lt;/span&gt; &lt;span class="nv"&gt;$env:UserDNSDomain&lt;/span&gt; &lt;span class="n"&gt;-UserPrincipalName&lt;/span&gt; &lt;span class="nv"&gt;$GAUser&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Step 4 - Now you&amp;rsquo;re done but lets verify it&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Get-AzureADKerberosServer&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;Get-AzureADKerberosServer&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;You should see something like this&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png&#34;
-	width=&#34;634&#34;
-	height=&#34;247&#34;
-	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Confirmation of Deployment&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;256&#34;
-		data-flex-basis=&#34;616px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1.png"
+width="634"
+height="247"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_b637ad8c85730dda.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-1_hu_58fc152c8f10b759.png 1024w"
+loading="lazy"
+alt="Confirmation of Deployment"
+class="gallery-image"
+data-flex-grow="256"
+data-flex-basis="616px"
 &gt;&lt;/p&gt;
 &lt;p&gt;If you look on a domain controller within Users and Computer, you should see 2 new objects created. These act like a read only domain controller. They provide the mechanism to provide part of the Primary Refresh Token (PRT) that users need to authenticate.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png&#34;
-	width=&#34;1067&#34;
-	height=&#34;458&#34;
-	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Disabled User Object&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;232&#34;
-		data-flex-basis=&#34;559px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2.png"
+width="1067"
+height="458"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_eca32f052185968d.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-2_hu_f44cccaf456a3a03.png 1024w"
+loading="lazy"
+alt="Disabled User Object"
+class="gallery-image"
+data-flex-grow="232"
+data-flex-basis="559px"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png&#34;
-	width=&#34;1066&#34;
-	height=&#34;456&#34;
-	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Enabled Device Object&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;233&#34;
-		data-flex-basis=&#34;561px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3.png"
+width="1066"
+height="456"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_acc09366a0b7f075.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-3_hu_d35e0dded9b6e19e.png 1024w"
+loading="lazy"
+alt="Enabled Device Object"
+class="gallery-image"
+data-flex-grow="233"
+data-flex-basis="561px"
 &gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Do not delete/move/rename these 2 objects. To do so will break your new Cloud Kerberos Trust!&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3 id=&#34;intune-configuration&#34;&gt;Intune Configuration
+&lt;h3 id="intune-configuration"&gt;Intune Configuration
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;Create Windows Hello for Business Configuration Profile&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Now it&amp;rsquo;s time to create and deploy the WHfB configuration. Here is an example settings catalog profile to deploy WHfB will all the necessary settings. Make amendments as you see fit, the important one is highlighted in yellow. Use Cloud Trust for on prem auth, just make sure that&amp;rsquo;s enabled!&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png&#34;
-	width=&#34;615&#34;
-	height=&#34;831&#34;
-	srcset=&#34;http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, http://localhost:46528/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Enabled Device Object&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;74&#34;
-		data-flex-basis=&#34;177px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4.png"
+width="615"
+height="831"
+srcset="https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_95bb8644ed453b4f.png 480w, https://endpointmgt.com/p/whfbcloudkerberos/post/WHfBCloudKerberos/img/image-4_hu_2167123c786b64a7.png 1024w"
+loading="lazy"
+alt="Enabled Device Object"
+class="gallery-image"
+data-flex-grow="74"
+data-flex-basis="177px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
+&lt;ol start="2"&gt;
 &lt;li&gt;Deploy it to users or devices. Once the user logs back into the device, they should receive a message to setup Windows Hello.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;user-setup&#34;&gt;User Setup
+&lt;h3 id="user-setup"&gt;User Setup
 &lt;/h3&gt;&lt;p&gt;This works in the exactly the same way as it would without kerberos trust so the user won&amp;rsquo;t notice anything different. They sign in, go through the MFA Prompt and setup faceID, fingerprintID and then a PIN code. Once set, they&amp;rsquo;ll be logged in and WHfB will be the new default sign in option.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;This is one of the biggest benefits of using this method. Whereas using a key trust or certificate trust, means that when a user sets up for the first time, they can&amp;rsquo;t immediately  start using it, they have to wait upwards of 60 mins for the device objects in Active Directory to be updated. Not the case with Cloud Kerberos Trust. Use it straight away!&lt;/p&gt;
+&lt;p&gt;This is one of the biggest benefits of using this method. Whereas using a key trust or certificate trust, means that when a user sets up for the first time, they can&amp;rsquo;t immediately start using it, they have to wait upwards of 60 mins for the device objects in Active Directory to be updated. Not the case with Cloud Kerberos Trust. Use it straight away!&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;user-experience&#34;&gt;User Experience.
+&lt;h2 id="user-experience"&gt;User Experience.
 &lt;/h2&gt;&lt;p&gt;I&amp;rsquo;m not going to give you a screen shot of the setup process or accessing on premise file shares. As long as the user has line of sight to the file share, to test Cloud Kerberos, have them sign in with WHfB on the device and access a file share. If it just opens, success! If it prompts for a username/password, we have problems! I&amp;rsquo;d run the &lt;code&gt;Get-AzureADKerberosServer&lt;/code&gt; to check the status.&lt;/p&gt;
-&lt;p&gt;Thanks for reading!&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Deploy SOLUS 3 for SIMS</title>
-        <link>http://localhost:46528/p/deploysims/</link>
-        <pubDate>Wed, 29 Jan 2025 19:45:32 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/deploysims/</guid>
-        <description>&lt;img src="http://localhost:46528/p/deploysims/post/InstallSims/img/cover.png" alt="Featured image of post Deploy SOLUS 3 for SIMS" /&gt;&lt;p&gt;On a recent engagement in my day job, I had a challenge to deploy Solus3 agent to Microsoft Entra joined devices. These devices were enrolled via Windows Autopilot and no longer domain joined. The existing deployment deployed the Solus3 agent via a targeted AD OU, which deploys the agent via the deployment server. This of course, isn’t possible with Entra joined devices.&lt;/p&gt;
+&lt;p&gt;Thanks for reading!&lt;/p&gt;</description></item><item><title>Deploy SOLUS 3 for SIMS</title><link>https://endpointmgt.com/p/deploysims/</link><pubDate>Wed, 29 Jan 2025 19:45:32 +0100</pubDate><guid>https://endpointmgt.com/p/deploysims/</guid><description>&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/cover.png" alt="Featured image of post Deploy SOLUS 3 for SIMS" /&gt;&lt;p&gt;On a recent engagement in my day job, I had a challenge to deploy Solus3 agent to Microsoft Entra joined devices. These devices were enrolled via Windows Autopilot and no longer domain joined. The existing deployment deployed the Solus3 agent via a targeted AD OU, which deploys the agent via the deployment server. This of course, isn’t possible with Entra joined devices.&lt;/p&gt;
 &lt;p&gt;To get this to work, its a wrap within a wrap. Keeping it as close the production or what your using or how you might already deploy the app as close the the existing deployment but with a few tweaks. Anyways for now, here are the steps to deploy the agent via Microsoft Intune. After all, it’s why you’re here 🙂&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;It should be noted that this approach to deployment is NOT supported. Do so at your own risk. You may still need to keep an instance of a supported deployment. This will allow you to replicate the any issue on a supported deployment for escalation.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;preparation&#34;&gt;Preparation
+&lt;h2 id="preparation"&gt;Preparation
 &lt;/h2&gt;&lt;p&gt;You’ll need to gather the relevant files and create a folder for the install files, called SIMS. In my example, I’ve placed the SIMS folder on the root of the D:\ drive. Copy the following files over to the SIMS folder.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;SOLUS3AgentInstaller_x86.msi&lt;/li&gt;
 &lt;li&gt;SOLUS3AgentInstaller_x64.msi&lt;/li&gt;
 &lt;li&gt;Solus3.Keys.DeploymentService.Public.xml&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;first-installer-file&#34;&gt;First installer File
+&lt;h3 id="first-installer-file"&gt;First installer File
 &lt;/h3&gt;&lt;p&gt;Create a .bat file named Solus3AgentInstaller.bat with the following commands.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Powershell&#34; data-lang=&#34;Powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;cscript&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;exe&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nologo&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AgentInstaller&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;agent_installer.log&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;net.tcp://localhost:52966&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;net.tcp://Your-SIMS-Server:52965&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Solus3.Keys.DeploymentService.Public.xml&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;SOLUS3AgentInstaller_x86.msi&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;SOLUS3AgentInstaller_x64.msi&amp;#34;&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Powershell" data-lang="Powershell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;cscript&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;exe&lt;/span&gt; &lt;span class="p"&gt;//&lt;/span&gt;&lt;span class="n"&gt;nologo&lt;/span&gt; &lt;span class="n"&gt;AgentInstaller&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="py"&gt;js&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;agent_installer.log&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;net.tcp://localhost:52966&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;net.tcp://Your-SIMS-Server:52965&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Solus3.Keys.DeploymentService.Public.xml&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;SOLUS3AgentInstaller_x86.msi&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;SOLUS3AgentInstaller_x64.msi&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Update the &lt;code&gt;net.tcp://Your-SIMS-Server:52965&lt;/code&gt; with your server location and save the .bat file in your newly created SIMS folder.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshShell,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshSysEnv;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;fso,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;typeLib;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;fso&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;ActiveXObject(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Scripting.FileSystemObject&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;typeLib&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;ActiveXObject(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Scriptlet.TypeLib&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;wshShell&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.CreateObject(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;logFileName&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;agentAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;dsAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;keyFileName&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.Arguments(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;(is&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;())&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;wshShell.Run(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;msiexec.exe /qb /lv* \&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;fso.BuildPath(wshShell.Environment(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SYSTEM&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;TEMP&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;logFileName)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; /i \&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshShell.CurrentDirectory&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;\\&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;msi&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; AGENTSERVICEADDRESS=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;agentAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; AGENTID=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;typeLib.Guid.toString().substring(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;38&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; DEPLOYMENTSERVERADDRESS=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;dsAddress&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34; RSAKEYPATH=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;wshShell.CurrentDirectory&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;c1&#34;&gt;//&amp;#34;\&amp;#34; PREDEFINEDAGENTTARGETS=\&amp;#34;Sims Fms Discover&amp;#34; +
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;s2&#34;&gt;&amp;#34;\&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;is&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;shell&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;WScript.CreateObject(&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;err&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;(wshShell.Environment(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SYSTEM&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;PROCESSOR_ARCHITECTURE&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;).indexOf(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;64&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;wshShell,&lt;/span&gt; &lt;span class="err"&gt;wshSysEnv;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;fso,&lt;/span&gt; &lt;span class="err"&gt;f&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="err"&gt;typeLib;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;fso&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;new&lt;/span&gt; &lt;span class="err"&gt;ActiveXObject(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Scripting.FileSystemObject&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;typeLib&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;new&lt;/span&gt; &lt;span class="err"&gt;ActiveXObject(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Scriptlet.TypeLib&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;wshShell&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.CreateObject(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;logFileName&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.Arguments(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;agentAddress&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.Arguments(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;dsAddress&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.Arguments(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;keyFileName&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.Arguments(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;msi&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.Arguments(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;msi&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.Arguments(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;msi&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;if&lt;/span&gt; &lt;span class="err"&gt;(is&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="err"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;msi&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;msi&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;msi&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;msi&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;wshShell.Run(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;msiexec.exe /qb /lv* \&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;fso.BuildPath(wshShell.Environment(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;SYSTEM&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;)(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;TEMP&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;),&lt;/span&gt; &lt;span class="err"&gt;logFileName)&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;\&amp;#34; /i \&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;wshShell.CurrentDirectory&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;\\&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;msi&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;\&amp;#34; AGENTSERVICEADDRESS=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;agentAddress&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;\&amp;#34; AGENTID=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;typeLib.Guid.toString().substring(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;38&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;\&amp;#34; DEPLOYMENTSERVERADDRESS=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;dsAddress&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;\&amp;#34; RSAKEYPATH=\&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="err"&gt;wshShell.CurrentDirectory&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//&amp;#34;\&amp;#34; PREDEFINEDAGENTTARGETS=\&amp;#34;Sims Fms Discover&amp;#34; +
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;\&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;function&lt;/span&gt; &lt;span class="err"&gt;is&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="err"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;var&lt;/span&gt; &lt;span class="err"&gt;shell&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;WScript.CreateObject(&lt;/span&gt;&lt;span class="nt"&gt;&amp;#34;WScript.Shell&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;return&lt;/span&gt; &lt;span class="err"&gt;(wshShell.Environment(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;SYSTEM&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;)(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;PROCESSOR_ARCHITECTURE&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;).indexOf(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;64&amp;#34;&lt;/span&gt;&lt;span class="err"&gt;)&lt;/span&gt; &lt;span class="err"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Save the AgentInstaller.js file in your newly created SIMS folder. Your folder should then look something like this.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-1.png&#34;
-	width=&#34;258&#34;
-	height=&#34;193&#34;
-	srcset=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-1_hu_76715fd85077e857.png 480w, http://localhost:46528/p/deploysims/post/InstallSims/img/image-1_hu_cdaa27a93d01e402.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Install Files&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;133&#34;
-		data-flex-basis=&#34;320px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-1.png"
+width="258"
+height="193"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-1_hu_76715fd85077e857.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-1_hu_cdaa27a93d01e402.png 1024w"
+loading="lazy"
+alt="Install Files"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;wrapping-time&#34;&gt;Wrapping Time
-&lt;/h3&gt;&lt;p&gt;I’ll assume you already know how to wrap packages via &lt;a class=&#34;link&#34; href=&#34;https://go.microsoft.com/fwlink/?linkid=2065730&#34;  title=&#34;Microsoft Win32 Content Prep Tool&#34;
-     target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Microsoft Win32 Content Prep Tool&lt;/a&gt;. Packing the content should look something like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-2.png&#34;
-	width=&#34;588&#34;
-	height=&#34;116&#34;
-	srcset=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-2_hu_405465bf0873d17e.png 480w, http://localhost:46528/p/deploysims/post/InstallSims/img/image-2_hu_b9fc634c6a1c9a94.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Microsoft Win32 Content Prep Tool&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;506&#34;
-		data-flex-basis=&#34;1216px&#34;
-	
+&lt;h3 id="wrapping-time"&gt;Wrapping Time
+&lt;/h3&gt;&lt;p&gt;I’ll assume you already know how to wrap packages via &lt;a class="link" href="https://go.microsoft.com/fwlink/?linkid=2065730" title="Microsoft Win32 Content Prep Tool"
+target="_blank" rel="noopener"
+&gt;Microsoft Win32 Content Prep Tool&lt;/a&gt;. Packing the content should look something like this…&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-2.png"
+width="588"
+height="116"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-2_hu_405465bf0873d17e.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-2_hu_b9fc634c6a1c9a94.png 1024w"
+loading="lazy"
+alt="Microsoft Win32 Content Prep Tool"
+class="gallery-image"
+data-flex-grow="506"
+data-flex-basis="1216px"
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;upload-time&#34;&gt;Upload Time
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;h3 id="upload-time"&gt;Upload Time
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Install Command: Solus3AgentInstaller.bat
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Uninstall Command: msiexec.exe /qn /x {PRODUCT-CODE} /lv* “%TEMP%\uninstall.log”
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Install behavior: System
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Install Command: Solus3AgentInstaller.bat
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Uninstall Command: msiexec.exe /qn /x {PRODUCT-CODE} /lv* “%TEMP%\uninstall.log”
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Install behavior: System
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;It should look like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-3.png&#34;
-	width=&#34;774&#34;
-	height=&#34;547&#34;
-	srcset=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-3_hu_58f71c649c2862a3.png 480w, http://localhost:46528/p/deploysims/post/InstallSims/img/image-3_hu_29bf22cd539d43ac.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Microsoft Intune Install Commands&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;141&#34;
-		data-flex-basis=&#34;339px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-3.png"
+width="774"
+height="547"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-3_hu_58f71c649c2862a3.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-3_hu_29bf22cd539d43ac.png 1024w"
+loading="lazy"
+alt="Microsoft Intune Install Commands"
+class="gallery-image"
+data-flex-grow="141"
+data-flex-basis="339px"
 &gt;&lt;/p&gt;
 &lt;p&gt;For the detection, we’ll use a file installed as part of the installer&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Rule Type: File
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Path: C:\Program Files\SOLUS3\AgentService
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;File or Folder: Infrastructure.dll
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Detection Method: File or folder exists
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Associated with a 32-bit app on 64-bit clients: No
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Rule Type: File
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Path: C:\Program Files\SOLUS3\AgentService
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File or Folder: Infrastructure.dll
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Detection Method: File or folder exists
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Associated with a 32-bit app on 64-bit clients: No
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;It should look like this…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-4.png&#34;
-	width=&#34;557&#34;
-	height=&#34;234&#34;
-	srcset=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-4_hu_b8642a77f09f8826.png 480w, http://localhost:46528/p/deploysims/post/InstallSims/img/image-4_hu_bc05dfdc1ed36592.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Microsoft Intune App Detection&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;238&#34;
-		data-flex-basis=&#34;571px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-4.png"
+width="557"
+height="234"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-4_hu_b8642a77f09f8826.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-4_hu_bc05dfdc1ed36592.png 1024w"
+loading="lazy"
+alt="Microsoft Intune App Detection"
+class="gallery-image"
+data-flex-grow="238"
+data-flex-basis="571px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;deployment-time&#34;&gt;Deployment Time
+&lt;h2 id="deployment-time"&gt;Deployment Time
 &lt;/h2&gt;&lt;p&gt;Assign your newly created and updated app to users or devices as you desire.&lt;/p&gt;
-&lt;h3 id=&#34;success&#34;&gt;Success?
+&lt;h3 id="success"&gt;Success?
 &lt;/h3&gt;&lt;p&gt;You should now have the app installed.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-5.png&#34;
-	width=&#34;962&#34;
-	height=&#34;540&#34;
-	srcset=&#34;http://localhost:46528/p/deploysims/post/InstallSims/img/image-5_hu_caffd6a6d41a374.png 480w, http://localhost:46528/p/deploysims/post/InstallSims/img/image-5_hu_973945a4cfcd80cf.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Installation Success&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;178&#34;
-		data-flex-basis=&#34;427px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-5.png"
+width="962"
+height="540"
+srcset="https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-5_hu_caffd6a6d41a374.png 480w, https://endpointmgt.com/p/deploysims/post/InstallSims/img/image-5_hu_973945a4cfcd80cf.png 1024w"
+loading="lazy"
+alt="Installation Success"
+class="gallery-image"
+data-flex-grow="178"
+data-flex-basis="427px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;next-steps&#34;&gt;Next Steps.
+&lt;h2 id="next-steps"&gt;Next Steps.
 &lt;/h2&gt;&lt;p&gt;Now that you have the Agent installed. You’ll need to login to the Solus3 server and deploy the Sims package to the device from the deployment server.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;While this will deploy the Solus3 agent to devices, what this doesn’t take care of is ongoing updates. You’ll need to package any updates to the Solus3 agent. It’s beyond the scope of this article.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;For now and until the next post, I wish you well…&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Missing Microsoft Enrolment App</title>
-        <link>http://localhost:46528/p/recreateenrolmentapp/</link>
-        <pubDate>Mon, 22 Jan 2024 10:59:19 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/recreateenrolmentapp/</guid>
-        <description>&lt;img src="http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" /&gt;&lt;p&gt;Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p&gt;
+&lt;p&gt;For now and until the next post, I wish you well…&lt;/p&gt;</description></item><item><title>Missing Microsoft Enrolment App</title><link>https://endpointmgt.com/p/recreateenrolmentapp/</link><pubDate>Mon, 22 Jan 2024 10:59:19 +0100</pubDate><guid>https://endpointmgt.com/p/recreateenrolmentapp/</guid><description>&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/cover.png" alt="Featured image of post Missing Microsoft Enrolment App" /&gt;&lt;p&gt;Missing this app in your M365 tenant and need it for Conditional Access? This was a recent issue that I came across while working on a tenant to tenant migration project. The Issue? Re-enrolling fully managed (COPE) devices and the requirement to exclude the enrollment from MFA prompts. The only problem, only the Microsoft Intune app existed.&lt;/p&gt;
 &lt;p&gt;As you can see below, the Microsoft Intune app is missing from the Mobility MDM and WIP page.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png&#34;
-	width=&#34;474&#34;
-	height=&#34;223&#34;
-	srcset=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_149ae6245f80ea59.png 480w, http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_1f6a1c3cc9ab2c2d.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Missing Enrolment App&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;212&#34;
-		data-flex-basis=&#34;510px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1.png"
+width="474"
+height="223"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_149ae6245f80ea59.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-1_hu_1f6a1c3cc9ab2c2d.png 1024w"
+loading="lazy"
+alt="Missing Enrolment App"
+class="gallery-image"
+data-flex-grow="212"
+data-flex-basis="510px"
 &gt;&lt;/p&gt;
 &lt;p&gt;As you can also see, it’s missing from the Target Resources within the Conditional Access Policies.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png&#34;
-	width=&#34;889&#34;
-	height=&#34;569&#34;
-	srcset=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_b4d59fee4348dda3.png 480w, http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_986cb2746ac23284.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Conditional Access Selection&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;156&#34;
-		data-flex-basis=&#34;374px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2.png"
+width="889"
+height="569"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_b4d59fee4348dda3.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-2_hu_986cb2746ac23284.png 1024w"
+loading="lazy"
+alt="Conditional Access Selection"
+class="gallery-image"
+data-flex-grow="156"
+data-flex-basis="374px"
 &gt;&lt;/p&gt;
 &lt;p&gt;To resolve the issue, we need a way of recreating the app that Microsoft will recognise as the Intune enrolment app, we can’t simply create an Enterprise Application called the same name. We’ll do this by creating a new Service Principle.&lt;/p&gt;
 &lt;p&gt;First, we’re going to login to Entra ID using Powershell.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Connect-AzureAD&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png&#34;
-	width=&#34;951&#34;
-	height=&#34;211&#34;
-	srcset=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_778087c9b4995078.png 480w, http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_3a1557af93c77bcc.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Connect to Entra&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;450&#34;
-		data-flex-basis=&#34;1081px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3.png"
+width="951"
+height="211"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_778087c9b4995078.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-3_hu_3a1557af93c77bcc.png 1024w"
+loading="lazy"
+alt="Connect to Entra"
+class="gallery-image"
+data-flex-grow="450"
+data-flex-basis="1081px"
 &gt;&lt;/p&gt;
 &lt;p&gt;Lets now check if the app exists, run the get command to see if it exists.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Get-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code&gt;&lt;/p&gt;
@@ -1155,60 +950,39 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;p&gt;Once complete, we’re now going to recreate it. Don’t make any changes to the command.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;New-AzureADServicePrincipal -AppId d4ebce55-015a-49b5-a083-c84d1797ae8c&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;To confirm it’s created, PS will show you the new Service Principle with the correct display name of the require Intune enrollment app.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png&#34;
-	width=&#34;975&#34;
-	height=&#34;205&#34;
-	srcset=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_27ce7b049dcda6d0.png 480w, http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_1d96ea3f53c16b2b.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Create Entra Service Principal&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;475&#34;
-		data-flex-basis=&#34;1141px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4.png"
+width="975"
+height="205"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_27ce7b049dcda6d0.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-4_hu_1d96ea3f53c16b2b.png 1024w"
+loading="lazy"
+alt="Create Entra Service Principal"
+class="gallery-image"
+data-flex-grow="475"
+data-flex-basis="1141px"
 &gt;&lt;/p&gt;
 &lt;p&gt;We can now also see the app listed in the Mobility page&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png&#34;
-	width=&#34;458&#34;
-	height=&#34;267&#34;
-	srcset=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_dfcaba243878ab7b.png 480w, http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_f847b448a2cef91.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Mobility Page&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;171&#34;
-		data-flex-basis=&#34;411px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5.png"
+width="458"
+height="267"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_dfcaba243878ab7b.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-5_hu_f847b448a2cef91.png 1024w"
+loading="lazy"
+alt="Mobility Page"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
 &gt;&lt;/p&gt;
 &lt;p&gt;And, if you now select the app from the CA policy, it should be listed. You’ll need to refresh the page if you still have it open from checking previously.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png&#34;
-	width=&#34;900&#34;
-	height=&#34;568&#34;
-	srcset=&#34;http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_49ecd5a2d22e3b8b.png 480w, http://localhost:46528/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_d88e477dc2e03f28.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Updated Conditional Access Selection&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;158&#34;
-		data-flex-basis=&#34;380px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6.png"
+width="900"
+height="568"
+srcset="https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_49ecd5a2d22e3b8b.png 480w, https://endpointmgt.com/p/recreateenrolmentapp/post/MissingEnrolmentApp/img/image-6_hu_d88e477dc2e03f28.png 1024w"
+loading="lazy"
+alt="Updated Conditional Access Selection"
+class="gallery-image"
+data-flex-grow="158"
+data-flex-basis="380px"
 &gt;&lt;/p&gt;
-&lt;p&gt;And your done. Now all you have to do is save your CA policy and test the results.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>MAM for Windows</title>
-        <link>http://localhost:46528/p/mamforwindows/</link>
-        <pubDate>Fri, 13 Oct 2023 11:18:38 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/mamforwindows/</guid>
-        <description>&lt;img src="http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
+&lt;p&gt;And your done. Now all you have to do is save your CA policy and test the results.&lt;/p&gt;</description></item><item><title>MAM for Windows</title><link>https://endpointmgt.com/p/mamforwindows/</link><pubDate>Fri, 13 Oct 2023 11:18:38 +0100</pubDate><guid>https://endpointmgt.com/p/mamforwindows/</guid><description>&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/cover.png" alt="Featured image of post MAM for Windows" /&gt;&lt;p&gt;Today we’re going to take a quick look at, MAM for Windows. But what is it? MAM stands for Mobile Application Protection and Windows, instead a mobile OS, so what does Microsoft mean when they say MAM for Windows? Well, it’s in essence, it’s App Protection for Windows. It applies to the Edge Browser and can provide organisations with the ability to provide their end users with secure M365 access on personally owned unmanaged devices while applying some level of data protection controls.&lt;/p&gt;
 &lt;p&gt;So we know what is it but how does it work? If all the requirements are met, once setup, the user just has to sign in to Office and they’ll be taken through the process and well apart from one slightly misleading screen where it could all come crashing down, more on that later, it’s a fairly easy process for users to follow and makes accessing M365 almost easier.&lt;/p&gt;
 &lt;p&gt;We’ll take a look at&lt;/p&gt;
 &lt;ol&gt;
@@ -1218,7 +992,7 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;li&gt;What else did we see?&lt;/li&gt;
 &lt;li&gt;What didn’t we see that we maybe expected?&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;what-are-the-prerequisites&#34;&gt;What are the prerequisites…
+&lt;h2 id="what-are-the-prerequisites"&gt;What are the prerequisites…
 &lt;/h2&gt;&lt;p&gt;If you look at the Microsoft tech announcement, it will told us that it’s Windows 11 and Microsoft Edge for Windows ver. 117 and above. With the updated learn article Data protection for Windows MAM | Microsoft Learn, this was changed to support Windows 10 running build 19046.3636 and above with KB5031445 or later.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 10, build 19046.3636, KB5031445 or later and Windows 11, build 10.0.22621.2506, KB5031455 (22H2) or later&lt;/li&gt;
@@ -1227,312 +1001,235 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;li&gt;Windows Security Center (v 1.0.2310.2002 and later) if using Device Risk scores&lt;/li&gt;
 &lt;li&gt;Users must be assigned a licence for Microsoft Intune and a Conditional Access P1 or P2 licence.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;the-setup&#34;&gt;The Setup…
+&lt;h2 id="the-setup"&gt;The Setup…
 &lt;/h2&gt;&lt;p&gt;The first thing users will see when they sign in is a conditional access message saying that they’ll need to sign into the Edge Browser or access the account from a registered device. (we’ll not get into the later, you never know, I may do another post on this separately).&lt;/p&gt;
 &lt;p&gt;Here’s a quick step by step run though of what it looks like for the user&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;they’ll sign into Office.com with their organisational account&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-1.png&#34;
-	width=&#34;458&#34;
-	height=&#34;552&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Sign In&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;82&#34;
-		data-flex-basis=&#34;199px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1.png"
+width="458"
+height="552"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1_hu_d6b338ae6df862b7.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-1_hu_9a40b1c8d83626ee.png 1024w"
+loading="lazy"
+alt="Sign In"
+class="gallery-image"
+data-flex-grow="82"
+data-flex-basis="199px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
+&lt;ol start="2"&gt;
 &lt;li&gt;User will be asked to create a work profile, they simply need to select the account and select the Sign in to Sync data and they’ll then be prompted for their password.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-2.png&#34;
-	width=&#34;422&#34;
-	height=&#34;334&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Continue with Work Account&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;126&#34;
-		data-flex-basis=&#34;303px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2.png"
+width="422"
+height="334"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2_hu_e18bea5066d1279.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-2_hu_a3864874ca7986ae.png 1024w"
+loading="lazy"
+alt="Continue with Work Account"
+class="gallery-image"
+data-flex-grow="126"
+data-flex-basis="303px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;4&#34;&gt;
+&lt;ol start="4"&gt;
 &lt;li&gt;This is where it gets interesting, the user is provided with a a couple of options on this screen. We need them to register the device but not enrol and allow the organisation to manage the device. Managed devices will block MAM for Windows from working so the user has to untick Allow my organisation to manage my device and then select OK.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
 &lt;p&gt;they only sign into the app by selecting No, this won’t register the device and they’ll get stuck in a loop with MS Edge asking them to sign in and create a work profile. You have been warned.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-4.png&#34;
-	width=&#34;657&#34;
-	height=&#34;642&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Management selection&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;102&#34;
-		data-flex-basis=&#34;245px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4.png"
+width="657"
+height="642"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4_hu_895e093c3a28f4ac.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-4_hu_47d09a397b5ea36e.png 1024w"
+loading="lazy"
+alt="Management selection"
+class="gallery-image"
+data-flex-grow="102"
+data-flex-basis="245px"
 &gt;&lt;/p&gt;
-&lt;ol start=&#34;5&#34;&gt;
+&lt;ol start="5"&gt;
 &lt;li&gt;Once signed in, the work profile will be created, a couple of customisation screens will appear, they can tailor the browser or simply just click Continue, Next and Done.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-5.png&#34;
-	width=&#34;768&#34;
-	height=&#34;480&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Edge Setup&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;160&#34;
-		data-flex-basis=&#34;384px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5.png"
+width="768"
+height="480"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5_hu_820a773d50ddc709.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-5_hu_ca0f45821e7e4578.png 1024w"
+loading="lazy"
+alt="Edge Setup"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="384px"
 &gt;&lt;/p&gt;
 &lt;p&gt;And its done. A user will now have SSO when they use the Microsoft Edge browser using the newly created Work Profile.&lt;/p&gt;
-&lt;h2 id=&#34;in-practice&#34;&gt;In Practice…
+&lt;h2 id="in-practice"&gt;In Practice…
 &lt;/h2&gt;&lt;p&gt;Here’s the subtle difference between the Personal and Work profiles signed in and how you can select between the two.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-6.png&#34;
-	width=&#34;333&#34;
-	height=&#34;434&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Work Profile&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;76&#34;
-		data-flex-basis=&#34;184px&#34;
-	
-&gt;, &lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-7.png&#34;
-	width=&#34;249&#34;
-	height=&#34;300&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Personal Profile&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;83&#34;
-		data-flex-basis=&#34;199px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6.png"
+width="333"
+height="434"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6_hu_bca53813c4a8df5.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-6_hu_9d0502e3b69da7c9.png 1024w"
+loading="lazy"
+alt="Work Profile"
+class="gallery-image"
+data-flex-grow="76"
+data-flex-basis="184px"
+&gt;, &lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7.png"
+width="249"
+height="300"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7_hu_b0f3d2cc9c5c5e09.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-7_hu_49f23e20f3451f62.png 1024w"
+loading="lazy"
+alt="Personal Profile"
+class="gallery-image"
+data-flex-grow="83"
+data-flex-basis="199px"
 &gt;&lt;/p&gt;
 &lt;p&gt;Trying to download files from OneDrive / SharePoint is blocked (as per our requirement) along with the ability to download the Office installer, rather unexpectedly but when you think about it logically, you can understand why.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-8.png&#34;
-	width=&#34;522&#34;
-	height=&#34;260&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Prevented Action&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;200&#34;
-		data-flex-basis=&#34;481px&#34;
-	
-&gt;, &lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-9.png&#34;
-	width=&#34;768&#34;
-	height=&#34;543&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Blocked Download&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;141&#34;
-		data-flex-basis=&#34;339px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8.png"
+width="522"
+height="260"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8_hu_1358aa21fa6e21cd.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-8_hu_cf244d922073d020.png 1024w"
+loading="lazy"
+alt="Prevented Action"
+class="gallery-image"
+data-flex-grow="200"
+data-flex-basis="481px"
+&gt;, &lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9.png"
+width="768"
+height="543"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9_hu_2eeeed7f5982aeb5.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-9_hu_242e2b5c4fa834cd.png 1024w"
+loading="lazy"
+alt="Blocked Download"
+class="gallery-image"
+data-flex-grow="141"
+data-flex-basis="339px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;how-was-it-configured&#34;&gt;How was it configured…
+&lt;h2 id="how-was-it-configured"&gt;How was it configured…
 &lt;/h2&gt;&lt;p&gt;Configuration is carried out in 2 parts. You first have to great an App Protection Policy, followed by a Conditional Access Policy to enforce it.&lt;/p&gt;
-&lt;h3 id=&#34;app-protection&#34;&gt;App Protection
+&lt;h3 id="app-protection"&gt;App Protection
 &lt;/h3&gt;&lt;p&gt;The App Protection Policy is created within Intune here – Apps – Microsoft Intune admin center and you’ll need the role of Intune Admin or Global Admin (GA) to create this policy. The policy is broken down into 2 areas;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Data protection&lt;/li&gt;
 &lt;li&gt;Health Checks (otherwise known as Conditional Launch)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Data Protection allows admins to select where the managed profile can receive data from, send and receive organisational data, whether to allow cut, copy and past and decide if users can print organisational data.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-10.png&#34;
-	width=&#34;361&#34;
-	height=&#34;109&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;App Protection - Data Controls&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;331&#34;
-		data-flex-basis=&#34;794px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10.png"
+width="361"
+height="109"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10_hu_2118c78d9023e870.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-10_hu_745d8a037f991894.png 1024w"
+loading="lazy"
+alt="App Protection - Data Controls"
+class="gallery-image"
+data-flex-grow="331"
+data-flex-basis="794px"
 &gt;&lt;/p&gt;
 &lt;p&gt;Health Checks allow admins to set criteria that must be met before a user can access M365 data via the work profile, such as Minimum OS, Minimum Edge version and id their account is disabled. It can also use the devices risk score from Microsoft Defender for Endpoint if used to secure unmanaged devices. (we’ll not cover this aspect here)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-11.png&#34;
-	width=&#34;744&#34;
-	height=&#34;183&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;App Protection - Health Check&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;406&#34;
-		data-flex-basis=&#34;975px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11.png"
+width="744"
+height="183"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11_hu_503fa942b39bb55e.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-11_hu_a6aa2a68f992f212.png 1024w"
+loading="lazy"
+alt="App Protection - Health Check"
+class="gallery-image"
+data-flex-grow="406"
+data-flex-basis="975px"
 &gt;&lt;/p&gt;
 &lt;p&gt;Once the App Protection Policy is configured, it would be prevalent to assign this to a test group of users before deploying this to production.&lt;/p&gt;
-&lt;h3 id=&#34;conditional-access&#34;&gt;Conditional Access
+&lt;h3 id="conditional-access"&gt;Conditional Access
 &lt;/h3&gt;&lt;p&gt;The Conditional Access Policy is created within Intune or Entra ID – Conditional Access – Microsoft Intune admin center and you’ll need the role of Conditional Access Admin or Global Admin (GA) to create this policy.&lt;/p&gt;
 &lt;p&gt;This article isn’t designed to teach you how to use CA policies, if you are unfamiliar with these, improve your knowledge here – What is Conditional Access in Microsoft Entra ID? | Microsoft Learn&lt;/p&gt;
 &lt;p&gt;Below is the policy that I created, targeting O365 apps, on windows, via a browser to require app protection. My policy did not follow the Microsoft guidance to either require app protection or require a compliant device. Consider your use case carefully.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-12.png&#34;
-	width=&#34;979&#34;
-	height=&#34;524&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Conditional Access&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;186&#34;
-		data-flex-basis=&#34;448px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12.png"
+width="979"
+height="524"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12_hu_46a292ec916c04fb.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-12_hu_61c59e484ee177d0.png 1024w"
+loading="lazy"
+alt="Conditional Access"
+class="gallery-image"
+data-flex-grow="186"
+data-flex-basis="448px"
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;what-else-did-we-see&#34;&gt;What else did we see…
+&lt;h3 id="what-else-did-we-see"&gt;What else did we see…
 &lt;/h3&gt;&lt;p&gt;An interesting one here, the Minimum OS was originally set to block older OS but regardless of the version of OS, I found that it always blocked it, even if the OS version was higher. As you can see from below, I changed this to warn so that I could continue but it’s still complaining, despite the Windows version being equal.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-13.png&#34;
-	width=&#34;809&#34;
-	height=&#34;289&#34;
-	srcset=&#34;http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, http://localhost:46528/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;App Protection Health Check in action&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;279&#34;
-		data-flex-basis=&#34;671px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13.png"
+width="809"
+height="289"
+srcset="https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13_hu_4037d2bb40f4e770.png 480w, https://endpointmgt.com/p/mamforwindows/post/MamForWindows/Img/image-13_hu_addf6845a6c08990.png 1024w"
+loading="lazy"
+alt="App Protection Health Check in action"
+class="gallery-image"
+data-flex-grow="279"
+data-flex-basis="671px"
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;what-didnt-see-see-or-would-like&#34;&gt;What didn’t see see or would like
+&lt;h3 id="what-didnt-see-see-or-would-like"&gt;What didn’t see see or would like
 &lt;/h3&gt;&lt;p&gt;For me, it’s around 2 aspects.&lt;/p&gt;
 &lt;p&gt;The user setup process is confusing that users have to untick the box or face having their device managed. This could be must tidier if Microsoft revised this part of the process.&lt;/p&gt;
 &lt;p&gt;The second is around the app protection policy with there being no access requirements that you get on both iOS and Android App Protection Policies. This means that admins can’t set a PIN or password requirement for users. This missing feature alone may rule out this being a viable option for some organisations.&lt;/p&gt;
-&lt;h3 id=&#34;further-info&#34;&gt;Further Info
+&lt;h3 id="further-info"&gt;Further Info
 &lt;/h3&gt;&lt;p&gt;Here’s the official docs from Microsoft&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Data protection for Windows MAM | Microsoft Learn&lt;/li&gt;
 &lt;li&gt;Frequently asked questions about MAM and app protection | Microsoft Learn&lt;/li&gt;
 &lt;li&gt;Conditional Access – Require app protection policy for Windows | Microsoft Learn&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>Company Portal Set up</title>
-        <link>http://localhost:46528/p/companyportal/</link>
-        <pubDate>Tue, 22 Nov 2022 14:40:57 +0100</pubDate>
-        
-        <guid>http://localhost:46528/p/companyportal/</guid>
-        <description>&lt;img src="http://localhost:46528/p/companyportal/post/CompanyPortal/img/cover.png" alt="Featured image of post Company Portal Set up" /&gt;&lt;p&gt;If you’re in a Hybrid environment using SCCM and Intune already or in the process of moving to a Hybrid deployment, a decision that will need to be made is where you direct users to install applications.&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>Company Portal Set up</title><link>https://endpointmgt.com/p/companyportal/</link><pubDate>Tue, 22 Nov 2022 14:40:57 +0100</pubDate><guid>https://endpointmgt.com/p/companyportal/</guid><description>&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/cover.png" alt="Featured image of post Company Portal Set up" /&gt;&lt;p&gt;If you’re in a Hybrid environment using SCCM and Intune already or in the process of moving to a Hybrid deployment, a decision that will need to be made is where you direct users to install applications.&lt;/p&gt;
 &lt;p&gt;Many of you may have already deployed the company portal but in this post; I’ll look at the benefits of deploying company portal to Windows devices, how to deploy it to devices, what’s visible within Company Portal and what the user experience is.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-1.png&#34;
-	width=&#34;720&#34;
-	height=&#34;451&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-1_hu_c7075a82912c2056.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-1_hu_12b630db80f4aa01.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Software Center&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;159&#34;
-		data-flex-basis=&#34;383px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-1.png"
+width="720"
+height="451"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-1_hu_c7075a82912c2056.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-1_hu_12b630db80f4aa01.png 1024w"
+loading="lazy"
+alt="Software Center"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
 &gt;
-&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-2.png&#34;
-	width=&#34;1024&#34;
-	height=&#34;750&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-2_hu_df9cd7ac7852d7ca.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-2_hu_59626fd052c757b6.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Company Portal&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;136&#34;
-		data-flex-basis=&#34;327px&#34;
-	
+&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-2.png"
+width="1024"
+height="750"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-2_hu_df9cd7ac7852d7ca.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-2_hu_59626fd052c757b6.png 1024w"
+loading="lazy"
+alt="Company Portal"
+class="gallery-image"
+data-flex-grow="136"
+data-flex-basis="327px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;why-should-we-move&#34;&gt;Why Should we move
+&lt;h2 id="why-should-we-move"&gt;Why Should we move
 &lt;/h2&gt;&lt;p&gt;I’ll keep this part brief as Microsoft already do a very good job of making recommendations on why you should move but for me, it’s about consistency for users. Giving a user a similar user experience across platform. Users may already have a MacOS or iOS device are already used to using Company Portal for obtain apps. It’s also the place to go when the device compliance workload has been moved and users need to check if and why their devices are non-compliant. Here’s what Microsoft have to say… Install the Intune Company Portal on devices | Microsoft Learn&lt;/p&gt;
-&lt;h2 id=&#34;how-to-deploy-company-portal&#34;&gt;How to deploy Company Portal
+&lt;h2 id="how-to-deploy-company-portal"&gt;How to deploy Company Portal
 &lt;/h2&gt;&lt;p&gt;In this example, we’ll use the new Microsoft store experience natively built into Intune.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Open Intune via https://endpoint.microsoft.com as a Global Admin or Intune Administrator. Navigate to Apps&amp;gt;Windows Devices&amp;gt; Add App, select the App type, “Microsoft Store app (new)”&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-3.png&#34;
-	width=&#34;1536&#34;
-	height=&#34;506&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-3_hu_d0f4399c630061d0.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-3_hu_522aa005c07a915b.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Windows App List&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;303&#34;
-		data-flex-basis=&#34;728px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-3.png"
+width="1536"
+height="506"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-3_hu_d0f4399c630061d0.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-3_hu_522aa005c07a915b.png 1024w"
+loading="lazy"
+alt="Windows App List"
+class="gallery-image"
+data-flex-grow="303"
+data-flex-basis="728px"
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Search and select Company Portal&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-4.png&#34;
-	width=&#34;844&#34;
-	height=&#34;248&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-4_hu_889f740b541b1c68.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-4_hu_651427c430a32784.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Search for Company Portal&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;340&#34;
-		data-flex-basis=&#34;816px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-4.png"
+width="844"
+height="248"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-4_hu_889f740b541b1c68.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-4_hu_651427c430a32784.png 1024w"
+loading="lazy"
+alt="Search for Company Portal"
+class="gallery-image"
+data-flex-grow="340"
+data-flex-basis="816px"
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Confirm the app details.&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;One thing to note is with the new store experience, apps do not have application Icons (a bit like SCCM doesn’t, you;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-5.png&#34;
-	width=&#34;796&#34;
-	height=&#34;907&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-5_hu_b3abe8e454e8540c.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-5_hu_618e2a31f7da26ac.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Update App details&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;87&#34;
-		data-flex-basis=&#34;210px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-5.png"
+width="796"
+height="907"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-5_hu_b3abe8e454e8540c.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-5_hu_618e2a31f7da26ac.png 1024w"
+loading="lazy"
+alt="Update App details"
+class="gallery-image"
+data-flex-grow="87"
+data-flex-basis="210px"
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Click Next and then decide where to deploy the app to before clicking next and Create.&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;decide-on-whats-available-in-company-portal&#34;&gt;Decide on what’s available in Company Portal
+&lt;h2 id="decide-on-whats-available-in-company-portal"&gt;Decide on what’s available in Company Portal
 &lt;/h2&gt;&lt;p&gt;Now that you’ve deployed the Company Portal, you need to decide what you want to show and hide from users. Microsoft recently released new options to give administrators control over what users see. To access these new controls, following these steps to configure you’re desired settings.&lt;/p&gt;
 &lt;p&gt;Here you will see the options available under Configuration, the options are;&lt;/p&gt;
 &lt;ul&gt;
@@ -1540,124 +1237,69 @@ If the request is rejected, the notes from the approver are visible to the reque
 &lt;li&gt;Office Online Applications&lt;/li&gt;
 &lt;li&gt;Configuration Manager Applications&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-6.png&#34;
-	width=&#34;823&#34;
-	height=&#34;654&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-6_hu_826b649d4a0c1d59.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-6_hu_bb87ed3a22511be6.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Tenant Branding within Intune&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;125&#34;
-		data-flex-basis=&#34;302px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-6.png"
+width="823"
+height="654"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-6_hu_826b649d4a0c1d59.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-6_hu_bb87ed3a22511be6.png 1024w"
+loading="lazy"
+alt="Tenant Branding within Intune"
+class="gallery-image"
+data-flex-grow="125"
+data-flex-basis="302px"
 &gt;&lt;/p&gt;
 &lt;p&gt;The defaults are shown above. To change these defaults –&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Scroll up to edit, scroll down to App Sources and change the hide to show as necessary before selecting Review and Save.&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-7.png&#34;
-	width=&#34;533&#34;
-	height=&#34;186&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-7_hu_c73a3660ff378b56.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-7_hu_10ac1061fc583a1c.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;App Sources&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;286&#34;
-		data-flex-basis=&#34;687px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-7.png"
+width="533"
+height="186"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-7_hu_c73a3660ff378b56.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-7_hu_10ac1061fc583a1c.png 1024w"
+loading="lazy"
+alt="App Sources"
+class="gallery-image"
+data-flex-grow="286"
+data-flex-basis="687px"
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;user-notification-and-improving-the-user-experience&#34;&gt;User Notification and improving the user experience
+&lt;h2 id="user-notification-and-improving-the-user-experience"&gt;User Notification and improving the user experience
 &lt;/h2&gt;&lt;p&gt;Now that the app is deployed, apps are displayed within Company Portal. When it comes time to deploy a new app or app update, we don’t really want users to be notified by Software Center. To prevent this, we need to update the SCCM client settings.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Open SCCM Admin Console as a Full Administrator&lt;/code&gt;
 &lt;code&gt;Navigate to Administration&amp;gt;Client Settings, right click and create a Custom Device Client setting&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;!Configuration Manager Client Settings](img/image-8.png)&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Give the client device setting a name, I’ve gone for “Company Portal Workload”, tick the option of software centre&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-9.png&#34;
-	width=&#34;777&#34;
-	height=&#34;724&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-9_hu_81586a73800170e6.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-9_hu_48e502bd934e753e.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Custom Client Settings&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;107&#34;
-		data-flex-basis=&#34;257px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-9.png"
+width="777"
+height="724"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-9_hu_81586a73800170e6.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-9_hu_48e502bd934e753e.png 1024w"
+loading="lazy"
+alt="Custom Client Settings"
+class="gallery-image"
+data-flex-grow="107"
+data-flex-basis="257px"
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Select on Software Center and under device settings, change the select the user portal from Software Center to Company Portal and click OK&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-10.png&#34;
-	width=&#34;778&#34;
-	height=&#34;724&#34;
-	srcset=&#34;http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-10_hu_5f77e5177d9f64a8.png 480w, http://localhost:46528/p/companyportal/post/CompanyPortal/img/image-10_hu_c6170f66a20e90bb.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Custom Client Settings Continued&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;107&#34;
-		data-flex-basis=&#34;257px&#34;
-	
+&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-10.png"
+width="778"
+height="724"
+srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-10_hu_5f77e5177d9f64a8.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-10_hu_c6170f66a20e90bb.png 1024w"
+loading="lazy"
+alt="Custom Client Settings Continued"
+class="gallery-image"
+data-flex-grow="107"
+data-flex-basis="257px"
 &gt;&lt;/p&gt;
 &lt;p&gt;Once created, deploy this new client setting profile to a suitable device collection&lt;/p&gt;
 &lt;p&gt;Now that these settings are deployed, when an app is deployed from SCCM, users will receive any notifications that you have configured as part of the deployment within Company Portal.&lt;/p&gt;
-&lt;h2 id=&#34;other-things-to-consider&#34;&gt;Other things to consider
+&lt;h2 id="other-things-to-consider"&gt;Other things to consider
 &lt;/h2&gt;&lt;p&gt;Although not covered within this article, it should be noted that in order to follow this post, the Application workload slider would need to be moved from Software Center to either Pilot or all the way over to Intune.&lt;/p&gt;
 &lt;p&gt;Environments without a Cloud Management Gateway (CMG), for devices that are not on a VPN or within the corporate LAN, apps deployed from SCCM will need line of sight connectivity to SCCM for these apps to download and install. If you have a CMG or an always on VPN, remote devices will still be able to download and install apps from Software Center.&lt;/p&gt;
 &lt;p&gt;Once you’re happy that everything is working as it should, you can start to think about removing Software Center from end user devices but that’s for another day (and post)&lt;/p&gt;
-&lt;p&gt;Thanks for reading.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Posts</title>
-        <link>http://localhost:46528/posts/</link>
-        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:46528/posts/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>About Me</title>
-        <link>http://localhost:46528/about/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:46528/about/</guid>
-        <description>&lt;p&gt;Writing about myself isn’t exactly my favorite pastime, but I’ll give it a go. I’m Chris Sellar, and I’m the creator of endpointmgt.com. With experience in both the private and public sector IT in the UK, I earn my keep as a Cloud Endpoint Technical Consultant for a large Microsoft Partner and software reseller in the UK. My unique position as a technology leader has given me valuable insight into the world of IT, and I hope to share some of that knowledge through my blog.&lt;/p&gt;
+&lt;p&gt;Thanks for reading.&lt;/p&gt;</description></item><item><title>Posts</title><link>https://endpointmgt.com/posts/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/posts/</guid><description/></item><item><title>About Me</title><link>https://endpointmgt.com/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/about/</guid><description>&lt;p&gt;Writing about myself isn’t exactly my favorite pastime, but I’ll give it a go. I’m Chris Sellar, and I’m the creator of endpointmgt.com. With experience in both the private and public sector IT in the UK, I earn my keep as a Cloud Endpoint Technical Consultant for a large Microsoft Partner and software reseller in the UK. My unique position as a technology leader has given me valuable insight into the world of IT, and I hope to share some of that knowledge through my blog.&lt;/p&gt;
 &lt;p&gt;The primary focus of my blog will be on Microsoft Intune, Configuration Manager, Windows Autopilot, and Windows 11. I aim to use it as a practical how-to guide, sharing my personal experiences to help others navigate the world of IT more easily. Any useful how-to guides I create will be posted on this blog.&lt;/p&gt;
-&lt;p&gt;In addition to working in the field of IT for many years, I also have a first class honors degree in IT Management for Business from Robert Gordon University. Along with an ever increasing number of Microsoft certifications, thanks to my current employers willingness for continuous personal development. To that end, I’m delighted to have passed the &lt;a class=&#34;link&#34; href=&#34;https://learn.microsoft.com/api/credentials/share/en-gb/ChrisSellar-8412/606E4B574C771B5D?sharingId=B707E2744889D373&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;M365 Admin Expert certification&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;fyi-and-disclaimer&#34;&gt;FYI and Disclaimer
+&lt;p&gt;In addition to working in the field of IT for many years, I also have a first class honors degree in IT Management for Business from Robert Gordon University. Along with an ever increasing number of Microsoft certifications, thanks to my current employers willingness for continuous personal development. To that end, I’m delighted to have passed the &lt;a class="link" href="https://learn.microsoft.com/api/credentials/share/en-gb/ChrisSellar-8412/606E4B574C771B5D?sharingId=B707E2744889D373" target="_blank" rel="noopener"
+&gt;M365 Admin Expert certification&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="fyi-and-disclaimer"&gt;FYI and Disclaimer
 &lt;/h2&gt;&lt;p&gt;It’s important to note that the views on endpointmgt.com are strictly my own personal views, thoughts and opinions. These are not the views of any current or previous employer or any vendors that I may reference.&lt;/p&gt;
 &lt;p&gt;By sharing some of my experience through this site, I hope that I can assist you in reaching your own goals. I accept no responsibility for the impact and results of following my blog posts in a production environment. All technical changes should be thoroughly tested in a non-production/development environment to assess the impact of any changes.&lt;/p&gt;
-&lt;h2 id=&#34;sponsoring&#34;&gt;Sponsoring
+&lt;h2 id="sponsoring"&gt;Sponsoring
 &lt;/h2&gt;&lt;p&gt;If you like this content or it&amp;rsquo;s been useful to you, consider supporting its development:&lt;/p&gt;
-&lt;script type=&#34;text/javascript&#34; src=&#34;https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js&#34; data-name=&#34;bmc-button&#34; data-slug=&#34;chrissellar&#34; data-color=&#34;#081136ff&#34; data-emoji=&#34;☕&#34; data-font=&#34;Lato&#34; data-text=&#34;Buy me a coffee&#34; data-outline-color=&#34;#000000&#34; data-font-color=&#34;#ffffff&#34; data-coffee-color=&#34;#FFDD00&#34; &gt;&lt;/script&gt;
-&lt;p&gt;By helping support me, it provide a small reward and incentive to produce more relevant content.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Links</title>
-        <link>http://localhost:46528/links/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:46528/links/</guid>
-        <description>&lt;p&gt;Here are some useful sites that you might like to Visit&amp;hellip;&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Search</title>
-        <link>http://localhost:46528/search/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:46528/search/</guid>
-        <description></description>
-        </item>
-        
-    </channel>
-</rss>
+&lt;script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="chrissellar" data-color="#081136ff" data-emoji="☕" data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" &gt;&lt;/script&gt;
+&lt;p&gt;By helping support me, it provide a small reward and incentive to produce more relevant content.&lt;/p&gt;</description></item><item><title>Links</title><link>https://endpointmgt.com/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/links/</guid><description>&lt;p&gt;Here are some useful sites that you might like to Visit&amp;hellip;&lt;/p&gt;</description></item><item><title>Search</title><link>https://endpointmgt.com/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://endpointmgt.com/search/</guid><description/></item></channel></rss>
