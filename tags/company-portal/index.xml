@@ -1,65 +1,99 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Company Portal on endpointmgt.com</title><link>https://endpointmgt.com/tags/company-portal/</link><description>Recent content in Company Portal on endpointmgt.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Nov 2022 14:40:57 +0100</lastBuildDate><atom:link href="https://endpointmgt.com/tags/company-portal/index.xml" rel="self" type="application/rss+xml"/><item><title>Company Portal Set up</title><link>https://endpointmgt.com/p/companyportal/</link><pubDate>Tue, 22 Nov 2022 14:40:57 +0100</pubDate><guid>https://endpointmgt.com/p/companyportal/</guid><description>&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/cover.png" alt="Featured image of post Company Portal Set up" /&gt;&lt;p&gt;If you’re in a Hybrid environment using SCCM and Intune already or in the process of moving to a Hybrid deployment, a decision that will need to be made is where you direct users to install applications.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Company Portal on endpointmgt.com</title>
+        <link>http://localhost:11841/tags/company-portal/</link>
+        <description>Recent content in Company Portal on endpointmgt.com</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 22 Nov 2022 14:40:57 +0100</lastBuildDate><atom:link href="http://localhost:11841/tags/company-portal/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Company Portal Set up</title>
+        <link>http://localhost:11841/p/companyportal/</link>
+        <pubDate>Tue, 22 Nov 2022 14:40:57 +0100</pubDate>
+        
+        <guid>http://localhost:11841/p/companyportal/</guid>
+        <description>&lt;img src="http://localhost:11841/p/companyportal/post/CompanyPortal/img/cover.png" alt="Featured image of post Company Portal Set up" /&gt;&lt;p&gt;If you’re in a Hybrid environment using SCCM and Intune already or in the process of moving to a Hybrid deployment, a decision that will need to be made is where you direct users to install applications.&lt;/p&gt;
 &lt;p&gt;Many of you may have already deployed the company portal but in this post; I’ll look at the benefits of deploying company portal to Windows devices, how to deploy it to devices, what’s visible within Company Portal and what the user experience is.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-1.png"
-width="720"
-height="451"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-1_hu_c7075a82912c2056.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-1_hu_12b630db80f4aa01.png 1024w"
-loading="lazy"
-alt="Software Center"
-class="gallery-image"
-data-flex-grow="159"
-data-flex-basis="383px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-1.png&#34;
+	width=&#34;720&#34;
+	height=&#34;451&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-1_hu_c7075a82912c2056.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-1_hu_12b630db80f4aa01.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Software Center&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;159&#34;
+		data-flex-basis=&#34;383px&#34;
+	
 &gt;
-&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-2.png"
-width="1024"
-height="750"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-2_hu_df9cd7ac7852d7ca.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-2_hu_59626fd052c757b6.png 1024w"
-loading="lazy"
-alt="Company Portal"
-class="gallery-image"
-data-flex-grow="136"
-data-flex-basis="327px"
+&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-2.png&#34;
+	width=&#34;1024&#34;
+	height=&#34;750&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-2_hu_df9cd7ac7852d7ca.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-2_hu_59626fd052c757b6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Company Portal&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;327px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h2 id="why-should-we-move"&gt;Why Should we move
+&lt;h2 id=&#34;why-should-we-move&#34;&gt;Why Should we move
 &lt;/h2&gt;&lt;p&gt;I’ll keep this part brief as Microsoft already do a very good job of making recommendations on why you should move but for me, it’s about consistency for users. Giving a user a similar user experience across platform. Users may already have a MacOS or iOS device are already used to using Company Portal for obtain apps. It’s also the place to go when the device compliance workload has been moved and users need to check if and why their devices are non-compliant. Here’s what Microsoft have to say… Install the Intune Company Portal on devices | Microsoft Learn&lt;/p&gt;
-&lt;h2 id="how-to-deploy-company-portal"&gt;How to deploy Company Portal
+&lt;h2 id=&#34;how-to-deploy-company-portal&#34;&gt;How to deploy Company Portal
 &lt;/h2&gt;&lt;p&gt;In this example, we’ll use the new Microsoft store experience natively built into Intune.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Open Intune via https://endpoint.microsoft.com as a Global Admin or Intune Administrator. Navigate to Apps&amp;gt;Windows Devices&amp;gt; Add App, select the App type, “Microsoft Store app (new)”&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-3.png"
-width="1536"
-height="506"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-3_hu_d0f4399c630061d0.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-3_hu_522aa005c07a915b.png 1024w"
-loading="lazy"
-alt="Windows App List"
-class="gallery-image"
-data-flex-grow="303"
-data-flex-basis="728px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-3.png&#34;
+	width=&#34;1536&#34;
+	height=&#34;506&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-3_hu_d0f4399c630061d0.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-3_hu_522aa005c07a915b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Windows App List&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;303&#34;
+		data-flex-basis=&#34;728px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Search and select Company Portal&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-4.png"
-width="844"
-height="248"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-4_hu_889f740b541b1c68.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-4_hu_651427c430a32784.png 1024w"
-loading="lazy"
-alt="Search for Company Portal"
-class="gallery-image"
-data-flex-grow="340"
-data-flex-basis="816px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-4.png&#34;
+	width=&#34;844&#34;
+	height=&#34;248&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-4_hu_889f740b541b1c68.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-4_hu_651427c430a32784.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Search for Company Portal&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;340&#34;
+		data-flex-basis=&#34;816px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Confirm the app details.&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;One thing to note is with the new store experience, apps do not have application Icons (a bit like SCCM doesn’t, you;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-5.png"
-width="796"
-height="907"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-5_hu_b3abe8e454e8540c.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-5_hu_618e2a31f7da26ac.png 1024w"
-loading="lazy"
-alt="Update App details"
-class="gallery-image"
-data-flex-grow="87"
-data-flex-basis="210px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-5.png&#34;
+	width=&#34;796&#34;
+	height=&#34;907&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-5_hu_b3abe8e454e8540c.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-5_hu_618e2a31f7da26ac.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Update App details&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;87&#34;
+		data-flex-basis=&#34;210px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Click Next and then decide where to deploy the app to before clicking next and Create.&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id="decide-on-whats-available-in-company-portal"&gt;Decide on what’s available in Company Portal
+&lt;h2 id=&#34;decide-on-whats-available-in-company-portal&#34;&gt;Decide on what’s available in Company Portal
 &lt;/h2&gt;&lt;p&gt;Now that you’ve deployed the Company Portal, you need to decide what you want to show and hide from users. Microsoft recently released new options to give administrators control over what users see. To access these new controls, following these steps to configure you’re desired settings.&lt;/p&gt;
 &lt;p&gt;Here you will see the options available under Configuration, the options are;&lt;/p&gt;
 &lt;ul&gt;
@@ -67,59 +101,80 @@ data-flex-basis="210px"
 &lt;li&gt;Office Online Applications&lt;/li&gt;
 &lt;li&gt;Configuration Manager Applications&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-6.png"
-width="823"
-height="654"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-6_hu_826b649d4a0c1d59.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-6_hu_bb87ed3a22511be6.png 1024w"
-loading="lazy"
-alt="Tenant Branding within Intune"
-class="gallery-image"
-data-flex-grow="125"
-data-flex-basis="302px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-6.png&#34;
+	width=&#34;823&#34;
+	height=&#34;654&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-6_hu_826b649d4a0c1d59.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-6_hu_bb87ed3a22511be6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Tenant Branding within Intune&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;125&#34;
+		data-flex-basis=&#34;302px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;The defaults are shown above. To change these defaults –&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Scroll up to edit, scroll down to App Sources and change the hide to show as necessary before selecting Review and Save.&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-7.png"
-width="533"
-height="186"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-7_hu_c73a3660ff378b56.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-7_hu_10ac1061fc583a1c.png 1024w"
-loading="lazy"
-alt="App Sources"
-class="gallery-image"
-data-flex-grow="286"
-data-flex-basis="687px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-7.png&#34;
+	width=&#34;533&#34;
+	height=&#34;186&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-7_hu_c73a3660ff378b56.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-7_hu_10ac1061fc583a1c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;App Sources&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;286&#34;
+		data-flex-basis=&#34;687px&#34;
+	
 &gt;&lt;/p&gt;
-&lt;h2 id="user-notification-and-improving-the-user-experience"&gt;User Notification and improving the user experience
+&lt;h2 id=&#34;user-notification-and-improving-the-user-experience&#34;&gt;User Notification and improving the user experience
 &lt;/h2&gt;&lt;p&gt;Now that the app is deployed, apps are displayed within Company Portal. When it comes time to deploy a new app or app update, we don’t really want users to be notified by Software Center. To prevent this, we need to update the SCCM client settings.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Open SCCM Admin Console as a Full Administrator&lt;/code&gt;
 &lt;code&gt;Navigate to Administration&amp;gt;Client Settings, right click and create a Custom Device Client setting&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;!Configuration Manager Client Settings](img/image-8.png)&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Give the client device setting a name, I’ve gone for “Company Portal Workload”, tick the option of software centre&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-9.png"
-width="777"
-height="724"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-9_hu_81586a73800170e6.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-9_hu_48e502bd934e753e.png 1024w"
-loading="lazy"
-alt="Custom Client Settings"
-class="gallery-image"
-data-flex-grow="107"
-data-flex-basis="257px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-9.png&#34;
+	width=&#34;777&#34;
+	height=&#34;724&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-9_hu_81586a73800170e6.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-9_hu_48e502bd934e753e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Custom Client Settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;107&#34;
+		data-flex-basis=&#34;257px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Select on Software Center and under device settings, change the select the user portal from Software Center to Company Portal and click OK&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-10.png"
-width="778"
-height="724"
-srcset="https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-10_hu_5f77e5177d9f64a8.png 480w, https://endpointmgt.com/p/companyportal/post/CompanyPortal/img/image-10_hu_c6170f66a20e90bb.png 1024w"
-loading="lazy"
-alt="Custom Client Settings Continued"
-class="gallery-image"
-data-flex-grow="107"
-data-flex-basis="257px"
+&lt;p&gt;&lt;img src=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-10.png&#34;
+	width=&#34;778&#34;
+	height=&#34;724&#34;
+	srcset=&#34;http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-10_hu_5f77e5177d9f64a8.png 480w, http://localhost:11841/p/companyportal/post/CompanyPortal/img/image-10_hu_c6170f66a20e90bb.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Custom Client Settings Continued&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;107&#34;
+		data-flex-basis=&#34;257px&#34;
+	
 &gt;&lt;/p&gt;
 &lt;p&gt;Once created, deploy this new client setting profile to a suitable device collection&lt;/p&gt;
 &lt;p&gt;Now that these settings are deployed, when an app is deployed from SCCM, users will receive any notifications that you have configured as part of the deployment within Company Portal.&lt;/p&gt;
-&lt;h2 id="other-things-to-consider"&gt;Other things to consider
+&lt;h2 id=&#34;other-things-to-consider&#34;&gt;Other things to consider
 &lt;/h2&gt;&lt;p&gt;Although not covered within this article, it should be noted that in order to follow this post, the Application workload slider would need to be moved from Software Center to either Pilot or all the way over to Intune.&lt;/p&gt;
 &lt;p&gt;Environments without a Cloud Management Gateway (CMG), for devices that are not on a VPN or within the corporate LAN, apps deployed from SCCM will need line of sight connectivity to SCCM for these apps to download and install. If you have a CMG or an always on VPN, remote devices will still be able to download and install apps from Software Center.&lt;/p&gt;
 &lt;p&gt;Once you’re happy that everything is working as it should, you can start to think about removing Software Center from end user devices but that’s for another day (and post)&lt;/p&gt;
-&lt;p&gt;Thanks for reading.&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;Thanks for reading.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

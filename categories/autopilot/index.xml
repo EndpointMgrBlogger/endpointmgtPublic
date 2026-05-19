@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Autopilot on endpointmgt.com</title>
+        <link>http://localhost:1313/categories/autopilot/</link>
+        <description>Recent content in Autopilot on endpointmgt.com</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 19 May 2026 08:52:10 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/autopilot/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Set Windows Autopilot Device Names</title>
+        <link>http://localhost:1313/p/prenamewindowsautopilotdevices/</link>
+        <pubDate>Tue, 19 May 2026 08:52:10 +0100</pubDate>
+        
+        <guid>http://localhost:1313/p/prenamewindowsautopilotdevices/</guid>
+        <description>&lt;img src="http://localhost:1313/img/cover.png" alt="Featured image of post Set Windows Autopilot Device Names" /&gt;&lt;h1 id=&#34;automate-windows-autopilot-device-naming-with-powershell--introducing-update-autopilotdevicenames&#34;&gt;Automate Windows Autopilot Device Naming with PowerShell – Introducing Update-AutopilotDeviceNames
+&lt;/h1&gt;&lt;p&gt;If you&amp;rsquo;ve spent any time managing Windows Autopilot at scale, you&amp;rsquo;ve almost certainly wrestled with device naming. Autopilot does give you &lt;em&gt;some&lt;/em&gt; native options here — but as soon as your organisation has its own asset numbering system, those options fall short fast.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s why I built &lt;strong&gt;Update-AutopilotDeviceNames&lt;/strong&gt;, a PowerShell script now published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames/0.3.1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PowerShell Gallery&lt;/a&gt; and available on &lt;a class=&#34;link&#34; href=&#34;https://github.com/endpointmgtgit/AutopilotDeviceNameTool&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;the-problem--and-why-autopilots-native-naming-isnt-always-enough&#34;&gt;The Problem — and Why Autopilot&amp;rsquo;s Native Naming Isn&amp;rsquo;t Always Enough
+&lt;/h2&gt;&lt;p&gt;Windows Autopilot supports device naming through Autopilot Deployment Profiles. You can define a name template using a prefix combined with either a random alphanumeric string or the device&amp;rsquo;s serial number — for example, &lt;code&gt;CORP-%SERIAL%&lt;/code&gt; or &lt;code&gt;WKS-%RAND:5%&lt;/code&gt;. For many environments, that&amp;rsquo;s perfectly adequate.&lt;/p&gt;
+&lt;p&gt;But here&amp;rsquo;s where it breaks down: what if your organisation already has a CMDB with unique asset numbers assigned to every device? What if your hardware arrives with asset labels physically attached — stickers on the chassis that your service desk, finance team, and CMDB all refer to? In those cases, &lt;code&gt;CORP-%SERIAL%&lt;/code&gt; is next to useless. You don&amp;rsquo;t want a name derived from the serial number — you want the device named after the asset number that&amp;rsquo;s already on record.&lt;/p&gt;
+&lt;p&gt;Maybe you&amp;rsquo;re a procurement team that receives a bulk order of 200 laptops. Before they even reach users, your CMDB has assigned asset IDs to each one, cross-referenced against serial numbers captured at the point of receipt. You have a spreadsheet — or can easily produce one — with two columns: serial number and desired device name. The serial number is the link between your asset register and the Autopilot record. What you need is a way to feed that mapping directly into Autopilot so the device gets the right name when it enrols.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s exactly the gap this tool fills.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;what-the-script-does&#34;&gt;What the Script Does
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Update-AutopilotDeviceNames&lt;/strong&gt; connects to Microsoft Graph and handles two core jobs:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Export Mode (&lt;code&gt;-ExportCurrent&lt;/code&gt;)&lt;/strong&gt;
+Pulls all Windows Autopilot device identities from your tenant and writes them to a timestamped CSV. The export includes serial number, current display name, manufacturer, model, group tag, purchase order, and enrolment state. This gives you a clean baseline to work from — you can review what&amp;rsquo;s already named, spot gaps, and edit the file to feed back into the update process.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Update Mode (default)&lt;/strong&gt;
+Takes a CSV you provide, maps serial numbers to desired device names, and applies them via the Graph Beta endpoint using the &lt;code&gt;updateDeviceProperties&lt;/code&gt; action. It&amp;rsquo;s smart about what it touches: by default it skips devices that already have a display name, so you&amp;rsquo;re not accidentally overwriting intentional names. Use &lt;code&gt;-ForceUpdate&lt;/code&gt; if you need to overwrite existing values.&lt;/p&gt;
+&lt;p&gt;The script produces a full results report CSV with one of these statuses for every device processed:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Status&lt;/th&gt;
+          &lt;th&gt;Meaning&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;Updated&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Display name was successfully applied&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;AlreadyNamed&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Device already had a name; skipped (use &lt;code&gt;-ForceUpdate&lt;/code&gt; to override)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NoDeviceFound&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Serial number wasn&amp;rsquo;t found in your Autopilot tenant&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;DuplicateName&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;The desired name appears more than once in your CSV; skipped to avoid conflicts&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NoChange&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Current name already matches the desired name; no action taken&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;WhatIf&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Would have updated, but &lt;code&gt;-WhatIf&lt;/code&gt; was passed; no changes made&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;Failed&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;An error occurred during the update attempt&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;key-features-worth-highlighting&#34;&gt;Key Features Worth Highlighting
+&lt;/h2&gt;&lt;h3 id=&#34;-whatif-support&#34;&gt;&lt;code&gt;-WhatIf&lt;/code&gt; Support
+&lt;/h3&gt;&lt;p&gt;Before committing any changes, run the script with &lt;code&gt;-WhatIf&lt;/code&gt;. It goes through the full logic — connects to Graph, loads your CSV, evaluates every device — but makes zero changes. It still generates a report CSV showing exactly what &lt;em&gt;would&lt;/em&gt; happen. This is the first thing I&amp;rsquo;d recommend doing before any production run.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-CsvPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\NewDeviceNames.csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-WhatIf&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;flexible-csv-input&#34;&gt;Flexible CSV Input
+&lt;/h3&gt;&lt;p&gt;The script accepts either a &lt;code&gt;DeviceName&lt;/code&gt; or &lt;code&gt;DisplayName&lt;/code&gt; column alongside &lt;code&gt;SerialNumber&lt;/code&gt;, so it works whether you&amp;rsquo;re building a fresh naming list or editing an export you&amp;rsquo;ve already generated with &lt;code&gt;-ExportCurrent&lt;/code&gt;. The &lt;code&gt;-ExportCurrent&lt;/code&gt; workflow is probably the cleanest path: export what you have, edit the &lt;code&gt;DisplayName&lt;/code&gt; column, then feed it straight back in.&lt;/p&gt;
+&lt;h3 id=&#34;configurable-report-output&#34;&gt;Configurable Report Output
+&lt;/h3&gt;&lt;p&gt;You can pass &lt;code&gt;-ReportOutputPath&lt;/code&gt; with either a folder path (the script generates a timestamped filename for you) or a full file path if you want to control the exact output name. It defaults to &lt;code&gt;C:\Temp&lt;/code&gt; if you don&amp;rsquo;t specify anything.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Auto-named file in a folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Explicit file path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Temp\Autopilot-Current.csv&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;duplicate-name-detection&#34;&gt;Duplicate Name Detection
+&lt;/h3&gt;&lt;p&gt;If your CSV accidentally contains the same desired device name against two different serial numbers, the script detects it, flags both entries in the report as &lt;code&gt;DuplicateName&lt;/code&gt;, and skips them entirely. No silent conflicts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Module:&lt;/strong&gt; &lt;code&gt;Microsoft.Graph.Authentication&lt;/code&gt; must be installed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permissions:&lt;/strong&gt; &lt;code&gt;DeviceManagementServiceConfig.ReadWrite.All&lt;/code&gt; via Microsoft Graph&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Graph endpoint:&lt;/strong&gt; Uses the Beta endpoint for Autopilot device identity properties&lt;/li&gt;
+&lt;li&gt;The script authenticates interactively using &lt;code&gt;Connect-MgGraph&lt;/code&gt; — it&amp;rsquo;ll prompt for credentials if you&amp;rsquo;re not already connected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;how-to-install&#34;&gt;How to Install
+&lt;/h2&gt;&lt;p&gt;The script is published to the PowerShell Gallery, so installation is straightforward:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Install-Script&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Name&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Or if you&amp;rsquo;re using PSResourceGet:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;Install-PSResource&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Name&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;a-typical-workflow&#34;&gt;A Typical Workflow
+&lt;/h2&gt;&lt;p&gt;Here&amp;rsquo;s how I&amp;rsquo;d approach this for an organisation receiving a bulk device order where the CMDB already has asset numbers assigned against serial numbers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 1 — Prepare your CSV&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Your starting point is a CSV with two columns: &lt;code&gt;SerialNumber&lt;/code&gt; and &lt;code&gt;DeviceName&lt;/code&gt;. This is the mapping between the serial number captured at receipt (or from your supplier&amp;rsquo;s delivery manifest) and the asset label or CMDB asset number you want the device named after. It might look something like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-csv&#34; data-lang=&#34;csv&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;SerialNumber&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;DeviceName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;5CG12345AB&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;ASSET-10042&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;5CG12346CD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;ASSET-10043&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;5CG12347EF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;ASSET-10044&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If you already have an existing Autopilot estate and want to see what&amp;rsquo;s currently named before making changes, use &lt;code&gt;-ExportCurrent&lt;/code&gt; first to generate a baseline:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Open the CSV, review the current &lt;code&gt;DisplayName&lt;/code&gt; values, and update any that need changing.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 2 — Preview the changes&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-CsvPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\Autopilot-Current-edited.csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-WhatIf&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Check the WhatIf report. Confirm the &lt;code&gt;Updated&lt;/code&gt; count looks right and there are no unexpected &lt;code&gt;NoDeviceFound&lt;/code&gt; entries.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 3 — Apply&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-CsvPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\Autopilot-Current-edited.csv&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Step 4 — Verify&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;.\&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Update-AutopilotDeviceNames&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;ps1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ExportCurrent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ReportOutputPath&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Reports\Autopilot&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Run a fresh export and confirm the &lt;code&gt;DisplayName&lt;/code&gt; values have propagated as expected. The script even reminds you to do this at the end of every update run.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;important-limitations-to-be-aware-of&#34;&gt;Important Limitations to Be Aware Of
+&lt;/h2&gt;&lt;p&gt;Because this is built on top of how Windows Autopilot actually works, there are constraints that are by design:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Naming only applies at enrolment.&lt;/strong&gt; If a device is already provisioned, updating the display name in Autopilot does not rename the device — it only takes effect the next time that device goes through the Autopilot provisioning process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Microsoft Entra joined devices only.&lt;/strong&gt; Hybrid Azure AD Join scenarios are not supported for Autopilot device naming.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These aren&amp;rsquo;t limitations of the script itself — they reflect the underlying platform behaviour.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up
+&lt;/h2&gt;&lt;p&gt;This script came out of a real need I kept running into across different environments — particularly where organisations already had asset numbering systems or CMDB records in place and needed device names to align with those, not with whatever Autopilot&amp;rsquo;s prefix+serial template would produce. The serial-to-name CSV approach means your existing asset data becomes the source of truth, and the export-edit-update loop makes it practical to maintain naming standards across large Autopilot estates without touching the portal. The &lt;code&gt;-WhatIf&lt;/code&gt; support means you can validate confidently before making any changes.&lt;/p&gt;
+&lt;p&gt;The full source is on &lt;a class=&#34;link&#34; href=&#34;https://github.com/endpointmgtgit/AutopilotDeviceNameTool&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt; and the script is published to the &lt;a class=&#34;link&#34; href=&#34;https://www.powershellgallery.com/packages/Update-AutopilotDeviceNames/0.3.1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PowerShell Gallery&lt;/a&gt; at version 0.3.1. If you run into any issues or have suggestions, feel free to raise them on the repo.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Build it right.&lt;br&gt;
+Name it right.&lt;br&gt;
+Before it ever turns on.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
